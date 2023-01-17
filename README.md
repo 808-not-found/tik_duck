@@ -22,7 +22,7 @@
 .
 ├── docker-compose.yaml     // 用于创建 mysql 和 Etcd 的 docker-compose
 ├── go.mod
-├── IDLs                    // 存放
+├── IDLs                    // 存放 IDL 文件
 ├── README.md               // 本文档
 ├── Taskfile.yaml           // 自动命令
 ├── user                    // 基础接口
