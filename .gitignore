@@ -1,0 +1,26 @@
+.idea
+.vscode
+.DS_Store
+
+.env
+.envrc
+
+source.sh
+dev-env/
+*.exe
+.air.toml
+coverage.out
+.bin/
+bin/
+dist/
+tmp/
+
+# bug of idea openapi plugin, see https://youtrack.jetbrains.com/issue/IDEA-285879
+/gen/
+
+node_modules/
+pnpm-lock.yaml
+yarn.lock
+.task/
+
+config.yaml
