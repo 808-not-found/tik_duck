@@ -49,6 +49,36 @@ CREATE TABLE `like` (
   `video_id` int NOT NULL
 );
 
+CREATE INDEX `video_index_0` ON `video` (`id`);
+
+CREATE INDEX `video_index_1` ON `video` (`author_id`);
+
+CREATE INDEX `user_index_2` ON `user` (`id`);
+
+CREATE INDEX `follow_index_3` ON `follow` (`id`);
+
+CREATE INDEX `follow_index_4` ON `follow` (`from_user_id`);
+
+CREATE INDEX `follow_index_5` ON `follow` (`to_user_id`);
+
+CREATE INDEX `comment_index_6` ON `comment` (`id`);
+
+CREATE INDEX `comment_index_7` ON `comment` (`user_id`);
+
+CREATE INDEX `comment_index_8` ON `comment` (`video_id`);
+
+CREATE INDEX `message_index_9` ON `message` (`id`);
+
+CREATE INDEX `message_index_10` ON `message` (`from_user_id`);
+
+CREATE INDEX `message_index_11` ON `message` (`to_user_id`);
+
+CREATE INDEX `like_index_12` ON `like` (`id`);
+
+CREATE INDEX `like_index_13` ON `like` (`user_id`);
+
+CREATE INDEX `like_index_14` ON `like` (`video_id`);
+
 ALTER TABLE `video` ADD FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `follow` ADD FOREIGN KEY (`from_user_id`) REFERENCES `user` (`id`);
