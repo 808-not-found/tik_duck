@@ -30,3 +30,9 @@
 ├── user_user               // 社交接口
 └── util                    // 通用工具函数
 ```
+
+## 数据图关系图
+
+> 初始化 sql 语句在 `/util/initsql` 下
+
+![database.png](./database.png)
