@@ -1,0 +1,43 @@
+name: Lint
+
+on:
+  push:
+    branches-ignore:
+      - renovate/**
+    paths:
+      - "**.go"
+      - "**.go.json"
+      - "go.mod"
+      - "go.sum"
+      - ".golangci.yaml"
+      - ".github/workflows/lint.yaml"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "**.go"
+      - "**.go.json"
+      - "go.mod"
+      - "go.sum"
+      - ".golangci.yaml"
+      - ".github/workflows/lint.yaml"
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: "go.mod"
+
+      - run: go mod tidy
+
+      - name: Run linters
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.50.0
+          skip-pkg-cache: true
+          skip-build-cache: true
