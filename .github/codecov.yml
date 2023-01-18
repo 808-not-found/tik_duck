@@ -2,4 +2,4 @@ ignore:
   - "**/mock_*.go"
   - "**/*_test.go"
   - "**/*.gen.go"
-  - "kitex_gen/"
+  - "**/kitex_gen/"
