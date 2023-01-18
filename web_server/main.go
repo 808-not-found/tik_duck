@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strconv"
 
@@ -31,7 +30,6 @@ func main() {
 		b, _ := strconv.ParseInt(ctx.Query("b"), 10, 64)
 		req := &minimal_demo.AddRequest{A: a, B: b}
 		resp, err := client.Add(context.Background(), req)
-		fmt.Println("Lint ci test")
 		if err != nil {
 			log.Fatal(err)
 		}
