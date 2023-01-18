@@ -13,11 +13,11 @@ tasks:
     desc: Run 'golangci-lint'
     cmds:
       - golangci-lint run --fix
-  
+
   prettier:
     silent: true
     cmds:
-      - npx prettier --write .
+      - npx prettier --write --list-different ./
 
   coverage:
     desc: Run tests with coverage report, used in CI.
