@@ -13,7 +13,7 @@ tasks:
     desc: Run 'golangci-lint'
     cmds:
       - golangci-lint run --fix
-    
+
   coverage:
     desc: Run tests with coverage report, used in CI.
     cmds:

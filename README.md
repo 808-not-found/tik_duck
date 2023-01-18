@@ -12,7 +12,7 @@
 
 > 当前为第一版，接口说明请参考飞书内部文档\
 > 值得注意的是，尽管中文我们称他们为基础接口、互动接口、社交接口\
-> 但是我们将他们分别表述为user, user_platform, user_user
+> 但是我们将他们分别表述为 user, user_platform, user_user
 
 ![call_relation.svg](./call_relation.svg)
 
