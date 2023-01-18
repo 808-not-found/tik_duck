@@ -10,6 +10,10 @@ func Sub(a int, b int) int {
 	return a - b
 }
 
+func Multi(a int, b int) int {
+	return a * b
+}
+
 func main() {
 	svr := minimal_demo.NewServer(new(AddServiceImpl))
 	err := svr.Run()
