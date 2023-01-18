@@ -1,7 +1,7 @@
 CREATE TABLE `video` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `author_id` int NOT NULL,
-  `publish_time` datetime NOT NULL DEFAULT "now()",
+  `publish_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `file_path` varchar(32) NOT NULL,
   `cover_path` varchar(32) NOT NULL,
   `favorite_count` int DEFAULT 0,
@@ -11,7 +11,7 @@ CREATE TABLE `video` (
 
 CREATE TABLE `user` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `create_time` datetime NOT NULL DEFAULT "now()",
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `name` varchar(20) UNIQUE NOT NULL,
   `password` char(32) NOT NULL,
   `salt` char(32) NOT NULL,
@@ -21,14 +21,14 @@ CREATE TABLE `user` (
 
 CREATE TABLE `follow` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `follow_time` datetime NOT NULL DEFAULT "now()",
+  `follow_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `from_user_id` int NOT NULL,
   `to_user_id` int NOT NULL
 );
 
 CREATE TABLE `comment` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `comment_time` datetime NOT NULL DEFAULT "now()",
+  `comment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int NOT NULL,
   `video_id` int NOT NULL,
   `content` text NOT NULL
@@ -36,7 +36,7 @@ CREATE TABLE `comment` (
 
 CREATE TABLE `message` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `message_time` datetime NOT NULL DEFAULT "now()",
+  `message_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `from_user_id` int NOT NULL,
   `to_user_id` int NOT NULL,
   `content` text NOT NULL
@@ -44,7 +44,7 @@ CREATE TABLE `message` (
 
 CREATE TABLE `like` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `like_time` datetime NOT NULL DEFAULT "now()",
+  `like_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int NOT NULL,
   `video_id` int NOT NULL
 );
