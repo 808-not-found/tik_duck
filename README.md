@@ -1,5 +1,7 @@
 # TikDuck 一个极简版抖音的后端
 
+[![codecov](https://codecov.io/gh/808-not-found/tik_duck/branch/master/graph/badge.svg?token=ZRGZZ0HMMG)](https://codecov.io/gh/808-not-found/tik_duck)
+
 ## 项目工具依赖
 
 - [Go 1.19](https://go.dev/)
