@@ -5,8 +5,8 @@ import (
 	"log"
 	"strconv"
 
-	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimal_demo"
-	"github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimal_demo/addservice"
+	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo"
+	"github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo/addservice"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/utils"

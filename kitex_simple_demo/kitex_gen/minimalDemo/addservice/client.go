@@ -4,14 +4,14 @@ package addservice
 
 import (
 	"context"
-	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimal_demo"
+	minimaldemo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	Add(ctx context.Context, req *minimal_demo.AddRequest, callOptions ...callopt.Option) (r *minimal_demo.AddResponse, err error)
+	Add(ctx context.Context, req *minimaldemo.AddRequest, callOptions ...callopt.Option) (r *minimaldemo.AddResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -43,7 +43,7 @@ type kAddServiceClient struct {
 	*kClient
 }
 
-func (p *kAddServiceClient) Add(ctx context.Context, req *minimal_demo.AddRequest, callOptions ...callopt.Option) (r *minimal_demo.AddResponse, err error) {
+func (p *kAddServiceClient) Add(ctx context.Context, req *minimaldemo.AddRequest, callOptions ...callopt.Option) (r *minimaldemo.AddResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.Add(ctx, req)
 }

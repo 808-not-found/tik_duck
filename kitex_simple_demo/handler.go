@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimal_demo"
+	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo"
 )
 
 // AddServiceImpl implements the last service interface defined in the IDL.

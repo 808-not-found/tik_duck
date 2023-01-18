@@ -2,12 +2,12 @@
 package addservice
 
 import (
-	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimal_demo"
+	minimaldemo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo"
 	server "github.com/cloudwego/kitex/server"
 )
 
 // NewServer creates a server.Server with the given handler and options.
-func NewServer(handler minimal_demo.AddService, opts ...server.Option) server.Server {
+func NewServer(handler minimaldemo.AddService, opts ...server.Option) server.Server {
 	var options []server.Option
 
 	options = append(options, opts...)

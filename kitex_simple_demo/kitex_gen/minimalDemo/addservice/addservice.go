@@ -4,7 +4,7 @@ package addservice
 
 import (
 	"context"
-	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimal_demo"
+	minimaldemo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 )
@@ -17,12 +17,12 @@ var addServiceServiceInfo = NewServiceInfo()
 
 func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "AddService"
-	handlerType := (*minimal_demo.AddService)(nil)
+	handlerType := (*minimaldemo.AddService)(nil)
 	methods := map[string]kitex.MethodInfo{
 		"Add": kitex.NewMethodInfo(addHandler, newAddServiceAddArgs, newAddServiceAddResult, false),
 	}
 	extra := map[string]interface{}{
-		"PackageName": "minimal_demo",
+		"PackageName": "minimaldemo",
 	}
 	svcInfo := &kitex.ServiceInfo{
 		ServiceName:     serviceName,
@@ -36,9 +36,9 @@ func NewServiceInfo() *kitex.ServiceInfo {
 }
 
 func addHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*minimal_demo.AddServiceAddArgs)
-	realResult := result.(*minimal_demo.AddServiceAddResult)
-	success, err := handler.(minimal_demo.AddService).Add(ctx, realArg.Req)
+	realArg := arg.(*minimaldemo.AddServiceAddArgs)
+	realResult := result.(*minimaldemo.AddServiceAddResult)
+	success, err := handler.(minimaldemo.AddService).Add(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
@@ -46,11 +46,11 @@ func addHandler(ctx context.Context, handler interface{}, arg, result interface{
 	return nil
 }
 func newAddServiceAddArgs() interface{} {
-	return minimal_demo.NewAddServiceAddArgs()
+	return minimaldemo.NewAddServiceAddArgs()
 }
 
 func newAddServiceAddResult() interface{} {
-	return minimal_demo.NewAddServiceAddResult()
+	return minimaldemo.NewAddServiceAddResult()
 }
 
 type kClient struct {
@@ -63,10 +63,10 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) Add(ctx context.Context, req *minimal_demo.AddRequest) (r *minimal_demo.AddResponse, err error) {
-	var _args minimal_demo.AddServiceAddArgs
+func (p *kClient) Add(ctx context.Context, req *minimaldemo.AddRequest) (r *minimaldemo.AddResponse, err error) {
+	var _args minimaldemo.AddServiceAddArgs
 	_args.Req = req
-	var _result minimal_demo.AddServiceAddResult
+	var _result minimaldemo.AddServiceAddResult
 	if err = p.c.Call(ctx, "Add", &_args, &_result); err != nil {
 		return
 	}

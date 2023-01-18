@@ -1,4 +1,4 @@
-namespace go minimal_demo
+namespace go minimalDemo
 
 struct AddRequest {
   1: i64 a
