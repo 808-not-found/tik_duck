@@ -1,0 +1,23 @@
+name: Test
+
+on:
+  push:
+    branches-ignore:
+      - renovate/**
+    paths:
+      - ".github/workflows/test.yaml"
+      - "go.mod"
+      - "go.sum"
+      - "Taskfile.yaml"
+      - "**.go"
+      - "**.go.json"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/test.yaml"
+      - "go.mod"
+      - "go.sum"
+      - "Taskfile.yaml"
+      - "**.go"
+      - "**.go.json"
