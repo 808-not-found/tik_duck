@@ -21,3 +21,30 @@ on:
       - "Taskfile.yaml"
       - "**.go"
       - "**.go.json"
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: "go.mod"
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - run: go mod tidy
+
+      - name: Run tests
+        run: task coverage
+
+      - uses: codecov/codecov-action@v3
+        with:
+          files: coverage.out 
