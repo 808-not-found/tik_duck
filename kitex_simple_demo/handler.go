@@ -10,7 +10,10 @@ import (
 type AddServiceImpl struct{}
 
 // Add implements the AddServiceImpl interface.
-func (s *AddServiceImpl) Add(ctx context.Context, req *minimal_demo.AddRequest) (resp *minimal_demo.AddResponse, err error) {
+func (s *AddServiceImpl) Add(
+	ctx context.Context,
+	req *minimal_demo.AddRequest,
+) (resp *minimal_demo.AddResponse, err error) {
 	// TODO: Your code here...
 	resp = &minimal_demo.AddResponse{Res: req.A + req.B}
 	return
