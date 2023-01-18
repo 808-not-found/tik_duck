@@ -7,6 +7,7 @@
 - [golangci-lint](https://golangci-lint.run/)，使用 `task lint` 运行 linter。
 - [mockery](https://github.com/vektra/mockery) 生成 mock
 - [kitex](https://www.cloudwego.io/docs/kitex/) 通过 IDL 生成 RPC 代码框架
+- [prettier](https://prettier.io/) 非代码文件使用它进行格式化
 
 ## 调用关系
 
