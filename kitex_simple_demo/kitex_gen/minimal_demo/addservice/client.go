@@ -11,8 +11,7 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	Add(ctx context.Context, Req *minimal_demo.AddRequest, callOptions ...callopt.Option) (r *minimal_demo.AddResponse, err error)
-	Query(ctx context.Context, Req *minimal_demo.QueryRequest, callOptions ...callopt.Option) (r *minimal_demo.QueryResponse, err error)
+	Add(ctx context.Context, req *minimal_demo.AddRequest, callOptions ...callopt.Option) (r *minimal_demo.AddResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -44,12 +43,7 @@ type kAddServiceClient struct {
 	*kClient
 }
 
-func (p *kAddServiceClient) Add(ctx context.Context, Req *minimal_demo.AddRequest, callOptions ...callopt.Option) (r *minimal_demo.AddResponse, err error) {
+func (p *kAddServiceClient) Add(ctx context.Context, req *minimal_demo.AddRequest, callOptions ...callopt.Option) (r *minimal_demo.AddResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.Add(ctx, Req)
-}
-
-func (p *kAddServiceClient) Query(ctx context.Context, Req *minimal_demo.QueryRequest, callOptions ...callopt.Option) (r *minimal_demo.QueryResponse, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.Query(ctx, Req)
+	return p.kClient.Add(ctx, req)
 }

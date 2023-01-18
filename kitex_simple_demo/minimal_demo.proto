@@ -11,15 +11,15 @@ message AddResponse {
     int64 res = 1;
 }
 
-message QueryRequest {
-    int64 id = 1;
-}
+// message QueryRequest {
+//     int64 id = 1;
+// }
 
-message QueryResponse {
-    int64 res = 1;
-}
+// message QueryResponse {
+//     int64 res = 1;
+// }
 
 service AddService {
     rpc Add (AddRequest) returns (AddResponse) {}
-    rpc Query (QueryRequest) returns (QueryResponse) {}
+    // rpc Query (QueryRequest) returns (QueryResponse) {}
 }

@@ -15,9 +15,3 @@ func (s *AddServiceImpl) Add(ctx context.Context, req *minimal_demo.AddRequest) 
 	resp = &minimal_demo.AddResponse{Res: req.A + req.B}
 	return
 }
-
-// Query implements the AddServiceImpl interface.
-func (s *AddServiceImpl) Query(ctx context.Context, req *minimal_demo.QueryRequest) (resp *minimal_demo.QueryResponse, err error) {
-	// TODO: Your code here...
-	return
-}
