@@ -1,7 +1,7 @@
 syntax = "proto3";
-package douyin_user;
+package douyinuser;
 
-option go_package="/douyin_user";
+option go_package="/douyinuser";
 
 
 message douyin_feed_request
@@ -97,6 +97,12 @@ message douyin_publish_list_response
     optional string status_msg = 2; //返回状态描述
     repeated Video video_list = 3; //用户发布的视频列表
 }
+
+message douyin_testinfo
+{
+    string testinfo = 1; //测试信息
+}
+
 service UserService{
 
     //注册
@@ -116,4 +122,7 @@ service UserService{
     
     //视频投稿
     rpc User_Publish_action (douyin_publish_action_request) returns (douyin_publish_action_response) {}
+
+    //rpc测试
+    rpc User_Test (douyin_testinfo) returns (douyin_testinfo) {}
 }

@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
-	"github.com/808-not-found/tik_duck/kitex_gen/douyin_user"
+	douyinuser "github.com/808-not-found/tik_duck/kitex_gen/douyinuser/userservice"
 )
 
 func main() {
-	svr := douyin_user.NewServer(new(UserServiceImpl))
+	svr := douyinuser.NewServer(new(UserServiceImpl))
 
 	err := svr.Run()
 

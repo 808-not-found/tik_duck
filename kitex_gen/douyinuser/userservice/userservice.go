@@ -5,7 +5,7 @@ package userservice
 import (
 	"context"
 	"fmt"
-	douyin_user "github.com/808-not-found/tik_duck/cmd/user/kitex_gen/douyin_user"
+	douyinuser "github.com/808-not-found/tik_duck/kitex_gen/douyinuser"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 	streaming "github.com/cloudwego/kitex/pkg/streaming"
@@ -20,7 +20,7 @@ var userServiceServiceInfo = NewServiceInfo()
 
 func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "UserService"
-	handlerType := (*douyin_user.UserService)(nil)
+	handlerType := (*douyinuser.UserService)(nil)
 	methods := map[string]kitex.MethodInfo{
 		"User_Register":       kitex.NewMethodInfo(user_RegisterHandler, newUser_RegisterArgs, newUser_RegisterResult, false),
 		"User_GetFeed":        kitex.NewMethodInfo(user_GetFeedHandler, newUser_GetFeedArgs, newUser_GetFeedResult, false),
@@ -28,9 +28,10 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"User_Info":           kitex.NewMethodInfo(user_InfoHandler, newUser_InfoArgs, newUser_InfoResult, false),
 		"User_Publish_list":   kitex.NewMethodInfo(user_PublishListHandler, newUser_PublishListArgs, newUser_PublishListResult, false),
 		"User_Publish_action": kitex.NewMethodInfo(user_PublishActionHandler, newUser_PublishActionArgs, newUser_PublishActionResult, false),
+		"User_Test":           kitex.NewMethodInfo(user_TestHandler, newUser_TestArgs, newUser_TestResult, false),
 	}
 	extra := map[string]interface{}{
-		"PackageName": "douyin_user",
+		"PackageName": "douyinuser",
 	}
 	svcInfo := &kitex.ServiceInfo{
 		ServiceName:     serviceName,
@@ -47,11 +48,11 @@ func user_RegisterHandler(ctx context.Context, handler interface{}, arg, result 
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(douyin_user.DouyinUserRegisterRequest)
+		req := new(douyinuser.DouyinUserRegisterRequest)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(douyin_user.UserService).User_Register(ctx, req)
+		resp, err := handler.(douyinuser.UserService).User_Register(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -59,7 +60,7 @@ func user_RegisterHandler(ctx context.Context, handler interface{}, arg, result 
 			return err
 		}
 	case *User_RegisterArgs:
-		success, err := handler.(douyin_user.UserService).User_Register(ctx, s.Req)
+		success, err := handler.(douyinuser.UserService).User_Register(ctx, s.Req)
 		if err != nil {
 			return err
 		}
@@ -77,12 +78,12 @@ func newUser_RegisterResult() interface{} {
 }
 
 type User_RegisterArgs struct {
-	Req *douyin_user.DouyinUserRegisterRequest
+	Req *douyinuser.DouyinUserRegisterRequest
 }
 
 func (p *User_RegisterArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(douyin_user.DouyinUserRegisterRequest)
+		p.Req = new(douyinuser.DouyinUserRegisterRequest)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -109,7 +110,7 @@ func (p *User_RegisterArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_RegisterArgs) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinUserRegisterRequest)
+	msg := new(douyinuser.DouyinUserRegisterRequest)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -117,9 +118,9 @@ func (p *User_RegisterArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var User_RegisterArgs_Req_DEFAULT *douyin_user.DouyinUserRegisterRequest
+var User_RegisterArgs_Req_DEFAULT *douyinuser.DouyinUserRegisterRequest
 
-func (p *User_RegisterArgs) GetReq() *douyin_user.DouyinUserRegisterRequest {
+func (p *User_RegisterArgs) GetReq() *douyinuser.DouyinUserRegisterRequest {
 	if !p.IsSetReq() {
 		return User_RegisterArgs_Req_DEFAULT
 	}
@@ -131,14 +132,14 @@ func (p *User_RegisterArgs) IsSetReq() bool {
 }
 
 type User_RegisterResult struct {
-	Success *douyin_user.DouyinUserRegisterResponse
+	Success *douyinuser.DouyinUserRegisterResponse
 }
 
-var User_RegisterResult_Success_DEFAULT *douyin_user.DouyinUserRegisterResponse
+var User_RegisterResult_Success_DEFAULT *douyinuser.DouyinUserRegisterResponse
 
 func (p *User_RegisterResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(douyin_user.DouyinUserRegisterResponse)
+		p.Success = new(douyinuser.DouyinUserRegisterResponse)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -165,7 +166,7 @@ func (p *User_RegisterResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_RegisterResult) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinUserRegisterResponse)
+	msg := new(douyinuser.DouyinUserRegisterResponse)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -173,7 +174,7 @@ func (p *User_RegisterResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *User_RegisterResult) GetSuccess() *douyin_user.DouyinUserRegisterResponse {
+func (p *User_RegisterResult) GetSuccess() *douyinuser.DouyinUserRegisterResponse {
 	if !p.IsSetSuccess() {
 		return User_RegisterResult_Success_DEFAULT
 	}
@@ -181,7 +182,7 @@ func (p *User_RegisterResult) GetSuccess() *douyin_user.DouyinUserRegisterRespon
 }
 
 func (p *User_RegisterResult) SetSuccess(x interface{}) {
-	p.Success = x.(*douyin_user.DouyinUserRegisterResponse)
+	p.Success = x.(*douyinuser.DouyinUserRegisterResponse)
 }
 
 func (p *User_RegisterResult) IsSetSuccess() bool {
@@ -192,11 +193,11 @@ func user_GetFeedHandler(ctx context.Context, handler interface{}, arg, result i
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(douyin_user.DouyinFeedRequest)
+		req := new(douyinuser.DouyinFeedRequest)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(douyin_user.UserService).User_GetFeed(ctx, req)
+		resp, err := handler.(douyinuser.UserService).User_GetFeed(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -204,7 +205,7 @@ func user_GetFeedHandler(ctx context.Context, handler interface{}, arg, result i
 			return err
 		}
 	case *User_GetFeedArgs:
-		success, err := handler.(douyin_user.UserService).User_GetFeed(ctx, s.Req)
+		success, err := handler.(douyinuser.UserService).User_GetFeed(ctx, s.Req)
 		if err != nil {
 			return err
 		}
@@ -222,12 +223,12 @@ func newUser_GetFeedResult() interface{} {
 }
 
 type User_GetFeedArgs struct {
-	Req *douyin_user.DouyinFeedRequest
+	Req *douyinuser.DouyinFeedRequest
 }
 
 func (p *User_GetFeedArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(douyin_user.DouyinFeedRequest)
+		p.Req = new(douyinuser.DouyinFeedRequest)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -254,7 +255,7 @@ func (p *User_GetFeedArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_GetFeedArgs) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinFeedRequest)
+	msg := new(douyinuser.DouyinFeedRequest)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -262,9 +263,9 @@ func (p *User_GetFeedArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var User_GetFeedArgs_Req_DEFAULT *douyin_user.DouyinFeedRequest
+var User_GetFeedArgs_Req_DEFAULT *douyinuser.DouyinFeedRequest
 
-func (p *User_GetFeedArgs) GetReq() *douyin_user.DouyinFeedRequest {
+func (p *User_GetFeedArgs) GetReq() *douyinuser.DouyinFeedRequest {
 	if !p.IsSetReq() {
 		return User_GetFeedArgs_Req_DEFAULT
 	}
@@ -276,14 +277,14 @@ func (p *User_GetFeedArgs) IsSetReq() bool {
 }
 
 type User_GetFeedResult struct {
-	Success *douyin_user.DouyinFeedResponse
+	Success *douyinuser.DouyinFeedResponse
 }
 
-var User_GetFeedResult_Success_DEFAULT *douyin_user.DouyinFeedResponse
+var User_GetFeedResult_Success_DEFAULT *douyinuser.DouyinFeedResponse
 
 func (p *User_GetFeedResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(douyin_user.DouyinFeedResponse)
+		p.Success = new(douyinuser.DouyinFeedResponse)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -310,7 +311,7 @@ func (p *User_GetFeedResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_GetFeedResult) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinFeedResponse)
+	msg := new(douyinuser.DouyinFeedResponse)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -318,7 +319,7 @@ func (p *User_GetFeedResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *User_GetFeedResult) GetSuccess() *douyin_user.DouyinFeedResponse {
+func (p *User_GetFeedResult) GetSuccess() *douyinuser.DouyinFeedResponse {
 	if !p.IsSetSuccess() {
 		return User_GetFeedResult_Success_DEFAULT
 	}
@@ -326,7 +327,7 @@ func (p *User_GetFeedResult) GetSuccess() *douyin_user.DouyinFeedResponse {
 }
 
 func (p *User_GetFeedResult) SetSuccess(x interface{}) {
-	p.Success = x.(*douyin_user.DouyinFeedResponse)
+	p.Success = x.(*douyinuser.DouyinFeedResponse)
 }
 
 func (p *User_GetFeedResult) IsSetSuccess() bool {
@@ -337,11 +338,11 @@ func user_LoginHandler(ctx context.Context, handler interface{}, arg, result int
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(douyin_user.DouyinUserLoginRequest)
+		req := new(douyinuser.DouyinUserLoginRequest)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(douyin_user.UserService).User_Login(ctx, req)
+		resp, err := handler.(douyinuser.UserService).User_Login(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -349,7 +350,7 @@ func user_LoginHandler(ctx context.Context, handler interface{}, arg, result int
 			return err
 		}
 	case *User_LoginArgs:
-		success, err := handler.(douyin_user.UserService).User_Login(ctx, s.Req)
+		success, err := handler.(douyinuser.UserService).User_Login(ctx, s.Req)
 		if err != nil {
 			return err
 		}
@@ -367,12 +368,12 @@ func newUser_LoginResult() interface{} {
 }
 
 type User_LoginArgs struct {
-	Req *douyin_user.DouyinUserLoginRequest
+	Req *douyinuser.DouyinUserLoginRequest
 }
 
 func (p *User_LoginArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(douyin_user.DouyinUserLoginRequest)
+		p.Req = new(douyinuser.DouyinUserLoginRequest)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -399,7 +400,7 @@ func (p *User_LoginArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_LoginArgs) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinUserLoginRequest)
+	msg := new(douyinuser.DouyinUserLoginRequest)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -407,9 +408,9 @@ func (p *User_LoginArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var User_LoginArgs_Req_DEFAULT *douyin_user.DouyinUserLoginRequest
+var User_LoginArgs_Req_DEFAULT *douyinuser.DouyinUserLoginRequest
 
-func (p *User_LoginArgs) GetReq() *douyin_user.DouyinUserLoginRequest {
+func (p *User_LoginArgs) GetReq() *douyinuser.DouyinUserLoginRequest {
 	if !p.IsSetReq() {
 		return User_LoginArgs_Req_DEFAULT
 	}
@@ -421,14 +422,14 @@ func (p *User_LoginArgs) IsSetReq() bool {
 }
 
 type User_LoginResult struct {
-	Success *douyin_user.DouyinUserLoginResponse
+	Success *douyinuser.DouyinUserLoginResponse
 }
 
-var User_LoginResult_Success_DEFAULT *douyin_user.DouyinUserLoginResponse
+var User_LoginResult_Success_DEFAULT *douyinuser.DouyinUserLoginResponse
 
 func (p *User_LoginResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(douyin_user.DouyinUserLoginResponse)
+		p.Success = new(douyinuser.DouyinUserLoginResponse)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -455,7 +456,7 @@ func (p *User_LoginResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_LoginResult) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinUserLoginResponse)
+	msg := new(douyinuser.DouyinUserLoginResponse)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -463,7 +464,7 @@ func (p *User_LoginResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *User_LoginResult) GetSuccess() *douyin_user.DouyinUserLoginResponse {
+func (p *User_LoginResult) GetSuccess() *douyinuser.DouyinUserLoginResponse {
 	if !p.IsSetSuccess() {
 		return User_LoginResult_Success_DEFAULT
 	}
@@ -471,7 +472,7 @@ func (p *User_LoginResult) GetSuccess() *douyin_user.DouyinUserLoginResponse {
 }
 
 func (p *User_LoginResult) SetSuccess(x interface{}) {
-	p.Success = x.(*douyin_user.DouyinUserLoginResponse)
+	p.Success = x.(*douyinuser.DouyinUserLoginResponse)
 }
 
 func (p *User_LoginResult) IsSetSuccess() bool {
@@ -482,11 +483,11 @@ func user_InfoHandler(ctx context.Context, handler interface{}, arg, result inte
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(douyin_user.DouyinUserInfoRequest)
+		req := new(douyinuser.DouyinUserInfoRequest)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(douyin_user.UserService).User_Info(ctx, req)
+		resp, err := handler.(douyinuser.UserService).User_Info(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -494,7 +495,7 @@ func user_InfoHandler(ctx context.Context, handler interface{}, arg, result inte
 			return err
 		}
 	case *User_InfoArgs:
-		success, err := handler.(douyin_user.UserService).User_Info(ctx, s.Req)
+		success, err := handler.(douyinuser.UserService).User_Info(ctx, s.Req)
 		if err != nil {
 			return err
 		}
@@ -512,12 +513,12 @@ func newUser_InfoResult() interface{} {
 }
 
 type User_InfoArgs struct {
-	Req *douyin_user.DouyinUserInfoRequest
+	Req *douyinuser.DouyinUserInfoRequest
 }
 
 func (p *User_InfoArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(douyin_user.DouyinUserInfoRequest)
+		p.Req = new(douyinuser.DouyinUserInfoRequest)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -544,7 +545,7 @@ func (p *User_InfoArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_InfoArgs) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinUserInfoRequest)
+	msg := new(douyinuser.DouyinUserInfoRequest)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -552,9 +553,9 @@ func (p *User_InfoArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var User_InfoArgs_Req_DEFAULT *douyin_user.DouyinUserInfoRequest
+var User_InfoArgs_Req_DEFAULT *douyinuser.DouyinUserInfoRequest
 
-func (p *User_InfoArgs) GetReq() *douyin_user.DouyinUserInfoRequest {
+func (p *User_InfoArgs) GetReq() *douyinuser.DouyinUserInfoRequest {
 	if !p.IsSetReq() {
 		return User_InfoArgs_Req_DEFAULT
 	}
@@ -566,14 +567,14 @@ func (p *User_InfoArgs) IsSetReq() bool {
 }
 
 type User_InfoResult struct {
-	Success *douyin_user.DouyinUserInfoResponse
+	Success *douyinuser.DouyinUserInfoResponse
 }
 
-var User_InfoResult_Success_DEFAULT *douyin_user.DouyinUserInfoResponse
+var User_InfoResult_Success_DEFAULT *douyinuser.DouyinUserInfoResponse
 
 func (p *User_InfoResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(douyin_user.DouyinUserInfoResponse)
+		p.Success = new(douyinuser.DouyinUserInfoResponse)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -600,7 +601,7 @@ func (p *User_InfoResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_InfoResult) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinUserInfoResponse)
+	msg := new(douyinuser.DouyinUserInfoResponse)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -608,7 +609,7 @@ func (p *User_InfoResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *User_InfoResult) GetSuccess() *douyin_user.DouyinUserInfoResponse {
+func (p *User_InfoResult) GetSuccess() *douyinuser.DouyinUserInfoResponse {
 	if !p.IsSetSuccess() {
 		return User_InfoResult_Success_DEFAULT
 	}
@@ -616,7 +617,7 @@ func (p *User_InfoResult) GetSuccess() *douyin_user.DouyinUserInfoResponse {
 }
 
 func (p *User_InfoResult) SetSuccess(x interface{}) {
-	p.Success = x.(*douyin_user.DouyinUserInfoResponse)
+	p.Success = x.(*douyinuser.DouyinUserInfoResponse)
 }
 
 func (p *User_InfoResult) IsSetSuccess() bool {
@@ -627,11 +628,11 @@ func user_PublishListHandler(ctx context.Context, handler interface{}, arg, resu
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(douyin_user.DouyinPublishListRequest)
+		req := new(douyinuser.DouyinPublishListRequest)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(douyin_user.UserService).User_PublishList(ctx, req)
+		resp, err := handler.(douyinuser.UserService).User_PublishList(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -639,7 +640,7 @@ func user_PublishListHandler(ctx context.Context, handler interface{}, arg, resu
 			return err
 		}
 	case *User_PublishListArgs:
-		success, err := handler.(douyin_user.UserService).User_PublishList(ctx, s.Req)
+		success, err := handler.(douyinuser.UserService).User_PublishList(ctx, s.Req)
 		if err != nil {
 			return err
 		}
@@ -657,12 +658,12 @@ func newUser_PublishListResult() interface{} {
 }
 
 type User_PublishListArgs struct {
-	Req *douyin_user.DouyinPublishListRequest
+	Req *douyinuser.DouyinPublishListRequest
 }
 
 func (p *User_PublishListArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(douyin_user.DouyinPublishListRequest)
+		p.Req = new(douyinuser.DouyinPublishListRequest)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -689,7 +690,7 @@ func (p *User_PublishListArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_PublishListArgs) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinPublishListRequest)
+	msg := new(douyinuser.DouyinPublishListRequest)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -697,9 +698,9 @@ func (p *User_PublishListArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var User_PublishListArgs_Req_DEFAULT *douyin_user.DouyinPublishListRequest
+var User_PublishListArgs_Req_DEFAULT *douyinuser.DouyinPublishListRequest
 
-func (p *User_PublishListArgs) GetReq() *douyin_user.DouyinPublishListRequest {
+func (p *User_PublishListArgs) GetReq() *douyinuser.DouyinPublishListRequest {
 	if !p.IsSetReq() {
 		return User_PublishListArgs_Req_DEFAULT
 	}
@@ -711,14 +712,14 @@ func (p *User_PublishListArgs) IsSetReq() bool {
 }
 
 type User_PublishListResult struct {
-	Success *douyin_user.DouyinPublishListResponse
+	Success *douyinuser.DouyinPublishListResponse
 }
 
-var User_PublishListResult_Success_DEFAULT *douyin_user.DouyinPublishListResponse
+var User_PublishListResult_Success_DEFAULT *douyinuser.DouyinPublishListResponse
 
 func (p *User_PublishListResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(douyin_user.DouyinPublishListResponse)
+		p.Success = new(douyinuser.DouyinPublishListResponse)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -745,7 +746,7 @@ func (p *User_PublishListResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_PublishListResult) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinPublishListResponse)
+	msg := new(douyinuser.DouyinPublishListResponse)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -753,7 +754,7 @@ func (p *User_PublishListResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *User_PublishListResult) GetSuccess() *douyin_user.DouyinPublishListResponse {
+func (p *User_PublishListResult) GetSuccess() *douyinuser.DouyinPublishListResponse {
 	if !p.IsSetSuccess() {
 		return User_PublishListResult_Success_DEFAULT
 	}
@@ -761,7 +762,7 @@ func (p *User_PublishListResult) GetSuccess() *douyin_user.DouyinPublishListResp
 }
 
 func (p *User_PublishListResult) SetSuccess(x interface{}) {
-	p.Success = x.(*douyin_user.DouyinPublishListResponse)
+	p.Success = x.(*douyinuser.DouyinPublishListResponse)
 }
 
 func (p *User_PublishListResult) IsSetSuccess() bool {
@@ -772,11 +773,11 @@ func user_PublishActionHandler(ctx context.Context, handler interface{}, arg, re
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(douyin_user.DouyinPublishActionRequest)
+		req := new(douyinuser.DouyinPublishActionRequest)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(douyin_user.UserService).User_PublishAction(ctx, req)
+		resp, err := handler.(douyinuser.UserService).User_PublishAction(ctx, req)
 		if err != nil {
 			return err
 		}
@@ -784,7 +785,7 @@ func user_PublishActionHandler(ctx context.Context, handler interface{}, arg, re
 			return err
 		}
 	case *User_PublishActionArgs:
-		success, err := handler.(douyin_user.UserService).User_PublishAction(ctx, s.Req)
+		success, err := handler.(douyinuser.UserService).User_PublishAction(ctx, s.Req)
 		if err != nil {
 			return err
 		}
@@ -802,12 +803,12 @@ func newUser_PublishActionResult() interface{} {
 }
 
 type User_PublishActionArgs struct {
-	Req *douyin_user.DouyinPublishActionRequest
+	Req *douyinuser.DouyinPublishActionRequest
 }
 
 func (p *User_PublishActionArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(douyin_user.DouyinPublishActionRequest)
+		p.Req = new(douyinuser.DouyinPublishActionRequest)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -834,7 +835,7 @@ func (p *User_PublishActionArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_PublishActionArgs) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinPublishActionRequest)
+	msg := new(douyinuser.DouyinPublishActionRequest)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -842,9 +843,9 @@ func (p *User_PublishActionArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var User_PublishActionArgs_Req_DEFAULT *douyin_user.DouyinPublishActionRequest
+var User_PublishActionArgs_Req_DEFAULT *douyinuser.DouyinPublishActionRequest
 
-func (p *User_PublishActionArgs) GetReq() *douyin_user.DouyinPublishActionRequest {
+func (p *User_PublishActionArgs) GetReq() *douyinuser.DouyinPublishActionRequest {
 	if !p.IsSetReq() {
 		return User_PublishActionArgs_Req_DEFAULT
 	}
@@ -856,14 +857,14 @@ func (p *User_PublishActionArgs) IsSetReq() bool {
 }
 
 type User_PublishActionResult struct {
-	Success *douyin_user.DouyinPublishActionResponse
+	Success *douyinuser.DouyinPublishActionResponse
 }
 
-var User_PublishActionResult_Success_DEFAULT *douyin_user.DouyinPublishActionResponse
+var User_PublishActionResult_Success_DEFAULT *douyinuser.DouyinPublishActionResponse
 
 func (p *User_PublishActionResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(douyin_user.DouyinPublishActionResponse)
+		p.Success = new(douyinuser.DouyinPublishActionResponse)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -890,7 +891,7 @@ func (p *User_PublishActionResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *User_PublishActionResult) Unmarshal(in []byte) error {
-	msg := new(douyin_user.DouyinPublishActionResponse)
+	msg := new(douyinuser.DouyinPublishActionResponse)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -898,7 +899,7 @@ func (p *User_PublishActionResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *User_PublishActionResult) GetSuccess() *douyin_user.DouyinPublishActionResponse {
+func (p *User_PublishActionResult) GetSuccess() *douyinuser.DouyinPublishActionResponse {
 	if !p.IsSetSuccess() {
 		return User_PublishActionResult_Success_DEFAULT
 	}
@@ -906,10 +907,155 @@ func (p *User_PublishActionResult) GetSuccess() *douyin_user.DouyinPublishAction
 }
 
 func (p *User_PublishActionResult) SetSuccess(x interface{}) {
-	p.Success = x.(*douyin_user.DouyinPublishActionResponse)
+	p.Success = x.(*douyinuser.DouyinPublishActionResponse)
 }
 
 func (p *User_PublishActionResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func user_TestHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(douyinuser.DouyinTestinfo)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(douyinuser.UserService).User_Test(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *User_TestArgs:
+		success, err := handler.(douyinuser.UserService).User_Test(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*User_TestResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUser_TestArgs() interface{} {
+	return &User_TestArgs{}
+}
+
+func newUser_TestResult() interface{} {
+	return &User_TestResult{}
+}
+
+type User_TestArgs struct {
+	Req *douyinuser.DouyinTestinfo
+}
+
+func (p *User_TestArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(douyinuser.DouyinTestinfo)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *User_TestArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *User_TestArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *User_TestArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in User_TestArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *User_TestArgs) Unmarshal(in []byte) error {
+	msg := new(douyinuser.DouyinTestinfo)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var User_TestArgs_Req_DEFAULT *douyinuser.DouyinTestinfo
+
+func (p *User_TestArgs) GetReq() *douyinuser.DouyinTestinfo {
+	if !p.IsSetReq() {
+		return User_TestArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *User_TestArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type User_TestResult struct {
+	Success *douyinuser.DouyinTestinfo
+}
+
+var User_TestResult_Success_DEFAULT *douyinuser.DouyinTestinfo
+
+func (p *User_TestResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(douyinuser.DouyinTestinfo)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *User_TestResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *User_TestResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *User_TestResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in User_TestResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *User_TestResult) Unmarshal(in []byte) error {
+	msg := new(douyinuser.DouyinTestinfo)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *User_TestResult) GetSuccess() *douyinuser.DouyinTestinfo {
+	if !p.IsSetSuccess() {
+		return User_TestResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *User_TestResult) SetSuccess(x interface{}) {
+	p.Success = x.(*douyinuser.DouyinTestinfo)
+}
+
+func (p *User_TestResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
@@ -923,7 +1069,7 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) User_Register(ctx context.Context, Req *douyin_user.DouyinUserRegisterRequest) (r *douyin_user.DouyinUserRegisterResponse, err error) {
+func (p *kClient) User_Register(ctx context.Context, Req *douyinuser.DouyinUserRegisterRequest) (r *douyinuser.DouyinUserRegisterResponse, err error) {
 	var _args User_RegisterArgs
 	_args.Req = Req
 	var _result User_RegisterResult
@@ -933,7 +1079,7 @@ func (p *kClient) User_Register(ctx context.Context, Req *douyin_user.DouyinUser
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) User_GetFeed(ctx context.Context, Req *douyin_user.DouyinFeedRequest) (r *douyin_user.DouyinFeedResponse, err error) {
+func (p *kClient) User_GetFeed(ctx context.Context, Req *douyinuser.DouyinFeedRequest) (r *douyinuser.DouyinFeedResponse, err error) {
 	var _args User_GetFeedArgs
 	_args.Req = Req
 	var _result User_GetFeedResult
@@ -943,7 +1089,7 @@ func (p *kClient) User_GetFeed(ctx context.Context, Req *douyin_user.DouyinFeedR
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) User_Login(ctx context.Context, Req *douyin_user.DouyinUserLoginRequest) (r *douyin_user.DouyinUserLoginResponse, err error) {
+func (p *kClient) User_Login(ctx context.Context, Req *douyinuser.DouyinUserLoginRequest) (r *douyinuser.DouyinUserLoginResponse, err error) {
 	var _args User_LoginArgs
 	_args.Req = Req
 	var _result User_LoginResult
@@ -953,7 +1099,7 @@ func (p *kClient) User_Login(ctx context.Context, Req *douyin_user.DouyinUserLog
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) User_Info(ctx context.Context, Req *douyin_user.DouyinUserInfoRequest) (r *douyin_user.DouyinUserInfoResponse, err error) {
+func (p *kClient) User_Info(ctx context.Context, Req *douyinuser.DouyinUserInfoRequest) (r *douyinuser.DouyinUserInfoResponse, err error) {
 	var _args User_InfoArgs
 	_args.Req = Req
 	var _result User_InfoResult
@@ -963,7 +1109,7 @@ func (p *kClient) User_Info(ctx context.Context, Req *douyin_user.DouyinUserInfo
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) User_PublishList(ctx context.Context, Req *douyin_user.DouyinPublishListRequest) (r *douyin_user.DouyinPublishListResponse, err error) {
+func (p *kClient) User_PublishList(ctx context.Context, Req *douyinuser.DouyinPublishListRequest) (r *douyinuser.DouyinPublishListResponse, err error) {
 	var _args User_PublishListArgs
 	_args.Req = Req
 	var _result User_PublishListResult
@@ -973,11 +1119,21 @@ func (p *kClient) User_PublishList(ctx context.Context, Req *douyin_user.DouyinP
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) User_PublishAction(ctx context.Context, Req *douyin_user.DouyinPublishActionRequest) (r *douyin_user.DouyinPublishActionResponse, err error) {
+func (p *kClient) User_PublishAction(ctx context.Context, Req *douyinuser.DouyinPublishActionRequest) (r *douyinuser.DouyinPublishActionResponse, err error) {
 	var _args User_PublishActionArgs
 	_args.Req = Req
 	var _result User_PublishActionResult
 	if err = p.c.Call(ctx, "User_Publish_action", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) User_Test(ctx context.Context, Req *douyinuser.DouyinTestinfo) (r *douyinuser.DouyinTestinfo, err error) {
+	var _args User_TestArgs
+	_args.Req = Req
+	var _result User_TestResult
+	if err = p.c.Call(ctx, "User_Test", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

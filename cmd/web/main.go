@@ -2,9 +2,12 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strconv"
 
+	douyin_user "github.com/808-not-found/tik_duck/kitex_gen/douyinuser"
+	"github.com/808-not-found/tik_duck/kitex_gen/douyinuser/userservice"
 	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo"
 	"github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo/addservice"
 	"github.com/cloudwego/hertz/pkg/app"
@@ -15,9 +18,13 @@ import (
 )
 
 func main() {
-	client, err := addservice.NewClient("hello", client.WithHostPorts("0.0.0.0:8888"))
-	if err != nil {
-		log.Fatal(err)
+	client1, err1 := addservice.NewClient("Hello",client.WithHostPorts("0.0.0.0:9999"))
+	if err1 != nil {
+		log.Fatal(err1)
+	}
+	client2, err2 := userservice.NewClient("Hello",client.WithHostPorts("0.0.0.0:8888"))
+	if err2 != nil {
+		log.Fatal(err2)
 	}
 	h := server.Default(server.WithHostPorts("127.0.0.1:8080"))
 
@@ -29,11 +36,21 @@ func main() {
 		a, _ := strconv.ParseInt(ctx.Query("a"), 10, 64)
 		b, _ := strconv.ParseInt(ctx.Query("b"), 10, 64)
 		req := &minimal_demo.AddRequest{A: a, B: b}
-		resp, err := client.Add(context.Background(), req)
+		resp, err := client1.Add(context.Background(), req)
 		if err != nil {
 			log.Fatal(err)
 		}
 		ctx.JSON(consts.StatusOK, utils.H{"res": resp.GetRes()})
+	})
+	h.GET("/user_test",func(c context.Context, ctx *app.RequestContext) {
+		req := &douyin_user.DouyinTestinfo{Testinfo:"这是一条测试rpc的test信息"}
+		resp, err :=client2.User_Test(context.Background(),req)
+		//fmt.Println(req,"****************************",resp)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(req,"pass")
+		ctx.JSON(consts.StatusOK, utils.H{"res": resp.Testinfo})
 	})
 	h.Spin()
 }
