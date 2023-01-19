@@ -3,14 +3,14 @@ package main
 import (
 	// "context"
 	// "log"
-	// "strconv"
+	// "strconv".
 
 	// user "github.com/808-not-found/tik_duck/kitex_gen/user"
 	// "github.com/808-not-found/tik_duck/kitex_gen/user/userservice"
 	// minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo"
 	// "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo/addservice"
 	// "github.com/cloudwego/hertz/pkg/app"
-	// "github.com/cloudwego/hertz/pkg/app/server"
+	// "github.com/cloudwego/hertz/pkg/app/server".
 	"github.com/808-not-found/tik_duck/cmd/web/service"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
@@ -20,7 +20,7 @@ func main() {
 	h := server.Default(server.WithHostPorts("127.0.0.1:8080"))
 	InitRouter(h)
 	h.Spin()
-	//old
+	// old
 	//demo申请的客户端
 	// client0, err0 := addservice.NewClient("Hello",client.WithHostPorts("0.0.0.0:8888"))
 	// if err0 != nil {
@@ -58,5 +58,3 @@ func main() {
 	// })
 	// h.Spin()
 }
-
-
