@@ -21,7 +21,7 @@ func main() {
 	InitRouter(h)
 	h.Spin()
 	// old
-	//demo申请的客户端
+	// demo申请的客户端
 	// client0, err0 := addservice.NewClient("Hello",client.WithHostPorts("0.0.0.0:8888"))
 	// if err0 != nil {
 	// 	log.Fatal(err0)
