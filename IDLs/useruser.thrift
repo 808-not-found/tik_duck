@@ -46,12 +46,12 @@ struct RelationFriendListResponse {
 
 service UserUserService {
     // 关系操作
-    RelationActionResponse UserRelationAction(RelationActionRequest Req)
+    RelationActionResponse UserRelationAction(1:RelationActionRequest Req)
     // 关注列表
-    RelationFollowListResponse UserRelationFollowList(RelationFollowListRequest Req)
+    RelationFollowListResponse UserRelationFollowList(1:RelationFollowListRequest Req)
     // 粉丝列表
-    RelationFollowerListResponse UserRelationFollowerList(RelationFollowerListRequest Req)
+    RelationFollowerListResponse UserRelationFollowerList(1:RelationFollowerListRequest Req)
     // 好友列表
-    RelationFriendListResponse UserRelationFriendList(RelationFriendListRequest Req)
+    RelationFriendListResponse UserRelationFriendList(1:RelationFriendListRequest Req)
     // 消息操作暂且不实现
 }
