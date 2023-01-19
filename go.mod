@@ -1,6 +1,6 @@
 module github.com/808-not-found/tik_duck
 
-go 1.19
+go 1.18
 
 require (
 	github.com/apache/thrift v0.13.0
