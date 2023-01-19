@@ -1,7 +1,6 @@
 package main
 
 import (
-
 	"github.com/808-not-found/tik_duck/cmd/web/service"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
