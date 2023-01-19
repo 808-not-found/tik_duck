@@ -21,6 +21,11 @@ on:
       - "go.sum"
       - ".golangci.yaml"
       - ".github/workflows/lint.yaml"
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches:
+      - master
+  
 
 jobs:
   lint:
