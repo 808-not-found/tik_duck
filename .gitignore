@@ -14,6 +14,7 @@ coverage.out
 bin/
 dist/
 tmp/
+public/
 
 # bug of idea openapi plugin, see https://youtrack.jetbrains.com/issue/IDEA-285879
 /gen/
