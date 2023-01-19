@@ -4,9 +4,9 @@
 
 ## 项目工具依赖
 
-- [Go 1.19](https://go.dev/)
+- [Go 1.18](https://go.dev/)
 - [go-task](https://taskfile.dev/installation/)，使用 `task` 查看所有的构建目标。（部分 linux 发行版安装完成之后的命令是 `go-task`）
-- [golangci-lint](https://golangci-lint.run/)，使用 `task lint` 运行 linter。
+- [golangci-lint](https://golangci-lint.run/)，使用 `task lint` 运行 linter
 - [mockery](https://github.com/vektra/mockery) 生成 mock
 - [kitex](https://www.cloudwego.io/docs/kitex/) 通过 IDL 生成 RPC 代码框架
 - [prettier](https://prettier.io/) 非代码文件使用它进行格式化
@@ -28,14 +28,18 @@
 ├── IDLs                    // 存放 IDL 文件
 ├── README.md               // 本文档
 ├── Taskfile.yaml           // 自动命令
-├── user                    // 基础接口
-├── user_platform           // 互动接口
-├── user_user               // 社交接口
-└── util                    // 通用工具函数
+├── cmd                     
+│   ├── user                // 用户接口
+│   ├── userplat            // 互动接口
+│   ├── useruser            // 社交接口
+│   └── web                 // 网关
+├── kitex_gen               // IDL 生成代码
+└── pkg                     // 通用代码，如 logger
+    └── initsql
 ```
 
 ## 数据图关系图
 
-> 初始化 sql 语句在 `/util/initsql` 下
+> 初始化 sql 语句在 `/pkg/initsql` 下
 
 ![database.png](./database.png)
