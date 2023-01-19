@@ -1,12 +1,11 @@
 module github.com/808-not-found/tik_duck
 
-go 1.19
+go 1.18
 
 require (
 	github.com/apache/thrift v0.13.0
-	github.com/cloudwego/hertz v0.5.0
+	github.com/cloudwego/hertz v0.5.1
 	github.com/cloudwego/kitex v0.4.4
-	github.com/magiconair/properties v1.8.7
 	github.com/stretchr/testify v1.7.0
 )
 
