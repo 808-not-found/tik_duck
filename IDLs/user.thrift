@@ -1,4 +1,4 @@
-namespace * user;
+namespace * user
 
 struct FeedRequest {
     1: optional i64 LatestTime //可选参数，限制返回视频的最新投稿时间戳，精确到秒，不填表示当前时间
@@ -75,7 +75,9 @@ struct PublishListResponse {
     2: optional string StatusMsg //返回状态描述
     3: list<Video> VideoList //用户发布的视频列表
 }
-
+struct Testinfo {
+    1: string testinfo //测试信息
+}
 service UserService {
     //注册
     UserRegisterResponse UserRegister (1: UserRegisterRequest Req)
@@ -84,9 +86,11 @@ service UserService {
     //登录
     UserLoginResponse UserLogin (1: UserLoginRequest Req)
     //获取用户信息
-    UserInfoResponse UserInfo (1: UserInfoRequest Req)
+    UserResponse UserInfo (1: UserRequest Req)
     //获取用户发布作品
     PublishListResponse UserPublishList (1: PublishListRequest Req)
     //视频投稿
     PublishActionResponse UserPublishAction (1: PublishActionRequest Req)
+    //rpc测试
+    Testinfo UserTest (1: Testinfo Req)
 }
