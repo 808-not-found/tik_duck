@@ -21,10 +21,6 @@ on:
       - "Taskfile.yaml"
       - "**.go"
       - "**.go.json"
-  pull_request_target:
-    types: [opened, synchronize, reopened]
-    branches:
-      - master
 
 jobs:
   test:
@@ -46,8 +42,11 @@ jobs:
 
       - run: go mod tidy
 
-      - name: Run tests
-        run: task coverage
+      - name: Start server and run tests
+        run: |
+          go run ./cmd/web/ &
+          sleep 10 && 
+          task coverage
 
       - uses: codecov/codecov-action@v3
         with:

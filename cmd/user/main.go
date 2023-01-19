@@ -6,7 +6,7 @@ import (
 
 	server "github.com/cloudwego/kitex/server"
 
-	user "github.com/808-not-found/tik_duck/IDLs/kitex_gen/user/userservice"
+	user "github.com/808-not-found/tik_duck/kitex_gen/user/userservice"
 )
 
 func main() {
