@@ -1,5 +1,9 @@
 syntax = "proto3";
-package douyin.user;
+package douyin_user;
+
+option go_package="/douyin_user";
+
+
 message douyin_feed_request
 {
     optional int64 latest_time = 1; //可选参数，限制返回视频的最新投稿时间戳，精确到秒，不填表示当前时间
@@ -58,12 +62,12 @@ message douyin_user_login_response
     string token = 4; //用户鉴权token
 }
 
-message douyin_user_request
+message douyin_user_info_request
 {
     int64 user_id = 1; //用户id
     string token = 2; //用户鉴权token
 }
-message douyin_user_response
+message douyin_user_info_response
 {
     int32 status_code = 1; //状态码，0-成功，其他值-失败
     optional string status_msg = 2; //返回状态描述
@@ -92,4 +96,24 @@ message douyin_publish_list_response
     int32 status_code = 1; //状态码，0-成功，其他值-失败
     optional string status_msg = 2; //返回状态描述
     repeated Video video_list = 3; //用户发布的视频列表
+}
+service UserService{
+
+    //注册
+    rpc User_Register (douyin_user_register_request) returns (douyin_user_register_response) {}
+    
+    //获取视频流
+    rpc User_GetFeed (douyin_feed_request) returns (douyin_feed_response) {}
+    
+    //登录
+    rpc User_Login (douyin_user_login_request) returns (douyin_user_login_response) {}
+    
+    //获取用户信息
+    rpc User_Info (douyin_user_info_request) returns (douyin_user_info_response) {}
+    
+    //获取用户发布作品
+    rpc User_Publish_list (douyin_publish_list_request) returns (douyin_publish_list_response) {}
+    
+    //视频投稿
+    rpc User_Publish_action (douyin_publish_action_request) returns (douyin_publish_action_response) {}
 }
