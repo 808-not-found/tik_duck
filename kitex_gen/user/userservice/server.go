@@ -2,12 +2,12 @@
 package userservice
 
 import (
-	douyinuser "github.com/808-not-found/tik_duck/kitex_gen/douyinuser"
+	user "github.com/808-not-found/tik_duck/kitex_gen/user"
 	server "github.com/cloudwego/kitex/server"
 )
 
 // NewServer creates a server.Server with the given handler and options.
-func NewServer(handler douyinuser.UserService, opts ...server.Option) server.Server {
+func NewServer(handler user.UserService, opts ...server.Option) server.Server {
 	var options []server.Option
 
 	options = append(options, opts...)

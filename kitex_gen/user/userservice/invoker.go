@@ -3,12 +3,12 @@
 package userservice
 
 import (
-	douyinuser "github.com/808-not-found/tik_duck/kitex_gen/douyinuser"
+	user "github.com/808-not-found/tik_duck/kitex_gen/user"
 	server "github.com/cloudwego/kitex/server"
 )
 
 // NewInvoker creates a server.Invoker with the given handler and options.
-func NewInvoker(handler douyinuser.UserService, opts ...server.Option) server.Invoker {
+func NewInvoker(handler user.UserService, opts ...server.Option) server.Invoker {
 	var options []server.Option
 
 	options = append(options, opts...)

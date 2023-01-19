@@ -5,8 +5,8 @@ import (
 	"log"
 	"strconv"
 
-	douyin_user "github.com/808-not-found/tik_duck/kitex_gen/douyinuser"
-	"github.com/808-not-found/tik_duck/kitex_gen/douyinuser/userservice"
+	user "github.com/808-not-found/tik_duck/kitex_gen/user"
+	"github.com/808-not-found/tik_duck/kitex_gen/user/userservice"
 	minimal_demo "github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo"
 	"github.com/808-not-found/tik_duck/kitex_simple_demo/kitex_gen/minimalDemo/addservice"
 	"github.com/cloudwego/hertz/pkg/app"
@@ -45,8 +45,8 @@ func main() {
 		ctx.JSON(consts.StatusOK, utils.H{"res": resp.GetRes()})
 	})
 	h.GET("/user_test",func(c context.Context, ctx *app.RequestContext) {
-		req := &douyin_user.DouyinTestinfo{Testinfo:"这是一条测试rpc的test信息"}
-		resp, err :=client1.User_Test(context.Background(),req)
+		req := &user.Testinfo{Testinfo:"这是一条测试rpc的test信息"}
+		resp, err :=client1.UserTest(context.Background(),req)
 		if err != nil {
 			log.Fatal(err)
 		}

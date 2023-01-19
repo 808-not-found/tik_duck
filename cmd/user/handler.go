@@ -3,51 +3,51 @@ package main
 import (
 	"context"
 
-	douyinuser "github.com/808-not-found/tik_duck/kitex_gen/douyinuser"
+	user "github.com/808-not-found/tik_duck/kitex_gen/user"
 )
 
 // UserServiceImpl implements the last service interface defined in the IDL.
 type UserServiceImpl struct{}
 
-// User_Register implements the UserServiceImpl interface.
-func (s *UserServiceImpl) User_Register(ctx context.Context, req *douyinuser.DouyinUserRegisterRequest) (resp *douyinuser.DouyinUserRegisterResponse, err error) {
+// UserRegister implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UserRegister(ctx context.Context, req *user.UserRegisterRequest) (resp *user.UserRegisterResponse, err error) {
 	// TODO: Your code here...
 	return
 }
 
-// User_GetFeed implements the UserServiceImpl interface.
-func (s *UserServiceImpl) User_GetFeed(ctx context.Context, req *douyinuser.DouyinFeedRequest) (resp *douyinuser.DouyinFeedResponse, err error) {
+// UserGetFeed implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UserGetFeed(ctx context.Context, req *user.FeedRequest) (resp *user.FeedResponse, err error) {
 	// TODO: Your code here...
 	return
 }
 
-// User_Login implements the UserServiceImpl interface.
-func (s *UserServiceImpl) User_Login(ctx context.Context, req *douyinuser.DouyinUserLoginRequest) (resp *douyinuser.DouyinUserLoginResponse, err error) {
+// UserLogin implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UserLogin(ctx context.Context, req *user.UserLoginRequest) (resp *user.UserLoginResponse, err error) {
 	// TODO: Your code here...
 	return
 }
 
-// User_Info implements the UserServiceImpl interface.
-func (s *UserServiceImpl) User_Info(ctx context.Context, req *douyinuser.DouyinUserInfoRequest) (resp *douyinuser.DouyinUserInfoResponse, err error) {
+// UserInfo implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UserInfo(ctx context.Context, req *user.UserRequest) (resp *user.UserResponse, err error) {
 	// TODO: Your code here...
 	return
 }
 
-// User_PublishList implements the UserServiceImpl interface.
-func (s *UserServiceImpl) User_PublishList(ctx context.Context, req *douyinuser.DouyinPublishListRequest) (resp *douyinuser.DouyinPublishListResponse, err error) {
+// UserPublishList implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UserPublishList(ctx context.Context, req *user.PublishListRequest) (resp *user.PublishListResponse, err error) {
 	// TODO: Your code here...
 	return
 }
 
-// User_PublishAction implements the UserServiceImpl interface.
-func (s *UserServiceImpl) User_PublishAction(ctx context.Context, req *douyinuser.DouyinPublishActionRequest) (resp *douyinuser.DouyinPublishActionResponse, err error) {
+// UserPublishAction implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UserPublishAction(ctx context.Context, req *user.PublishActionRequest) (resp *user.PublishActionResponse, err error) {
 	// TODO: Your code here...
 	return
 }
 
-// User_Test implements the UserServiceImpl interface.
-func (s *UserServiceImpl) User_Test(ctx context.Context, req *douyinuser.DouyinTestinfo) (resp *douyinuser.DouyinTestinfo, err error) {
+// UserTest implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UserTest(ctx context.Context, req *user.Testinfo) (resp *user.Testinfo, err error) {
 	// TODO: Your code here...
-	resp = &douyinuser.DouyinTestinfo{Testinfo: req.Testinfo}
+	resp = &user.Testinfo{Testinfo: req.Testinfo}
 	return
 }
