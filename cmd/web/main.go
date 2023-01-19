@@ -7,7 +7,7 @@ import (
 
 func main() {
 	go service.RunMessageServer()
-	h := server.Default(server.WithHostPorts("127.0.0.1:8080"))
+	h := server.Default(server.WithHostPorts("0.0.0.0:8080"), server.WithMaxRequestBodySize(20<<20)) //nolint:all
 	InitRouter(h)
 	h.Spin()
 }

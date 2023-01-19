@@ -8,7 +8,7 @@
 - [go-task](https://taskfile.dev/installation/)，使用 `task` 查看所有的构建目标。（部分 linux 发行版安装完成之后的命令是 `go-task`）
 - [golangci-lint](https://golangci-lint.run/)，使用 `task lint` 运行 linter
 - [mockery](https://github.com/vektra/mockery) 生成 mock
-- [kitex](https://www.cloudwego.io/docs/kitex/) 通过 IDL 生成RPC代码框架
+- [kitex](https://www.cloudwego.io/docs/kitex/) 通过 IDL 生成 RPC 代码框架
 - [prettier](https://prettier.io/) 非代码文件使用它进行格式化
 
 ## 调用关系
