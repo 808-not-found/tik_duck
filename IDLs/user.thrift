@@ -13,8 +13,8 @@ struct FeedResponse {
 struct Video {
     1: i64 Id //视频唯一标识
     2: User Author //视频作者信息
-    3: string PlayUrl //视频播放地址
-    4: string CoverUrl //视频封面地址
+    3: string PlayPath //视频播放路径
+    4: string CoverPath //视频封面路径
     5: i64 FavoriteCount //视频的点赞总数
     6: i64 CommentCount //视频的评论总数
     7: bool IsFavorite // true- 已点赞，false-未点赞
@@ -58,8 +58,9 @@ struct UserResponse {
 }
 struct PublishActionRequest {
     1: string Token //用户鉴权token
-    2: Bytes Data //视频数据
-    3: string Title //视频标题
+    2: string FilePath  // 视频路径
+    3: string CoverPath // 封面路径
+    4: string Title //视频标题
 }
 struct PublishActionResponse {
     1: i32 StatusCode //状态码，0-成功，其他值-失败
