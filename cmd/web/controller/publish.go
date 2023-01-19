@@ -3,7 +3,6 @@ package controller
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"path/filepath"
 
@@ -42,7 +41,6 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 			StatusCode: 1,
 			StatusMsg:  err.Error(),
 		})
-		log.Fatalln(err.Error())
 		return
 	}
 
