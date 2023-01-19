@@ -74,3 +74,18 @@ struct DouyinPublishListResponse {
     2: string StatusMsg //返回状态描述
     3: list<Video> VideoList //用户发布的视频列表
 }
+
+service UserService {
+    //注册
+    DouyinUserRegisterResponse UserRegister (1: DouyinUserRegisterRequest Req)
+    //获取视频流
+    DouyinFeedResponse UserGetFeed (1: DouyinFeedRequest Req)
+    //登录
+    DouyinUserLoginResponse UserLogin (1: DouyinUserLoginRequest Req)
+    //获取用户信息
+    DouyinUserInfoResponse UserInfo (1: DouyinUserInfoRequest Req)
+    //获取用户发布作品
+    DouyinPublishListResponse UserPublishList (1: DouyinPublishListRequest Req)
+    //视频投稿
+    DouyinPublishActionResponse UserPublishAction (1: DouyinPublishActionRequest Req)
+}
