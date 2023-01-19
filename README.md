@@ -28,7 +28,7 @@
 ├── IDLs                    // 存放 IDL 文件
 ├── README.md               // 本文档
 ├── Taskfile.yaml           // 自动命令
-├── cmd                     
+├── cmd
 │   ├── user                // 用户接口
 │   ├── userplat            // 互动接口
 │   ├── useruser            // 社交接口
