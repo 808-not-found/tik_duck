@@ -277,7 +277,19 @@ issues:
       linters: [gochecknoglobals, gochecknoinits, wrapcheck]
 
     - path: '.*_test\.go'
-      linters: [gocritic, gochecknoglobals, godot, nosnakecase, funlen]
+      linters:
+        [
+          gocritic,
+          gochecknoglobals,
+          godot,
+          nosnakecase,
+          funlen,
+          paralleltest,
+          gosec,
+          thelper,
+          errorlint,
+          errchkjson,
+        ]
 
     - source: "var .* = pool.New"
       linters: [gochecknoglobals]
