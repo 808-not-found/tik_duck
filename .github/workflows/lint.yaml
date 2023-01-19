@@ -25,7 +25,6 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - master
-  
 
 jobs:
   lint:
