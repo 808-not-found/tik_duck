@@ -2,45 +2,45 @@ package db
 
 import (
 	"context"
-	"net/http"
 	"time"
 
+	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	"github.com/808-not-found/tik_duck/pkg/consts"
 	"gorm.io/gorm"
 )
 
 type Video struct {
 	gorm.Model
-	ID   int64 `json:"id"`
-	User User  `json:"author"`
-	// PlayPath      string `json:play_path`
-	// CoverPath     string `json:cover_path`
-	// FavoriteCount int64  `json:favorite_count`
-	// CommentCount  int64  `json:comment_count`
-	// IsFavorite    bool   `json:is_favorite`
-	// Title         string `json:title`
+	ID            int64     `json:"id"`
+	Author        user.User `json:"author"`
+	PlayPath      string
+	CoverPath     string
+	FavoriteCount int64
+	CommentCount  int64
+	IsFavorite    bool
+	Title         string
+	PublishTime   int64 `json:"publish_time"`
 }
 
 func (v *Video) TableName() string {
 	return consts.VideoTableName
 }
 
-func UserGetFeed(ctx context.Context, latestTime int64, token string) (int32, string, []*Video, int64) {
-	var statusCode int32
-	var statusMsg string
-	var videoList []*Video
-	var nextTime int64
-	const num = 30
-
+func UserGetFeed(ctx context.Context, latestTime int64, token string) ([]*Video, int64, error) {
 	if latestTime == 0 {
 		latestTime = time.Now().Unix()
 	}
-	conn := DB.WithContext(ctx).Model(&Video{}).Limit(num).Where("publish_time <= ?", latestTime)
+	const limit = 30
 
-	statusCode = http.StatusAccepted
-	statusMsg = "success"
-	conn.Pluck("file_path", &videoList)
-	conn.Order("publish_time").First(&Video{}).Pluck("publish_time", &nextTime)
+	// 获取视频列表
+	var videoList []*Video
+	conn := DB.WithContext(ctx).Model(&Video{}).Limit(limit).Where("publish_time <= ?", latestTime).Find(&videoList)
+	if err := conn.Error; err != nil {
+		return nil, 0, err
+	}
 
-	return statusCode, statusMsg, videoList, nextTime
+	// 获取当前列表的最早的视频
+	var firstVideo Video
+	conn.Order("publish_time").First(&firstVideo)
+	return videoList, firstVideo.PublishTime, nil
 }
