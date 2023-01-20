@@ -23,8 +23,9 @@ func (s *UserServiceImpl) UserGetFeed(
 	ctx context.Context,
 	req *user.FeedRequest,
 ) (resp *user.FeedResponse, err error) {
-	// TODO: Your code here...
-	return
+	resp = new(user.FeedResponse)
+
+	return resp, nil
 }
 
 // UserLogin implements the UserServiceImpl interface.

@@ -17,7 +17,7 @@ func Init() {
 	var err error
 	gormlogrus := logger.New(
 		logrus.NewWriter(),
-		loggor.Config{
+		logger.Config{
 			SlowThreshold: time.Millisecond,
 			Colorful:      false,
 			LogLevel:      logger.Info,
