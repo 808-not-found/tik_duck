@@ -2,14 +2,14 @@
 
 package consts
 
-const {
+const (
 	CommentTableName = "comment"
-	FollowTableName = "follow"
-	LikeTableName = "like"
+	FollowTableName  = "follow"
+	LikeTableName    = "like"
 	MessageTableName = "message"
-	UserTableName = "user"
-	VideoTableName = "video"
-	
+	UserTableName    = "user"
+	VideoTableName   = "video"
+
 	MySQLDefaultDSN = "tik_duck:duck@tcp(localhost:9910)/tik_duck"
-	TCP = "tcp"
-}
+	TCP             = "tcp"
+)
