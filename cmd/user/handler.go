@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 
+	userservice "github.com/808-not-found/tik_duck/cmd/user/userService"
 	user "github.com/808-not-found/tik_duck/kitex_gen/user"
 )
 
@@ -18,6 +19,7 @@ func (s *UserServiceImpl) UserRegister(
 	return
 }
 
+// 视频流
 // UserGetFeed implements the UserServiceImpl interface.
 func (s *UserServiceImpl) UserGetFeed(
 	ctx context.Context,
@@ -25,6 +27,19 @@ func (s *UserServiceImpl) UserGetFeed(
 ) (resp *user.FeedResponse, err error) {
 	resp = new(user.FeedResponse)
 
+	statusCode, statusMsg, videoList, nextTime, err := userservice.UserGetFeedService(ctx, req)
+
+	// if err = req.IsValid(); err != nil {
+	// 	resp.StatusCode = 1001
+	// 	return resp, nil
+	// }
+	if err != nil {
+		return resp, err
+	}
+	resp.StatusCode = statusCode
+	resp.StatusMsg = &statusMsg
+	resp.VideoList = videoList
+	resp.NextTime = &nextTime
 	return resp, nil
 }
 
