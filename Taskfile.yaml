@@ -24,8 +24,8 @@ tasks:
     silent: true
     desc: Run tests without coverage report.
     cmds:
-      - go test -gcflags="all=-l -N" -v ./... 
-  
+      - go test -gcflags="all=-l -N" -v ./...
+
   coverage:
     desc: Run tests with coverage report, used in CI.
     cmds:
