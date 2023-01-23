@@ -21,7 +21,7 @@ func (u *User) TableName() string {
 	return consts.UserTableName
 }
 
-// 传入批量用户id 返回用户信息
+// 传入批量用户id 返回用户信息.
 func MGetUsers(ctx context.Context, userIds []int64) ([]*User, error) {
 	res := make([]*User, 0)
 	if len(userIds) == 0 {
@@ -35,13 +35,13 @@ func MGetUsers(ctx context.Context, userIds []int64) ([]*User, error) {
 }
 
 // CreateUser create user info.
-// 传入用户信息内容 在数据库创建用户
+// 传入用户信息内容 在数据库创建用户.
 func CreateUser(ctx context.Context, users []*User) error {
 	return DB.WithContext(ctx).Create(users).Error
 }
 
 // QueryUser query list of user info.
-// 传入用户名称 查找用户信息
+// 传入用户名称 查找用户信息.
 func QueryUser(ctx context.Context, userName string) ([]*User, error) {
 	res := make([]*User, 0)
 	if err := DB.WithContext(ctx).Where("username = ?", userName).Find(&res).Error; err != nil {

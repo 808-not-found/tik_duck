@@ -11,5 +11,4 @@ func main() {
 
 	InitRouter(h)
 	h.Spin()
-
 }
