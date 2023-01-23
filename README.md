@@ -11,6 +11,15 @@
 - [kitex](https://www.cloudwego.io/docs/kitex/) 通过 IDL 生成 RPC 代码框架
 - [prettier](https://prettier.io/) 非代码文件使用它进行格式化
 
+## 开发
+
+每次 commit 之前请确保以下命令正常运行：
+- `task lint` 对代码进行静态检查
+- `task test` 进行单元测试
+- `task prettier` 对非代码文件进行格式化
+
+`docker-compose up -d` 启动 MySQL 和 Etcd 服务。
+
 ## 调用关系
 
 > 当前为第一版，接口说明请参考飞书内部文档\
