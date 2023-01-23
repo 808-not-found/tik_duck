@@ -4,22 +4,32 @@ import (
 	"context"
 	"time"
 
-	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	"github.com/808-not-found/tik_duck/pkg/consts"
 	"gorm.io/gorm"
 )
 
+//	type Video struct {
+//			gorm.Model
+//			ID            int64     `json:"id"`
+//			Author        user.User `json:"author"`
+//			PlayPath      string
+//			CoverPath     string
+//			FavoriteCount int64
+//			CommentCount  int64
+//			IsFavorite    bool
+//			Title         string
+//			PublishTime   int64 `json:"publish_time"`
+//		}
 type Video struct {
 	gorm.Model
-	ID            int64     `json:"id"`
-	Author        user.User `json:"author"`
-	PlayPath      string
-	CoverPath     string
-	FavoriteCount int64
-	CommentCount  int64
-	IsFavorite    bool
-	Title         string
-	PublishTime   int64 `json:"publish_time"`
+	ID            int       `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	AuthorID      int       `gorm:"column:author_id;NOT NULL"`
+	PublishTime   time.Time `gorm:"column:publish_time;default:CURRENT_TIMESTAMP;NOT NULL"`
+	FilePath      string    `gorm:"column:file_path;NOT NULL"`
+	CoverPath     string    `gorm:"column:cover_path;NOT NULL"`
+	FavoriteCount int       `gorm:"column:favorite_count;default:0"`
+	CommentCount  int       `gorm:"column:comment_count;default:0"`
+	Title         string    `gorm:"column:title;NOT NULL"`
 }
 
 func (v *Video) TableName() string {

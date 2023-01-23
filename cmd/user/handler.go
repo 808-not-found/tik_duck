@@ -15,7 +15,8 @@ func (s *UserServiceImpl) UserRegister(
 	ctx context.Context,
 	req *user.UserRegisterRequest,
 ) (resp *user.UserRegisterResponse, err error) {
-	// TODO: Your code here...
+	//resp = new(user.FeedResponse)
+
 	return
 }
 
