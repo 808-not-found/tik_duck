@@ -6,6 +6,7 @@ require (
 	github.com/apache/thrift v0.13.0
 	github.com/cloudwego/hertz v0.5.1
 	github.com/cloudwego/kitex v0.4.4
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/kitex-contrib/registry-etcd v0.0.0-20221223084757-0d49e7162359
 	github.com/stretchr/testify v1.8.1
 	gorm.io/driver/mysql v1.4.5
