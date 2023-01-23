@@ -15,7 +15,8 @@ func (s *UserServiceImpl) UserRegister(
 	ctx context.Context,
 	req *user.UserRegisterRequest,
 ) (resp *user.UserRegisterResponse, err error) {
-	// TODO: Your code here...
+	// resp = new(user.FeedResponse)
+
 	return
 }
 
@@ -27,8 +28,8 @@ func (s *UserServiceImpl) UserGetFeed(
 ) (resp *user.FeedResponse, err error) {
 	resp = new(user.FeedResponse)
 
-	statusCode, statusMsg, videoList, nextTime, err := userservice.UserGetFeedService(ctx, req)
-
+	// statusCode, statusMsg, videoList, nextTime, err := userservice.UserGetFeedService(ctx, req)
+	statusCode, statusMsg, videoList, _, err := userservice.UserGetFeedService(ctx, req)
 	// if err = req.IsValid(); err != nil {
 	// 	resp.StatusCode = 1001
 	// 	return resp, nil
@@ -39,7 +40,8 @@ func (s *UserServiceImpl) UserGetFeed(
 	resp.StatusCode = statusCode
 	resp.StatusMsg = &statusMsg
 	resp.VideoList = videoList
-	resp.NextTime = &nextTime
+
+	// resp.NextTime = &nextTime
 	return resp, nil
 }
 
