@@ -74,7 +74,7 @@ require (
 	gorm.io/driver/sqlite v1.4.4 // indirect
 )
 
-replace (
-	go.etcd.io/etcd/client/v3 => go.etcd.io/etcd/client/v3 v3.5.7
-	go.etcd.io/etcd/server/v3 => go.etcd.io/etcd/server/v3 v3.5.7
+replace ( // nolint:gomoddirectives
+	go.etcd.io/etcd/client/v3 => go.etcd.io/etcd/client/v3 v3.5.7 // nolint:gomoddirectives
+	go.etcd.io/etcd/server/v3 => go.etcd.io/etcd/server/v3 v3.5.7 // nolint:gomoddirectives
 )

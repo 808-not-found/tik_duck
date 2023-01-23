@@ -9,7 +9,7 @@ import (
 func main() {
 	go service.RunMessageServer()
 	h := server.Default(server.WithHostPorts("0.0.0.0:8080"),
-		server.WithMaxRequestBodySize(consts.HttpMaxBodySize))
+		server.WithMaxRequestBodySize(consts.HTTPMaxBodySize))
 
 	InitRouter(h)
 	h.Spin()

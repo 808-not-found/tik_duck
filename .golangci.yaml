@@ -230,6 +230,7 @@ linters-settings:
 linters:
   enable-all: true
   disable:
+    - gomoddirectives # resolve conflict
     - nolintlint
     - ireturn
     - contextcheck

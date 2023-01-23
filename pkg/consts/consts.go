@@ -16,5 +16,5 @@ const (
 
 	MySQLDefaultDSN = "tik_duck:duck@tcp(localhost:9910)/tik_duck"
 	TCP             = "tcp"
-	HttpMaxBodySize = 1024 * 1024 * 1024 // 1GB
+	HTTPMaxBodySize = 1024 * 1024 * 1024 // 1GB
 )

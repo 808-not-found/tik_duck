@@ -14,6 +14,7 @@
 ## 开发
 
 每次 commit 之前请确保以下命令正常运行：
+
 - `task lint` 对代码进行静态检查
 - `task test` 进行单元测试
 - `task prettier` 对非代码文件进行格式化
