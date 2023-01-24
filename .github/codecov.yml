@@ -2,7 +2,7 @@ ignore:
   - "**/mock_*.go"
   - "**/*_test.go"
   - "**/*.gen.go"
-  - "**/kitex_gen/"
+  - "kitex_gen/"
 comment: # this is a top-level key
   layout: "reach, diff, flags, files"
   behavior: default
