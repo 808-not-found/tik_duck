@@ -20,7 +20,6 @@ import (
 //1010: 基础接口-获取用户信息-被调查用户不存在
 //1011: 基础接口-获取用户信息-数据库到rpc 转换失败
 
-
 // jwt错误.
 var errJWTParseTokenRun = errors.New("jwt：不合法的token")
 
