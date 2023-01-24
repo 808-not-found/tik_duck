@@ -21,7 +21,7 @@ func (m *Follow) TableName() string {
 	return "follow"
 }
 
-func DBUserToRPCUser(m *db.User, fromID int64, toid int64) (*user.User, error) {
+func DBUserToRPCUser(m *db.User, fromID int64) (*user.User, error) {
 	if m == nil {
 		return nil, allerrors.ErrDBUserToRPCUserVali()
 	}
@@ -29,7 +29,7 @@ func DBUserToRPCUser(m *db.User, fromID int64, toid int64) (*user.User, error) {
 	var reserr error
 	f := Follow{}
 
-	err := db.DB.Where("FromUserID = ? AND ToUserID = ?", fromID, toid).Find(&f).Error
+	err := db.DB.Where("FromUserID = ? AND ToUserID = ?", fromID, m.ID).Find(&f).Error
 	switch {
 	case errors.Is(err, gorm.ErrRecordNotFound):
 		IsFollowShip = false
@@ -47,11 +47,11 @@ func DBUserToRPCUser(m *db.User, fromID int64, toid int64) (*user.User, error) {
 	}, reserr
 }
 
-func DBUsersToRPCUsers(ms []*db.User, fromID int64, toids []int64) ([]*user.User, error) {
+func DBUsersToRPCUsers(ms []*db.User, fromID int64) ([]*user.User, error) {
 	users := make([]*user.User, 0)
 	var reserr error
-	for i, m := range ms {
-		userinfo, err := DBUserToRPCUser(m, fromID, toids[i])
+	for _, m := range ms {
+		userinfo, err := DBUserToRPCUser(m, fromID)
 		if err != nil {
 			reserr = err
 		}
