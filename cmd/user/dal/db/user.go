@@ -50,15 +50,16 @@ func GetUser(ctx context.Context, userID int64) (User, error) {
 func CreateUsers(ctx context.Context, users []*User) error {
 	return DB.WithContext(ctx).Create(users).Error
 }
+
 func CreateUser(ctx context.Context, user *User) error {
 	return DB.WithContext(ctx).Create(user).Error
 }
 
 // 传入用户名称 查找用户信息.
-func QueryUser(ctx context.Context, userName string) ([]*User, error) {
-	res := make([]*User, 0)
+func QueryUser(ctx context.Context, userName string) (*User, error) {
+	res := User{}
 	if err := DB.WithContext(ctx).Where("username = ?", userName).Find(&res).Error; err != nil {
 		return nil, err
 	}
-	return res, nil
+	return &res, nil
 }

@@ -19,6 +19,7 @@ func (s *UserServiceImpl) UserRegister(
 	// 2: optional string StatusMsg //返回状态描述
 	// 3: i64 UserId //用户id
 	// 4: string Token //用户鉴权token
+
 	// 生成回应结构体
 	resp = new(user.UserRegisterResponse)
 	// 校验参数
@@ -64,13 +65,35 @@ func (s *UserServiceImpl) UserGetFeed(
 	return resp, nil
 }
 
-// UserLogin implements the UserServiceImpl interface.
+// User登陆.
 func (s *UserServiceImpl) UserLogin(
 	ctx context.Context,
 	req *user.UserLoginRequest,
 ) (resp *user.UserLoginResponse, err error) {
 	// TODO: Your code here...
-	return
+	// 1: i32 StatusCode //状态码，0-成功，其他值失败
+	// 2: optional string StatusMsg //返回状态描述
+	// 3: i64 UserId //用户id
+	// 4: string Token //用户鉴权token
+
+	// 生成回应结构体
+	resp = new(user.UserLoginResponse)
+	// 校验参数
+	err = req.IsValid()
+	if err != nil {
+		return resp, err
+	}
+	// 实现逻辑
+	StatusCode, StatusMsg, UserID, Token, err := userservice.UserLoginService(ctx, req)
+	if err != nil {
+		return resp, err
+	}
+	resp.StatusCode = StatusCode
+	resp.StatusMsg = &StatusMsg
+	resp.UserId = UserID
+	resp.Token = Token
+	// 返回结构体
+	return resp, nil
 }
 
 // UserInfo implements the UserServiceImpl interface.
