@@ -5,7 +5,6 @@ import (
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
 )
 
-// 传入的是 数据库的原始值 这里返回的应该是封装好了 用于 rpc 的值.
 func Video(m *db.Video) *user.Video {
 	if m == nil {
 		return nil

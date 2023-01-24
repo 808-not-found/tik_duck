@@ -5,13 +5,11 @@ import (
 	"time"
 
 	"github.com/808-not-found/tik_duck/pkg/consts"
+	"gorm.io/gorm"
 )
 
 type User struct {
-<<<<<<< HEAD
 	gorm.Model
-=======
->>>>>>> upstream/master
 	ID            int       `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	CreateTime    time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	Name          string    `gorm:"column:name;unique;NOT NULL"`
