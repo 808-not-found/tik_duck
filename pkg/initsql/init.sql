@@ -1,52 +1,52 @@
 CREATE TABLE `video` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `author_id` int NOT NULL,
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
+  `author_id` bigint NOT NULL,
   `publish_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `file_path` varchar(32) NOT NULL,
   `cover_path` varchar(32) NOT NULL,
-  `favorite_count` int DEFAULT 0,
-  `comment_count` int DEFAULT 0,
+  `favorite_count` bigint DEFAULT 0,
+  `comment_count` bigint DEFAULT 0,
   `title` varchar(20) NOT NULL
 );
 
 CREATE TABLE `user` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `name` varchar(20) UNIQUE NOT NULL,
   `password` char(32) NOT NULL,
   `salt` char(32) NOT NULL,
-  `follow_count` int NOT NULL DEFAULT 0,
-  `follower_count` int NOT NULL DEFAULT 0
+  `follow_count` bigint NOT NULL DEFAULT 0,
+  `follower_count` bigint NOT NULL DEFAULT 0
 );
 
 CREATE TABLE `follow` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `follow_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `from_user_id` int NOT NULL,
-  `to_user_id` int NOT NULL
+  `from_user_id` bigint NOT NULL,
+  `to_user_id` bigint NOT NULL
 );
 
 CREATE TABLE `comment` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `comment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` int NOT NULL,
-  `video_id` int NOT NULL,
+  `user_id` bigint NOT NULL,
+  `video_id` bigint NOT NULL,
   `content` text NOT NULL
 );
 
 CREATE TABLE `message` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `message_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `from_user_id` int NOT NULL,
-  `to_user_id` int NOT NULL,
+  `from_user_id` bigint NOT NULL,
+  `to_user_id` bigint NOT NULL,
   `content` text NOT NULL
 );
 
 CREATE TABLE `like` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `like_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` int NOT NULL,
-  `video_id` int NOT NULL
+  `user_id` bigint NOT NULL,
+  `video_id` bigint NOT NULL
 );
 
 CREATE INDEX `video_index_0` ON `video` (`id`);
