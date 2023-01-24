@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/808-not-found/tik_duck/pkg/consts"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -35,7 +36,6 @@ func MGetUsers(ctx context.Context, userIds []int64) ([]*User, error) {
 	return res, nil
 }
 
-
 // 传入用户id 返回用户信息.
 func GetUser(ctx context.Context, userID int64) (User, error) {
 	res := User{}
@@ -53,7 +53,6 @@ func CreateUsers(ctx context.Context, users []*User) error {
 func CreateUser(ctx context.Context, user *User) error {
 	return DB.WithContext(ctx).Create(user).Error
 }
-
 
 // 传入用户名称 查找用户信息.
 func QueryUser(ctx context.Context, userName string) ([]*User, error) {

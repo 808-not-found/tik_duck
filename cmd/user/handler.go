@@ -40,7 +40,6 @@ func (s *UserServiceImpl) UserRegister(
 	return resp, nil
 }
 
-
 // 视频流
 // UserGetFeed implements the UserServiceImpl interface.
 func (s *UserServiceImpl) UserGetFeed(
