@@ -10,14 +10,34 @@ import (
 // UserServiceImpl implements the last service interface defined in the IDL.
 type UserServiceImpl struct{}
 
-// UserRegister implements the UserServiceImpl interface.
+// User注册.
 func (s *UserServiceImpl) UserRegister(
 	ctx context.Context,
 	req *user.UserRegisterRequest,
 ) (resp *user.UserRegisterResponse, err error) {
-	// resp = new(user.FeedResponse)
-
-	return
+	// 1: i32 StatusCode //状态码，0-成功，其他值失败
+	// 2: optional string StatusMsg //返回状态描述
+	// 3: i64 UserId //用户id
+	// 4: string Token //用户鉴权token
+	// 生成回应结构体
+	resp = new(user.UserRegisterResponse)
+	// 校验参数
+	err = req.IsValid()
+	if err != nil {
+		return resp, err
+	}
+	// 实现逻辑
+	// StatusCode, StatusMsg, UserId, Token, err := userservice.UserRegisterService(ctx, req)
+	StatusCode, StatusMsg, _, Token, err := userservice.UserRegisterService(ctx, req)
+	if err != nil {
+		return resp, err
+	}
+	resp.StatusCode = StatusCode
+	resp.StatusMsg = &StatusMsg
+	// resp.UserId = UserId //ToDo: 等待类型更新
+	resp.Token = Token
+	// 返回结构体
+	return resp, nil
 }
 
 // 视频流
