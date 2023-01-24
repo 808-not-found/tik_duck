@@ -27,14 +27,13 @@ func (s *UserServiceImpl) UserRegister(
 		return resp, err
 	}
 	// 实现逻辑
-	// StatusCode, StatusMsg, UserId, Token, err := userservice.UserRegisterService(ctx, req)
-	StatusCode, StatusMsg, _, Token, err := userservice.UserRegisterService(ctx, req)
+	StatusCode, StatusMsg, UserID, Token, err := userservice.UserRegisterService(ctx, req)
 	if err != nil {
 		return resp, err
 	}
 	resp.StatusCode = StatusCode
 	resp.StatusMsg = &StatusMsg
-	// resp.UserId = UserId //ToDo: 等待类型更新
+	resp.UserId = UserID
 	resp.Token = Token
 	// 返回结构体
 	return resp, nil

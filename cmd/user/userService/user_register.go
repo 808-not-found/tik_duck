@@ -7,6 +7,7 @@ import (
 	"github.com/808-not-found/tik_duck/cmd/user/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	"github.com/808-not-found/tik_duck/pkg/jwt"
+	"github.com/808-not-found/tik_duck/pkg/salt"
 )
 
 // ToDo:
@@ -17,13 +18,15 @@ func NewUserRegisterService(ctx context.Context) context.Context {
 	return ctx
 }
 
-func UserRegisterService(ctx context.Context, req *user.UserRegisterRequest) (int32, string, int, string, error) {
+func UserRegisterService(ctx context.Context, req *user.UserRegisterRequest) (int32, string, int64, string, error) {
 	var statusCode int32
+	NewSalt := salt.GenerateRandomSalt(salt.DefaultsaltSize)
+	NewPassWord := salt.HashPassword(req.Password, NewSalt)
 	userinfo := db.User{
 		CreateTime:    time.Now(),
 		Name:          req.Username,
-		Password:      req.Password,
-		Salt:          "", // ToDo : 加盐
+		Password:      NewPassWord,
+		Salt:          NewSalt, // ToDo : 加盐
 		FollowCount:   0,
 		FollowerCount: 0,
 	}

@@ -10,13 +10,13 @@ import (
 
 type User struct {
 	gorm.Model
-	ID            int       `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	ID            int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	CreateTime    time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	Name          string    `gorm:"column:name;unique;NOT NULL"`
 	Password      string    `gorm:"column:password;NOT NULL"`
 	Salt          string    `gorm:"column:salt;NOT NULL"`
-	FollowCount   int       `gorm:"column:follow_count;default:0;NOT NULL"`
-	FollowerCount int       `gorm:"column:follower_count;default:0;NOT NULL"`
+	FollowCount   int64     `gorm:"column:follow_count;default:0;NOT NULL"`
+	FollowerCount int64     `gorm:"column:follower_count;default:0;NOT NULL"`
 }
 
 func (u *User) TableName() string {
