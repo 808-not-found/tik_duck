@@ -10,13 +10,13 @@ import (
 
 type User struct {
 	gorm.Model
-	ID            int       `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	ID            int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	CreateTime    time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	Name          string    `gorm:"column:name;unique;NOT NULL"`
 	Password      string    `gorm:"column:password;NOT NULL"`
 	Salt          string    `gorm:"column:salt;NOT NULL"`
-	FollowCount   int       `gorm:"column:follow_count;default:0;NOT NULL"`
-	FollowerCount int       `gorm:"column:follower_count;default:0;NOT NULL"`
+	FollowCount   int64     `gorm:"column:follow_count;default:0;NOT NULL"`
+	FollowerCount int64     `gorm:"column:follower_count;default:0;NOT NULL"`
 }
 
 func (u *User) TableName() string {
@@ -50,15 +50,16 @@ func GetUser(ctx context.Context, userID int64) (User, error) {
 func CreateUsers(ctx context.Context, users []*User) error {
 	return DB.WithContext(ctx).Create(users).Error
 }
+
 func CreateUser(ctx context.Context, user *User) error {
 	return DB.WithContext(ctx).Create(user).Error
 }
 
 // 传入用户名称 查找用户信息.
-func QueryUser(ctx context.Context, userName string) ([]*User, error) {
-	res := make([]*User, 0)
+func QueryUser(ctx context.Context, userName string) (*User, error) {
+	res := User{}
 	if err := DB.WithContext(ctx).Where("username = ?", userName).Find(&res).Error; err != nil {
 		return nil, err
 	}
-	return res, nil
+	return &res, nil
 }
