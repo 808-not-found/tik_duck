@@ -1,3 +1,4 @@
+// 本文件放置jwt的配置信息
 package jwt
 
 import (
@@ -17,5 +18,3 @@ type MyClaims struct {
 	Username string `json:"username"`
 	jwt.StandardClaims
 }
-
-// 本文件放置jwt的配置信息

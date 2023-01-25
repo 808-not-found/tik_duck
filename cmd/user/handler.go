@@ -102,7 +102,26 @@ func (s *UserServiceImpl) UserInfo(
 	req *user.UserRequest,
 ) (resp *user.UserResponse, err error) {
 	// TODO: Your code here...
-	return
+	// 1: i32 StatusCode //状态码，0-成功，其他值-失败
+	// 2: optional string StatusMsg //返回状态描述
+	// 3: User User //用户信息
+	// 生成回应结构体
+	resp = new(user.UserResponse)
+	// 校验参数
+	err = req.IsValid()
+	if err != nil {
+		return resp, err
+	}
+	// 实现逻辑
+	StatusCode, StatusMsg, UserInfo, err := userservice.UserInfoService(ctx, req)
+	if err != nil {
+		return resp, err
+	}
+	resp.StatusCode = StatusCode
+	resp.StatusMsg = &StatusMsg
+	resp.User = UserInfo
+	// 返回结构体
+	return resp, nil
 }
 
 // UserPublishList implements the UserServiceImpl interface.
