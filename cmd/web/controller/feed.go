@@ -2,9 +2,11 @@ package controller
 
 import (
 	"context"
+	"log"
 	"net/http"
-	"time"
 
+	"github.com/808-not-found/tik_duck/cmd/web/rpc"
+	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -14,11 +16,16 @@ type FeedResponse struct {
 	NextTime  int64   `json:"next_time,omitempty"`
 }
 
-// Feed same demo video list for every request.
 func Feed(ctx context.Context, c *app.RequestContext) {
-	c.JSON(http.StatusOK, FeedResponse{
-		Response:  Response{StatusCode: 0},
-		VideoList: DemoVideos,
-		NextTime:  time.Now().Unix(),
-	})
+	var feedReq user.FeedRequest
+	if err := c.Bind(&feedReq); err != nil {
+		log.Fatalln(err)
+		return
+	}
+	resp, err := rpc.GetFeed(context.Background(), &feedReq)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	c.JSON(http.StatusOK, resp)
 }
