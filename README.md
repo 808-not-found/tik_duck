@@ -21,6 +21,20 @@
 
 `docker-compose up -d` 启动 MySQL 和 Etcd 服务。
 
+## 远程开发
+
+本项目已经配置好 gitpod 与 github codespaces 的初始化文件，在你 fork 本仓库后，可以根据性能需求和连接稳定性选择其中之一进行远程开发，不需要在本地额外配置开发环境。**这两个远程开发平台有时间限制，退出页面之前请确保关闭工作区！**
+
+在进入开发环境之后，请更改 go 插件设置中 `Lint Tool` 的选项为 `golangci-lint`。
+
+### gitpod
+
+使用 github 账号登录进 [gitpod](https://gitpod.io/workspaces) 后，点击 `New Workspace` **输入你 fork 的仓库地址**。
+
+### github codespaces
+
+在**你 fork 的仓库**中，点击右上角 `Code`，切换到 Codespaces 即可创建。
+
 ## 调用关系
 
 > 当前为第一版，接口说明请参考飞书内部文档\

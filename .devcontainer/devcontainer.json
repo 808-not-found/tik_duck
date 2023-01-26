@@ -1,33 +1,30 @@
 {
-    "name": "tik_duck env",
+  "name": "tik_duck env",
 
-    // Configure tool-specific properties.
-    "customizations": {
-        // Configure properties specific to VS Code.
-        "vscode": {
-            "settings": {},
-            "extensions": [
-				"golang.Go",
-				"usernamehw.errorlens"
-			]
-        }
-    },
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      "settings": {},
+      "extensions": ["golang.Go", "usernamehw.errorlens"]
+    }
+  },
 
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [3000],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [3000],
 
-    // Use 'portsAttributes' to set default properties for specific forwarded ports.
-    // More info: https://containers.dev/implementors/json_reference/#port-attributes
-    // "portsAttributes": {
-    // 	"9000": {
-    // 		"label": "Hello Remote World",
-    // 		"onAutoForward": "notify"
-    // 	}
-    // },
+  // Use 'portsAttributes' to set default properties for specific forwarded ports.
+  // More info: https://containers.dev/implementors/json_reference/#port-attributes
+  // "portsAttributes": {
+  // 	"9000": {
+  // 		"label": "Hello Remote World",
+  // 		"onAutoForward": "notify"
+  // 	}
+  // },
 
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "go install github.com/go-task/task/v3/cmd/task@latest && go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 && go install github.com/vektra/mockery/v2@latest && go install github.com/cloudwego/kitex/tool/cmd/kitex@latest && go install github.com/cloudwego/thriftgo@latest && npm install prettier -g"
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "go install github.com/go-task/task/v3/cmd/task@latest && go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 && go install github.com/vektra/mockery/v2@latest && go install github.com/cloudwego/kitex/tool/cmd/kitex@latest && go install github.com/cloudwego/thriftgo@latest && npm install prettier -g"
 
-    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "root"
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
 }
