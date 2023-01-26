@@ -2,9 +2,12 @@ package controller
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"sync/atomic"
 
+	"github.com/808-not-found/tik_duck/cmd/web/rpc"
+	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -82,16 +85,15 @@ func Login(ctx context.Context, c *app.RequestContext) {
 }
 
 func UserInfo(ctx context.Context, c *app.RequestContext) {
-	token := c.Query("token")
-
-	if user, exist := usersLoginInfo[token]; exist {
-		c.JSON(http.StatusOK, UserResponse{
-			Response: Response{StatusCode: 0},
-			User:     user,
-		})
-	} else {
-		c.JSON(http.StatusOK, UserResponse{
-			Response: Response{StatusCode: 1, StatusMsg: "User doesn't exist"},
-		})
+	var userInfoReq user.UserRequest
+	if err := c.Bind(&userInfoReq); err != nil {
+		log.Fatalln(err)
+		return
 	}
+	resp, err := rpc.UserInfo(context.Background(), &userInfoReq)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	c.JSON(http.StatusOK, resp)
 }
