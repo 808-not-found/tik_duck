@@ -7,8 +7,9 @@
         "vscode": {
             "settings": {},
             "extensions": [
-                "streetsidesoftware.code-spell-checker"
-            ]
+				"golang.Go",
+				"usernamehw.errorlens"
+			]
         }
     },
 
