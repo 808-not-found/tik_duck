@@ -1,22 +1,15 @@
 package jwt
 
 import (
-	"errors"
-	"fmt"
 	"time"
 
+	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
 const TokenExpireDuration = JWTOverTime
 
 var MySecret = []byte(JWTSecret) //nolint:gochecknoglobals
-
-var ErrTokenInfo = errors.New("invalid token")
-
-func ErrParseToken() error {
-	return fmt.Errorf("Err_UserRegisterRequest %w", ErrTokenInfo)
-}
 
 // 生成jwt //目前是只进行记录用户名.
 func GenToken(username string) (string, error) {
@@ -46,5 +39,5 @@ func ParseToken(tokenString string) (*MyClaims, error) {
 	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid {
 		return claims, nil
 	}
-	return nil, ErrParseToken()
+	return nil, allerrors.ErrJWTParseTokenRun()
 }
