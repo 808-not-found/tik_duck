@@ -2,66 +2,56 @@ package pack
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/808-not-found/tik_duck/cmd/user/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
+	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
 	"gorm.io/gorm"
 )
 
-var ErrSQL = errors.New("查询失败")
-var ErrVali = errors.New("传入查询对象为空")
-
-func ErrDBUserToRPCUserSQL() error {
-	return fmt.Errorf("ErrDBUserToRpcUser %w", ErrSQL)
-}
-func ErrDBUserToRPCUserVali() error {
-	return fmt.Errorf("ErrDBUserToRpcUser %w", ErrVali)
-}
-
 type Follow struct {
-	ID         int       `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	ID         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	FollowTime time.Time `gorm:"column:follow_time;default:CURRENT_TIMESTAMP;NOT NULL"`
-	FromUserID int       `gorm:"column:from_user_id;NOT NULL"`
-	ToUserID   int       `gorm:"column:to_user_id;NOT NULL"`
+	FromUserID int64     `gorm:"column:from_user_id;NOT NULL"`
+	ToUserID   int64     `gorm:"column:to_user_id;NOT NULL"`
 }
 
 func (m *Follow) TableName() string {
 	return "follow"
 }
 
-func DBUserToRPCUser(m *db.User, fromID int64, toid int64) (*user.User, error) {
+func DBUserToRPCUser(m *db.User, fromID int64) (*user.User, error) {
 	if m == nil {
-		return nil, ErrDBUserToRPCUserVali()
+		return nil, allerrors.ErrDBUserToRPCUserVali()
 	}
 	var IsFollowShip bool
 	var reserr error
 	f := Follow{}
 
-	err := db.DB.Where("FromUserID = ? AND ToUserID = ?", fromID, toid).Find(&f).Error
+	err := db.DB.Where("FromUserID = ? AND ToUserID = ?", fromID, m.ID).Find(&f).Error
 	switch {
 	case errors.Is(err, gorm.ErrRecordNotFound):
 		IsFollowShip = false
 	case err != nil:
-		return nil, ErrDBUserToRPCUserSQL()
+		return nil, allerrors.ErrDBUserToRPCUserRun()
 	default:
 		IsFollowShip = true
 	}
 	return &user.User{
-		//Id:   int64(m.ID),//ToDo:等待类型更新
-		Name: m.Name,
-		// FollowCount:   int64(m.FollowCount),//ToDo:等待类型更新
-		// FollowerCount: int64(m.FollowerCount),//ToDo:等待类型更新
-		IsFollow: IsFollowShip,
+		Id:            m.ID,
+		Name:          m.Name,
+		FollowCount:   &m.FollowCount,
+		FollowerCount: &m.FollowerCount,
+		IsFollow:      IsFollowShip,
 	}, reserr
 }
 
-func DBUsersToRPCUsers(ms []*db.User, fromID int64, toids []int64) ([]*user.User, error) {
+func DBUsersToRPCUsers(ms []*db.User, fromID int64) ([]*user.User, error) {
 	users := make([]*user.User, 0)
 	var reserr error
-	for i, m := range ms {
-		userinfo, err := DBUserToRPCUser(m, fromID, toids[i])
+	for _, m := range ms {
+		userinfo, err := DBUserToRPCUser(m, fromID)
 		if err != nil {
 			reserr = err
 		}
