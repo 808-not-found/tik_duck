@@ -174,7 +174,20 @@ func (s *UserServiceImpl) UserPublishAction(
 	// TODO: Your code here...
 	// 1: i32 StatusCode //状态码，0-成功，其他值-失败
 	// 2: optional string StatusMsg //返回状态描述
-	return
+	resp = new(user.PublishActionResponse)
+	if err = req.IsValid(); err != nil {
+		resp.StatusCode = 1101
+		return resp, err
+	}
+
+	statusCode, statusMsg, err := userservice.UserPublishActionService(ctx, req)
+	if err != nil {
+		resp.StatusCode = 1102
+		return resp, nil
+	}
+	resp.StatusCode = statusCode
+	resp.StatusMsg = &statusMsg
+	return resp, err
 }
 
 // UserTest implements the UserServiceImpl interface.

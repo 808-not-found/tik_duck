@@ -131,3 +131,7 @@ func (p *FeedRequest) IsValid() error {
 func (p *PublishListRequest) IsValid() error {
 	return nil
 }
+
+func (p *PublishActionRequest) IsValid() error {
+	return nil
+}
