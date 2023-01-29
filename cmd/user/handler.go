@@ -143,15 +143,24 @@ func (s *UserServiceImpl) UserPublishList(
 	// 3: list<Video> VideoList //用户发布的视频列表
 
 	// 生成返回结构体
-	// resp = new(user.PublishListResponse)
+	resp = new(user.PublishListResponse)
 
-	// // 判断请求是否合法
-	// if err = req.IsValid(); err != nil {
-	// 	resp.StatusCode = 1101
-	// 	return resp, err
-	// }
+	// 判断请求是否合法
+	if err = req.IsValid(); err != nil {
+		resp.StatusCode = 1101
+		return resp, err
+	}
 
-	// videoList, err = userservice.UserPublishList(req.UserId)
+	// 通过接口查询视频列表
+	statusCode, statusMsg, videoList, err := userservice.UserPublishListService(ctx, int32(req.UserId))
+	if err != nil {
+		resp.StatusCode = 1102
+		return resp, err
+	}
+
+	resp.StatusCode = statusCode
+	resp.StatusMsg = &statusMsg
+	resp.VideoList = videoList
 
 	return resp, nil
 }
