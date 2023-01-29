@@ -46,3 +46,15 @@ func UserGetFeed(ctx context.Context, latestTime time.Time) ([]*Video, int64, er
 
 	return videoList, nextTime, nil
 }
+
+func UserPublishList(ctx context.Context, userID int32) ([]*Video, error) {
+	// 获取视频列表
+	var videoList []*Video
+	conn := DB.WithContext(ctx).Model(&Video{}).Where("author_id = ?", userID).Find(&videoList)
+	if err := conn.Error; err != nil {
+		return nil, err
+	}
+
+	// 返回
+	return videoList, nil
+}
