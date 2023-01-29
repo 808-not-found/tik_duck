@@ -58,3 +58,12 @@ func UserPublishList(ctx context.Context, userID int32) ([]*Video, error) {
 	// 返回
 	return videoList, nil
 }
+
+func UserPublishAction(ctx context.Context, userID int64, filePath string, coverPath string, title string) error {
+	video := Video{AuthorID: userID, FilePath: filePath, CoverPath: coverPath, Title: title}
+	res := DB.Create(&video)
+	if err := res.Error; err != nil {
+		return err
+	}
+	return nil
+}
