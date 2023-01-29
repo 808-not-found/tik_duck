@@ -123,3 +123,11 @@ func (p *UserRequest) IsValid() error { // 用户信息请求
 	}
 	return nil
 }
+
+func (p *FeedRequest) IsValid() error {
+	return nil
+}
+
+func (p *PublishListRequest) IsValid() error {
+	return nil
+}
