@@ -21,10 +21,6 @@ on:
       - "Taskfile.yaml"
       - "**.go"
       - "**.go.json"
-  pull_request_target:
-    types: [opened, synchronize, reopened]
-    branches:
-      - master
 
 jobs:
   test:
