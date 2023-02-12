@@ -4,7 +4,7 @@ package useruserservice
 
 import (
 	"context"
-	useruser "github.com/808-not-found/tik_duck/IDLs/kitex_gen/useruser"
+	useruser "github.com/808-not-found/tik_duck/kitex_gen/useruser"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 )

@@ -1,8 +1,9 @@
 package main
 
 import (
-	useruser "github.com/808-not-found/tik_duck/IDLs/kitex_gen/useruser/useruserservice"
 	"log"
+
+	useruser "github.com/808-not-found/tik_duck/kitex_gen/useruser/useruserservice"
 )
 
 func main() {

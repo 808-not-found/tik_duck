@@ -3,7 +3,7 @@
 package useruserservice
 
 import (
-	useruser "github.com/808-not-found/tik_duck/IDLs/kitex_gen/useruser"
+	useruser "github.com/808-not-found/tik_duck/kitex_gen/useruser"
 	server "github.com/cloudwego/kitex/server"
 )
 
