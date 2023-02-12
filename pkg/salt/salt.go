@@ -17,7 +17,7 @@ func GenerateRandomSalt(saltSize int) string {
 		panic(err)
 	}
 
-	return string(salt)
+	return hex.EncodeToString(salt)
 }
 
 // 使用salt 和 SHA-512

@@ -1,4 +1,4 @@
-namespace * useruser;
+namespace * useruser
 
 struct RelationActionRequest {
     1: string Token //用户鉴权token

@@ -10,7 +10,7 @@ import (
 func main() {
 	rpc.InitRPC()
 	go service.RunMessageServer()
-	h := server.Default(server.WithHostPorts("0.0.0.0:8080"),
+	h := server.Default(server.WithHostPorts("0.0.0.0:"+consts.WebServerPort),
 		server.WithMaxRequestBodySize(consts.HTTPMaxBodySize))
 
 	InitRouter(h)
