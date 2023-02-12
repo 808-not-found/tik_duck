@@ -43,7 +43,6 @@ func UserGetFeed(ctx context.Context, latestTime time.Time) ([]*Video, int64, er
 	var firstVideo Video
 	conn.Order("publish_time").First(&firstVideo)
 	nextTime := firstVideo.PublishTime.Unix()
-
 	return videoList, nextTime, nil
 }
 

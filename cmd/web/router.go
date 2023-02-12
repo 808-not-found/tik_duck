@@ -2,12 +2,12 @@ package main
 
 import (
 	"github.com/808-not-found/tik_duck/cmd/web/controller"
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
 func InitRouter(h *server.Hertz) {
-	h.StaticFile("/static", "./public")
-
+	h.StaticFS("public/", &app.FS{Root: "./", GenerateIndexPages: true})
 	apiRouter := h.Group("/douyin")
 
 	// basic apis

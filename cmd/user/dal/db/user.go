@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/808-not-found/tik_duck/pkg/consts"
@@ -40,7 +39,6 @@ func MGetUsers(ctx context.Context, userIds []int64) ([]*User, error) {
 // 传入用户id 返回用户信息.
 func GetUser(ctx context.Context, userID int64) (User, error) {
 	res := User{}
-
 	if err := DB.WithContext(ctx).Where("id = ?", userID).Find(&res).Error; err != nil {
 		return res, err
 	}
@@ -59,7 +57,6 @@ func CreateUser(ctx context.Context, user *User) error {
 // 传入用户名称 查找用户信息.
 func QueryUser(ctx context.Context, userName string) (*User, error) {
 	res := User{}
-	log.Println(userName)
 	if err := DB.WithContext(ctx).Where("name = ?", userName).Find(&res).Error; err != nil {
 		return nil, err
 	}

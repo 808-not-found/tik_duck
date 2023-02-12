@@ -29,7 +29,7 @@ func DBUserToRPCUser(m *db.User, fromID int64) (*user.User, error) {
 	var reserr error
 	f := Follow{}
 
-	err := db.DB.Where("FromUserID = ? AND ToUserID = ?", fromID, m.ID).Find(&f).Error
+	err := db.DB.Where("from_user_id = ? AND to_user_id = ?", fromID, m.ID).Find(&f).Error
 	switch {
 	case errors.Is(err, gorm.ErrRecordNotFound):
 		IsFollowShip = false

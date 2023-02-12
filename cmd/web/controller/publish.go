@@ -11,6 +11,7 @@ import (
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	"github.com/808-not-found/tik_duck/pkg/jwt"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 type VideoListResponse struct {
@@ -21,6 +22,7 @@ type VideoListResponse struct {
 // Publish check token then save upload file to public directory.
 func Publish(ctx context.Context, c *app.RequestContext) {
 	token := c.PostForm("token")
+	title := c.PostForm("title")
 
 	// 用户鉴权
 	if _, err := jwt.ParseToken(token); err != nil {
@@ -41,18 +43,19 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 	filename := filepath.Base(data.Filename)
 	finalName := fmt.Sprintf("%s_%s", quser.Username, filename)
 	saveFile := filepath.Join("./public/", finalName)
-	if err := c.SaveUploadedFile(data, saveFile); err != nil {
+	if err2 := c.SaveUploadedFile(data, saveFile); err2 != nil {
+		hlog.Error(err2)
 		c.JSON(http.StatusOK, Response{
 			StatusCode: 1,
-			StatusMsg:  err.Error(),
+			StatusMsg:  err2.Error(),
 		})
 		return
 	}
 
 	var userPublishActionReq user.PublishActionRequest
 	userPublishActionReq.CoverPath = "http://www.hrbust.edu.cn/images/xjgk.jpg"
-	userPublishActionReq.FilePath = finalName
-	userPublishActionReq.Title = filename
+	userPublishActionReq.FilePath = saveFile
+	userPublishActionReq.Title = title
 	userPublishActionReq.Token = token
 	resp, err := rpc.UserPublishAction(context.Background(), &userPublishActionReq)
 	if err != nil {
