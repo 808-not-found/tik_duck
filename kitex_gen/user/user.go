@@ -10,8 +10,8 @@ import (
 )
 
 type FeedRequest struct {
-	LatestTime *int64  `thrift:"LatestTime,1,optional" frugal:"1,optional,i64" json:"LatestTime,omitempty"`
-	Token      *string `thrift:"Token,2,optional" frugal:"2,optional,string" json:"Token,omitempty"`
+	LatestTime *int64  `thrift:"LatestTime,1,optional" frugal:"1,optional,i64" json:"latest_time"`
+	Token      *string `thrift:"Token,2,optional" frugal:"2,optional,string" json:"token"`
 }
 
 func NewFeedRequest() *FeedRequest {
@@ -265,10 +265,10 @@ func (p *FeedRequest) Field2DeepEqual(src *string) bool {
 }
 
 type FeedResponse struct {
-	StatusCode int32    `thrift:"StatusCode,1" frugal:"1,default,i32" json:"StatusCode"`
-	StatusMsg  *string  `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"StatusMsg,omitempty"`
-	VideoList  []*Video `thrift:"VideoList,3" frugal:"3,default,list<Video>" json:"VideoList"`
-	NextTime   *int64   `thrift:"NextTime,4,optional" frugal:"4,optional,i64" json:"NextTime,omitempty"`
+	StatusCode int32    `thrift:"StatusCode,1" frugal:"1,default,i32" json:"status_code"`
+	StatusMsg  *string  `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"status_msg"`
+	VideoList  []*Video `thrift:"VideoList,3" frugal:"3,default,list<Video>" json:"video_list"`
+	NextTime   *int64   `thrift:"NextTime,4,optional" frugal:"4,optional,i64" json:"next_time"`
 }
 
 func NewFeedResponse() *FeedResponse {
@@ -663,14 +663,14 @@ func (p *FeedResponse) Field4DeepEqual(src *int64) bool {
 }
 
 type Video struct {
-	Id            int64  `thrift:"Id,1" frugal:"1,default,i64" json:"Id"`
-	Author        *User  `thrift:"Author,2" frugal:"2,default,User" json:"Author"`
-	PlayPath      string `thrift:"PlayPath,3" frugal:"3,default,string" json:"PlayPath"`
-	CoverPath     string `thrift:"CoverPath,4" frugal:"4,default,string" json:"CoverPath"`
-	FavoriteCount int64  `thrift:"FavoriteCount,5" frugal:"5,default,i64" json:"FavoriteCount"`
-	CommentCount  int64  `thrift:"CommentCount,6" frugal:"6,default,i64" json:"CommentCount"`
-	IsFavorite    bool   `thrift:"IsFavorite,7" frugal:"7,default,bool" json:"IsFavorite"`
-	Title         string `thrift:"Title,8" frugal:"8,default,string" json:"Title"`
+	Id            int64  `thrift:"Id,1" frugal:"1,default,i64" json:"id"`
+	Author        *User  `thrift:"Author,2" frugal:"2,default,User" json:"author"`
+	PlayPath      string `thrift:"PlayPath,3" frugal:"3,default,string" json:"play_path"`
+	CoverPath     string `thrift:"CoverPath,4" frugal:"4,default,string" json:"cover_path"`
+	FavoriteCount int64  `thrift:"FavoriteCount,5" frugal:"5,default,i64" json:"favorite_count"`
+	CommentCount  int64  `thrift:"CommentCount,6" frugal:"6,default,i64" json:"comment_count"`
+	IsFavorite    bool   `thrift:"IsFavorite,7" frugal:"7,default,bool" json:"is_favorite"`
+	Title         string `thrift:"Title,8" frugal:"8,default,string" json:"title"`
 }
 
 func NewVideo() *Video {
@@ -1248,11 +1248,11 @@ func (p *Video) Field8DeepEqual(src string) bool {
 }
 
 type User struct {
-	Id            int64  `thrift:"Id,1" frugal:"1,default,i64" json:"Id"`
-	Name          string `thrift:"Name,2" frugal:"2,default,string" json:"Name"`
-	FollowCount   *int64 `thrift:"FollowCount,3,optional" frugal:"3,optional,i64" json:"FollowCount,omitempty"`
-	FollowerCount *int64 `thrift:"FollowerCount,4,optional" frugal:"4,optional,i64" json:"FollowerCount,omitempty"`
-	IsFollow      bool   `thrift:"IsFollow,5" frugal:"5,default,bool" json:"IsFollow"`
+	Id            int64  `thrift:"Id,1" frugal:"1,default,i64" json:"id"`
+	Name          string `thrift:"Name,2" frugal:"2,default,string" json:"name"`
+	FollowCount   *int64 `thrift:"FollowCount,3,optional" frugal:"3,optional,i64" json:"follow_count"`
+	FollowerCount *int64 `thrift:"FollowerCount,4,optional" frugal:"4,optional,i64" json:"follower_count"`
+	IsFollow      bool   `thrift:"IsFollow,5" frugal:"5,default,bool" json:"is_follow"`
 }
 
 func NewUser() *User {
@@ -1680,8 +1680,8 @@ func (p *User) Field5DeepEqual(src bool) bool {
 }
 
 type UserRegisterRequest struct {
-	Username string `thrift:"Username,1" frugal:"1,default,string" json:"Username"`
-	Password string `thrift:"Password,2" frugal:"2,default,string" json:"Password"`
+	Username string `thrift:"Username,1" frugal:"1,default,string" json:"username"`
+	Password string `thrift:"Password,2" frugal:"2,default,string" json:"password"`
 }
 
 func NewUserRegisterRequest() *UserRegisterRequest {
@@ -1903,10 +1903,10 @@ func (p *UserRegisterRequest) Field2DeepEqual(src string) bool {
 }
 
 type UserRegisterResponse struct {
-	StatusCode int32   `thrift:"StatusCode,1" frugal:"1,default,i32" json:"StatusCode"`
-	StatusMsg  *string `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"StatusMsg,omitempty"`
-	UserId     int64   `thrift:"UserId,3" frugal:"3,default,i64" json:"UserId"`
-	Token      string  `thrift:"Token,4" frugal:"4,default,string" json:"Token"`
+	StatusCode int32   `thrift:"StatusCode,1" frugal:"1,default,i32" json:"status_code"`
+	StatusMsg  *string `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"status_msg"`
+	UserId     int64   `thrift:"UserId,3" frugal:"3,default,i64" json:"user_id"`
+	Token      string  `thrift:"Token,4" frugal:"4,default,string" json:"token"`
 }
 
 func NewUserRegisterResponse() *UserRegisterResponse {
@@ -2260,8 +2260,8 @@ func (p *UserRegisterResponse) Field4DeepEqual(src string) bool {
 }
 
 type UserLoginRequest struct {
-	Username string `thrift:"Username,1" frugal:"1,default,string" json:"Username"`
-	Password string `thrift:"Password,2" frugal:"2,default,string" json:"Password"`
+	Username string `thrift:"Username,1" frugal:"1,default,string" json:"username"`
+	Password string `thrift:"Password,2" frugal:"2,default,string" json:"password"`
 }
 
 func NewUserLoginRequest() *UserLoginRequest {
@@ -2483,10 +2483,10 @@ func (p *UserLoginRequest) Field2DeepEqual(src string) bool {
 }
 
 type UserLoginResponse struct {
-	StatusCode int32   `thrift:"StatusCode,1" frugal:"1,default,i32" json:"StatusCode"`
-	StatusMsg  *string `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"StatusMsg,omitempty"`
-	UserId     int64   `thrift:"UserId,3" frugal:"3,default,i64" json:"UserId"`
-	Token      string  `thrift:"Token,4" frugal:"4,default,string" json:"Token"`
+	StatusCode int32   `thrift:"StatusCode,1" frugal:"1,default,i32" json:"status_code"`
+	StatusMsg  *string `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"status_msg"`
+	UserId     int64   `thrift:"UserId,3" frugal:"3,default,i64" json:"user_id"`
+	Token      string  `thrift:"Token,4" frugal:"4,default,string" json:"token"`
 }
 
 func NewUserLoginResponse() *UserLoginResponse {
@@ -2840,8 +2840,8 @@ func (p *UserLoginResponse) Field4DeepEqual(src string) bool {
 }
 
 type UserRequest struct {
-	UserId int64  `thrift:"UserId,1" frugal:"1,default,i64" json:"UserId"`
-	Token  string `thrift:"Token,2" frugal:"2,default,string" json:"Token"`
+	UserId int64  `thrift:"UserId,1" frugal:"1,default,i64" json:"user_id"`
+	Token  string `thrift:"Token,2" frugal:"2,default,string" json:"token"`
 }
 
 func NewUserRequest() *UserRequest {
@@ -3063,9 +3063,9 @@ func (p *UserRequest) Field2DeepEqual(src string) bool {
 }
 
 type UserResponse struct {
-	StatusCode int32   `thrift:"StatusCode,1" frugal:"1,default,i32" json:"StatusCode"`
-	StatusMsg  *string `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"StatusMsg,omitempty"`
-	User       *User   `thrift:"User,3" frugal:"3,default,User" json:"User"`
+	StatusCode int32   `thrift:"StatusCode,1" frugal:"1,default,i32" json:"status_code"`
+	StatusMsg  *string `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"status_msg"`
+	User       *User   `thrift:"User,3" frugal:"3,default,User" json:"user"`
 }
 
 func NewUserResponse() *UserResponse {
@@ -3369,10 +3369,10 @@ func (p *UserResponse) Field3DeepEqual(src *User) bool {
 }
 
 type PublishActionRequest struct {
-	Token     string `thrift:"Token,1" frugal:"1,default,string" json:"Token"`
-	FilePath  string `thrift:"FilePath,2" frugal:"2,default,string" json:"FilePath"`
-	CoverPath string `thrift:"CoverPath,3" frugal:"3,default,string" json:"CoverPath"`
-	Title     string `thrift:"Title,4" frugal:"4,default,string" json:"Title"`
+	Token     string `thrift:"Token,1" frugal:"1,default,string" json:"token"`
+	FilePath  string `thrift:"FilePath,2" frugal:"2,default,string" json:"file_path"`
+	CoverPath string `thrift:"CoverPath,3" frugal:"3,default,string" json:"cover_path"`
+	Title     string `thrift:"Title,4" frugal:"4,default,string" json:"title"`
 }
 
 func NewPublishActionRequest() *PublishActionRequest {
@@ -3710,8 +3710,8 @@ func (p *PublishActionRequest) Field4DeepEqual(src string) bool {
 }
 
 type PublishActionResponse struct {
-	StatusCode int32   `thrift:"StatusCode,1" frugal:"1,default,i32" json:"StatusCode"`
-	StatusMsg  *string `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"StatusMsg,omitempty"`
+	StatusCode int32   `thrift:"StatusCode,1" frugal:"1,default,i32" json:"status_code"`
+	StatusMsg  *string `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"status_msg"`
 }
 
 func NewPublishActionResponse() *PublishActionResponse {
@@ -3949,8 +3949,8 @@ func (p *PublishActionResponse) Field2DeepEqual(src *string) bool {
 }
 
 type PublishListRequest struct {
-	UserId int64  `thrift:"UserId,1" frugal:"1,default,i64" json:"UserId"`
-	Token  string `thrift:"Token,2" frugal:"2,default,string" json:"Token"`
+	UserId int64  `thrift:"UserId,1" frugal:"1,default,i64" json:"user_id"`
+	Token  string `thrift:"Token,2" frugal:"2,default,string" json:"token"`
 }
 
 func NewPublishListRequest() *PublishListRequest {
@@ -4172,9 +4172,9 @@ func (p *PublishListRequest) Field2DeepEqual(src string) bool {
 }
 
 type PublishListResponse struct {
-	StatusCode int32    `thrift:"StatusCode,1" frugal:"1,default,i32" json:"StatusCode"`
-	StatusMsg  *string  `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"StatusMsg,omitempty"`
-	VideoList  []*Video `thrift:"VideoList,3" frugal:"3,default,list<Video>" json:"VideoList"`
+	StatusCode int32    `thrift:"StatusCode,1" frugal:"1,default,i32" json:"status_code"`
+	StatusMsg  *string  `thrift:"StatusMsg,2,optional" frugal:"2,optional,string" json:"status_msg"`
+	VideoList  []*Video `thrift:"VideoList,3" frugal:"3,default,list<Video>" json:"video_list"`
 }
 
 func NewPublishListResponse() *PublishListResponse {
