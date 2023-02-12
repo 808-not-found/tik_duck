@@ -1,0 +1,5 @@
+package userplatservice
+
+func  UserplatCommentService(){
+	
+}
