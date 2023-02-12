@@ -17,9 +17,13 @@ func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (int32, stri
 	var statusMsg string
 	var videoList []*user.Video
 	var nextTime int64
-
+	var latestTime time.Time
 	// 完善用户请求
-	latestTime := time.Unix(*req.LatestTime, 0)
+	if req.LatestTime != nil {
+		latestTime = time.Unix(*req.LatestTime, 0)
+	} else {
+		latestTime = time.Now()
+	}
 
 	// 向数据库获取视频列表
 	dbVideoList, nextTime, err := db.UserGetFeed(ctx, latestTime)
