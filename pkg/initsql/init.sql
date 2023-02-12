@@ -6,7 +6,10 @@ CREATE TABLE `video` (
   `cover_path` varchar(32) NOT NULL,
   `favorite_count` bigint DEFAULT 0,
   `comment_count` bigint DEFAULT 0,
-  `title` varchar(20) NOT NULL
+  `title` varchar(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'User account create time',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'User account update time',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT 'User account delete time'
 );
 
 CREATE TABLE `user` (
@@ -16,14 +19,20 @@ CREATE TABLE `user` (
   `password` char(32) NOT NULL,
   `salt` char(32) NOT NULL,
   `follow_count` bigint NOT NULL DEFAULT 0,
-  `follower_count` bigint NOT NULL DEFAULT 0
+  `follower_count` bigint NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'User account create time',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'User account update time',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT 'User account delete time'
 );
 
 CREATE TABLE `follow` (
   `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `follow_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `from_user_id` bigint NOT NULL,
-  `to_user_id` bigint NOT NULL
+  `to_user_id` bigint NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'User account create time',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'User account update time',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT 'User account delete time'
 );
 
 CREATE TABLE `comment` (
@@ -31,7 +40,10 @@ CREATE TABLE `comment` (
   `comment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` bigint NOT NULL,
   `video_id` bigint NOT NULL,
-  `content` text NOT NULL
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'User account create time',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'User account update time',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT 'User account delete time'
 );
 
 CREATE TABLE `message` (
@@ -39,14 +51,20 @@ CREATE TABLE `message` (
   `message_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `from_user_id` bigint NOT NULL,
   `to_user_id` bigint NOT NULL,
-  `content` text NOT NULL
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'User account create time',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'User account update time',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT 'User account delete time'
 );
 
 CREATE TABLE `like` (
   `id` bigint PRIMARY KEY AUTO_INCREMENT,
   `like_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` bigint NOT NULL,
-  `video_id` bigint NOT NULL
+  `video_id` bigint NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'User account create time',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'User account update time',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT 'User account delete time'
 );
 
 CREATE INDEX `video_index_0` ON `video` (`id`);
