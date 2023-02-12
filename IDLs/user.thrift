@@ -1,7 +1,7 @@
 namespace * user
 
 struct FeedRequest {
-    1: optional i64 LatestTime //可选参数，限制返回视频的最新投稿时间戳，精确到秒，不填表示当前时间
+    1: optional i64 LatestTime (go.tag = 'json:"latest_time"') //可选参数，限制返回视频的最新投稿时间戳，精确到秒，不填表示当前时间
     2: optional string Token // 可选参数，登录用户设置
 }
 struct FeedResponse {

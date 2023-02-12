@@ -8,6 +8,8 @@ import (
 	"strings"
 	"time"
 
+	"log"
+
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
 )
 
@@ -67,6 +69,7 @@ func RALCheckPassword(s string) bool { // 登陆和注册校验密码
 func (p *UserRegisterRequest) IsValid() error { // 注册信息校验
 	// 1: string Username //注册用户名，最长32个字符1525
 	// 2: string Password //密码，最长32个字符
+	log.Println(p.Username)
 	if len(p.Username) < 6 || len(p.Username) > 32 {
 		return allerrors.ErrUserRegisterRequestUsername()
 	}

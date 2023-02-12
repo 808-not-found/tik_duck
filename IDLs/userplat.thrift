@@ -1,4 +1,4 @@
-namespace * userplat;
+namespace * userplat
 
 struct FavoriteActionRequest {
     1: string Token

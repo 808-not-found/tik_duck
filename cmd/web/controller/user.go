@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 	"net/http"
-	"sync/atomic"
 
 	"github.com/808-not-found/tik_duck/cmd/web/rpc"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
@@ -41,59 +40,40 @@ type UserResponse struct {
 }
 
 func Register(ctx context.Context, c *app.RequestContext) {
-	username := c.Query("username")
-	password := c.Query("password")
-
-	token := username + password
-
-	if _, exist := usersLoginInfo[token]; exist {
-		c.JSON(http.StatusOK, UserLoginResponse{
-			Response: Response{StatusCode: 1, StatusMsg: "User already exist"},
-		})
-	} else {
-		atomic.AddInt64(&userIdSequence, 1)
-		newUser := User{
-			ID:   userIdSequence,
-			Name: username,
-		}
-		usersLoginInfo[token] = newUser
-		c.JSON(http.StatusOK, UserLoginResponse{
-			Response: Response{StatusCode: 0},
-			UserID:   userIdSequence,
-			Token:    username + password,
-		})
+	var userRegisterReq user.UserRegisterRequest
+	userRegisterReq.Username = c.Query("username")
+	userRegisterReq.Password = c.Query("password")
+	resp, err := rpc.UserRegister(context.Background(), &userRegisterReq)
+	if err != nil {
+		log.Fatalln(err)
+		c.JSON(http.StatusServiceUnavailable, err)
 	}
+	c.JSON(http.StatusOK, resp)
 }
 
 func Login(ctx context.Context, c *app.RequestContext) {
-	username := c.Query("username")
-	password := c.Query("password")
+	var userLoginReq user.UserLoginRequest
+	userLoginReq.Username = c.Query("username")
+	userLoginReq.Password = c.Query("password")
 
-	token := username + password
-
-	if user, exist := usersLoginInfo[token]; exist {
-		c.JSON(http.StatusOK, UserLoginResponse{
-			Response: Response{StatusCode: 0},
-			UserID:   user.ID,
-			Token:    token,
-		})
-	} else {
-		c.JSON(http.StatusOK, UserLoginResponse{
-			Response: Response{StatusCode: 1, StatusMsg: "User doesn't exist"},
-		})
+	resp, err := rpc.UserLogin(context.Background(), &userLoginReq)
+	if err != nil {
+		log.Fatalln(err)
+		c.JSON(http.StatusServiceUnavailable, err)
 	}
+	c.JSON(http.StatusOK, resp)
 }
 
 func UserInfo(ctx context.Context, c *app.RequestContext) {
 	var userInfoReq user.UserRequest
 	if err := c.Bind(&userInfoReq); err != nil {
 		log.Fatalln(err)
-		return
+		c.JSON(http.StatusBadRequest, err)
 	}
 	resp, err := rpc.UserInfo(context.Background(), &userInfoReq)
 	if err != nil {
 		log.Fatalln(err)
-		return
+		c.JSON(http.StatusServiceUnavailable, err)
 	}
 	c.JSON(http.StatusOK, resp)
 }
