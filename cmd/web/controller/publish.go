@@ -43,11 +43,11 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 	filename := filepath.Base(data.Filename)
 	finalName := fmt.Sprintf("%s_%s", quser.Username, filename)
 	saveFile := filepath.Join("./public/", finalName)
-	if err := c.SaveUploadedFile(data, saveFile); err != nil {
-		hlog.Error(err)
+	if err2 := c.SaveUploadedFile(data, saveFile); err2 != nil {
+		hlog.Error(err2)
 		c.JSON(http.StatusOK, Response{
 			StatusCode: 1,
-			StatusMsg:  err.Error(),
+			StatusMsg:  err2.Error(),
 		})
 		return
 	}

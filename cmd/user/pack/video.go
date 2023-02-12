@@ -15,7 +15,7 @@ func Video(m *db.Video) *user.Video {
 	return &user.Video{
 		Id:            m.ID,
 		Author:        &user.User{Id: 1, Name: "FakeUser", FollowCount: nil, FollowerCount: nil, IsFollow: false}, // 残缺
-		PlayPath:      "http://" + consts.WebServerPublicIP + ":" + consts.WebServerPort + "/" + m.FilePath,
+		PlayPath:      "http://" + consts.WebServerPublicIP + ":" + consts.StaticPort + "/" + m.FilePath,
 		CoverPath:     m.CoverPath,
 		FavoriteCount: m.FavoriteCount,
 		CommentCount:  m.CommentCount,

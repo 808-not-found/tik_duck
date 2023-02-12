@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/808-not-found/tik_duck/cmd/web/rpc"
@@ -13,7 +14,10 @@ import (
 func main() {
 	rpc.InitRPC()
 	go service.RunMessageServer()
-	os.Mkdir("public", os.ModePerm)
+	err := os.Mkdir("public", os.ModePerm)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	h := server.Default(
 		server.WithStreamBody(true), server.WithTransport(standard.NewTransporter),
 		server.WithHostPorts("0.0.0.0:"+consts.WebServerPort),

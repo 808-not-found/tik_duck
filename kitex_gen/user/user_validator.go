@@ -3,12 +3,11 @@ package user
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"reflect"
 	"regexp"
 	"strings"
 	"time"
-
-	"log"
 
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
 )
