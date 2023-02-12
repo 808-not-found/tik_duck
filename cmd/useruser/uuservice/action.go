@@ -1,0 +1,4 @@
+package uuservice
+
+func UserRelationActionService() {
+}
