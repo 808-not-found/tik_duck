@@ -14,7 +14,7 @@ const (
 	UserUserServiceName = "useruser"
 	UserPlatServiceName = "userplat"
 
-	MySQLDefaultDSN = "tik_duck:duck@tcp(localhost:9910)/tik_duck"
+	MySQLDefaultDSN = "tik_duck:duck@tcp(localhost:9910)/tik_duck?charset=utf8mb4&parseTime=True"
 	TCP             = "tcp"
 	Success         = "success"
 	HTTPMaxBodySize = 1024 * 1024 * 1024 // 1GB
