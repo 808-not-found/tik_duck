@@ -35,7 +35,8 @@ func UserLoginService(ctx context.Context, req *user.UserLoginRequest) (int32, s
 	}
 
 	// 2. 创建token
-	Token, err := jwt.GenToken(req.Username)
+	// 加了一个用户ID信息
+	Token, err := jwt.GenToken(req.Username, userinfo.ID)
 	if err != nil {
 		statusCode = 1007
 		return statusCode, "", 0, "", err

@@ -29,7 +29,8 @@ func UserRegisterService(ctx context.Context, req *user.UserRegisterRequest) (in
 		return statusCode, "", 0, "", err
 	}
 	Userid := userinfo.ID
-	Token, err := jwt.GenToken(req.Username)
+	// 加了用户ID信息
+	Token, err := jwt.GenToken(req.Username, Userid)
 	if err != nil {
 		statusCode = 1003
 		return statusCode, "", 0, "", err
