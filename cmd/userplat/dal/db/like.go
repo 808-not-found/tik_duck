@@ -1,7 +1,10 @@
 package db
 
 import (
+<<<<<<< HEAD
 	"context"
+=======
+>>>>>>> 1c9f1fabb3ba70047ca1f3174baaf9d20ca81f0c
 	"time"
 
 	"github.com/808-not-found/tik_duck/pkg/consts"
@@ -16,6 +19,7 @@ type Like struct {
 	VideoID  int64     `gorm:"column:video_id;default:0;NOT NULL"`
 }
 
+<<<<<<< HEAD
 type Video struct {
 	gorm.Model
 	ID            int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
@@ -116,3 +120,8 @@ func GetFavoriteList(ctx context.Context, myID int64) ([]*Video, error) {
 	return res, nil
 
 }
+=======
+func (like *Like) TableName() string {
+	return consts.LikeTableName
+}
+>>>>>>> 1c9f1fabb3ba70047ca1f3174baaf9d20ca81f0c

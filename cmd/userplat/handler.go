@@ -41,6 +41,7 @@ func (s *UserPlatServiceImpl) UserFavoriteAction(
 
 // UserFavoriteList implements the UserPlatServiceImpl interface.
 func (s *UserPlatServiceImpl) UserFavoriteList(
+<<<<<<< HEAD
 	ctx context.Context,
 	req *userplat.FavoriteListRequest,
 ) (resp *userplat.FavoriteListResponse, err error) {
@@ -68,10 +69,17 @@ func (s *UserPlatServiceImpl) UserFavoriteList(
 
 	return resp, nil
 
+=======
+	ctx context.Context, req *userplat.FavoriteListRequest,
+) (resp *userplat.FavoriteListResponse, err error) {
+	// TODO: Your code here...
+	return
+>>>>>>> 1c9f1fabb3ba70047ca1f3174baaf9d20ca81f0c
 }
 
 // UserCommentAction implements the UserPlatServiceImpl interface.
 func (s *UserPlatServiceImpl) UserCommentAction(
+<<<<<<< HEAD
 	ctx context.Context,
 	req *userplat.CommentActionRequest,
 ) (resp *userplat.CommentActionResponse, err error) {
@@ -99,10 +107,17 @@ func (s *UserPlatServiceImpl) UserCommentAction(
 
 	return resp, nil
 
+=======
+	ctx context.Context, req *userplat.CommentActionRequest,
+) (resp *userplat.CommentActionResponse, err error) {
+	// TODO: Your code here...
+	return
+>>>>>>> 1c9f1fabb3ba70047ca1f3174baaf9d20ca81f0c
 }
 
 // UserCommentList implements the UserPlatServiceImpl interface.
 func (s *UserPlatServiceImpl) UserCommentList(
+<<<<<<< HEAD
 	ctx context.Context,
 	req *userplat.CommentListRequest,
 ) (resp *userplat.CommentListResponse, err error) {
@@ -129,4 +144,10 @@ func (s *UserPlatServiceImpl) UserCommentList(
 	resp.CommentList = CommentList
 
 	return resp, nil
+=======
+	ctx context.Context, req *userplat.CommentListRequest,
+) (resp *userplat.CommentListResponse, err error) {
+	// TODO: Your code here...
+	return
+>>>>>>> 1c9f1fabb3ba70047ca1f3174baaf9d20ca81f0c
 }
