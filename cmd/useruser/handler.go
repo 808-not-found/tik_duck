@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 
+	"github.com/808-not-found/tik_duck/cmd/useruser/uuservice"
 	useruser "github.com/808-not-found/tik_duck/kitex_gen/useruser"
 )
 
@@ -16,15 +17,17 @@ func (s *UserUserServiceImpl) UserRelationAction(
 	req *useruser.RelationActionRequest,
 ) (resp *useruser.RelationActionResponse, err error) {
 	// TODO: Your code here...
-	// Request
-	// 1: string Token //用户鉴权token
-	// 2: i64 ToUserId //对方用户id
-	// 3: i32 ActionType // 1-关注，2-取消关注
-	// Response
-	// 1: i32 StatusCode //状态码，0- 成功，其他值-失败
-	// 2: optional string StatusMsg //返回状态描述
+	if err = req.IsValid(); err != nil {
+		return resp, err
+	}
 
-	return
+	resp, err = uuservice.UserRelationActionService(ctx, req)
+
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
 }
 
 // 登录用户关注的所有用户列表。
@@ -41,7 +44,16 @@ func (s *UserUserServiceImpl) UserRelationFollowList(
 	// 1: i32 StatusCode //状态码，0成功，其他值-失败
 	// 2: optional string StatusMsg //返回状态描述
 	// 3: list<User> UserList //用户信息列表
-	return
+	if err = req.IsValid(); err != nil {
+		return resp, err
+	}
+
+	resp, err = uuservice.UserRelationFollowListService(ctx, req)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
 }
 
 // 所有关注登录用户的粉丝列表。
@@ -58,7 +70,16 @@ func (s *UserUserServiceImpl) UserRelationFollowerList(
 	// 1: i32 StatusCode //状态码，0- 成功，其他值失败
 	// 2: optional string StatusMsg //返回状态描述
 	// 3: list<User> UserList //用户列表
-	return
+	if err = req.IsValid(); err != nil {
+		return resp, err
+	}
+
+	resp, err = uuservice.UserRelationFollowerList(ctx, req)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
 }
 
 // 所有关注登录用户的好友列表。
@@ -75,5 +96,14 @@ func (s *UserUserServiceImpl) UserRelationFriendList(
 	// 1: i32 StatusCode //状态码，0- 成功，其他值失败
 	// 2: optional string StatusMsg //返回状态描述
 	// 3: list<User> UserList //用户列表
-	return
+	if err = req.IsValid(); err != nil {
+		return resp, err
+	}
+
+	resp, err = uuservice.UserRelationFriendListService(ctx, req)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
 }
