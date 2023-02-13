@@ -28,7 +28,7 @@ func UserRelationFriendListService(
 	}
 	// 查询数据库
 	var dbUsers []*db.User
-	dbUsers, err = db.GetFriendList(myID)
+	dbUsers, err = db.GetFriendList(ctx, myID)
 	if err != nil {
 		resp.StatusCode = 1009
 		return &resp, nil

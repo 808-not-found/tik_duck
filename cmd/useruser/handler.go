@@ -37,13 +37,6 @@ func (s *UserUserServiceImpl) UserRelationFollowList(
 	req *useruser.RelationFollowListRequest,
 ) (resp *useruser.RelationFollowListResponse, err error) {
 	// TODO: Your code here...
-	// Request
-	// 1: i64 UserId //用户id
-	// 2: string Token //用户鉴权token
-	// Response
-	// 1: i32 StatusCode //状态码，0成功，其他值-失败
-	// 2: optional string StatusMsg //返回状态描述
-	// 3: list<User> UserList //用户信息列表
 	if err = req.IsValid(); err != nil {
 		return resp, err
 	}
@@ -63,13 +56,6 @@ func (s *UserUserServiceImpl) UserRelationFollowerList(
 	req *useruser.RelationFollowerListRequest,
 ) (resp *useruser.RelationFollowerListResponse, err error) {
 	// TODO: Your code here...
-	// Request
-	// 1: i64 UserId //用户id
-	// 2: string Token //用户鉴权token
-	// Response
-	// 1: i32 StatusCode //状态码，0- 成功，其他值失败
-	// 2: optional string StatusMsg //返回状态描述
-	// 3: list<User> UserList //用户列表
 	if err = req.IsValid(); err != nil {
 		return resp, err
 	}
@@ -89,13 +75,6 @@ func (s *UserUserServiceImpl) UserRelationFriendList(
 	req *useruser.RelationFriendListRequest,
 ) (resp *useruser.RelationFriendListResponse, err error) {
 	// TODO: Your code here...
-	// Request
-	// 1: i64 UserId //用户id
-	// 2: string Token //用户鉴权token
-	// Response
-	// 1: i32 StatusCode //状态码，0- 成功，其他值失败
-	// 2: optional string StatusMsg //返回状态描述
-	// 3: list<User> UserList //用户列表
 	if err = req.IsValid(); err != nil {
 		return resp, err
 	}
