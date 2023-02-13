@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 
 	userservice "github.com/808-not-found/tik_duck/cmd/user/userService"
 	user "github.com/808-not-found/tik_duck/kitex_gen/user"
@@ -116,7 +115,6 @@ func (s *UserServiceImpl) UserInfo(
 	// 生成回应结构体
 	resp = new(user.UserResponse)
 	// 校验参数
-	log.Println(req)
 	err = req.IsValid()
 	if err != nil {
 		return resp, err
