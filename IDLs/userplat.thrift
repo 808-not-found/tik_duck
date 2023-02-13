@@ -7,8 +7,8 @@ struct FavoriteActionRequest {
 }
 
 struct FavoriteActionResponse {
-    1: i32 StatusCode
-    2: string StatusMsg
+    1: i32 StatusCode           //状态码，0-成功，其他值失败
+    2: string StatusMsg         // 返回状态描述
 }
 
 struct FavoriteListRequest {
