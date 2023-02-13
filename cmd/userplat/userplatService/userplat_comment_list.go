@@ -31,13 +31,13 @@ func UserCommentListService(
 		vdID := req.VideoId
 		// 查询数据库
 		var dbComments []*db.Comment
-		dbComments, err = db.GetCommentList(ctx, vdID)
+		dbComments, err = db.GetCommentList(ctx, myID, vdID)
 		if err != nil {
 			resp.StatusCode = 1006
 			return &resp, err
 		}
 		// 数据封装
-		rpcComments, err := pack.Videos(dbComments, vdID)
+		rpcComments, err := pack.Comments(dbComments, myID, vdID)
 		if err != nil {
 			resp.StatusCode = 1007
 			return &resp, err

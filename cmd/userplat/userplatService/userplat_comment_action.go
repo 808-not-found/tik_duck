@@ -34,16 +34,16 @@ func UserCommentActionService(
 		resp.StatusCode = 1008
 		return &resp, err
 	}
-
 	if actionType == 1 {
 		// 评论,操作数据库：
-		err := db.CommentAction(ctx, myID, vdID, commentText)
+		//  返回两个值一条为评论的信息，目前没有处理完这步
+		commentlist, err := db.CommentAction(ctx, myID, vdID, commentText)
 		if err != nil {
 			resp.StatusCode = 2101
 			return &resp, err
 		}
 	} else {
-		// 取消点赞,操作数据库
+		// 取消评论,操作数据库
 		err := db.UnCommentAction(ctx, myID, vdID, commentID)
 		if err != nil {
 			resp.StatusCode = 2102

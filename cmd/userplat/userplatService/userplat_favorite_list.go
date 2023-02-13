@@ -36,7 +36,7 @@ func UserFavoriteListService(
 		return &resp, err
 	}
 	// 数据封装
-	rpcVideos, err := pack.Videos(dbVideos, myID)
+	rpcVideos, err := pack.Videos(ctx, dbVideos, myID)
 	if err != nil {
 		resp.StatusCode = 1007
 		return &resp, err

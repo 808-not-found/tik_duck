@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"time"
 
 	"github.com/808-not-found/tik_duck/pkg/consts"
@@ -20,10 +21,70 @@ func (comment *Comment) TableName() string {
 	return consts.CommentTableName
 }
 
-func CommentAction(myID int64, vdID int64, commentText *string) error {
+func CommentAction(ctx context.Context, myID int64, vdID int64, commentText string) (*Comment, error) {
+	// 增加commentcount
+	// var myUser *User
+	var res *Comment // 返回值为一条评论内容
+	var myVideo *Video
+	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("id", myVideo.CommentCount+1)
+	if err := conn.Error; err != nil {
+		return res, err
+	}
+	// 增加一条记录到Comment表
+	comment := Comment{
+		UserID:  myID,
+		VideoID: vdID,
+		Content: commentText,
+	}
+
+	conn = DB.WithContext(ctx).Create(comment)
+	res = &comment
+	if err := conn.Error; err != nil {
+		return res, err
+	}
+	return res, nil
+}
+
+func UnCommentAction(ctx context.Context, myID int64, vdID int64, commentID int64) error {
+	// 减少commentcount
+	// var myUser *User
+	var myVideo *Video
+	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("id", myVideo.CommentCount-1)
+	if err := conn.Error; err != nil {
+		return err
+	}
+	// 减少一条记录到Comment表
+	comment := Comment{
+		UserID:  myID,
+		VideoID: vdID,
+		ID:      commentID, // 应该是删除的commentID的内容的ID
+	}
+	conn = DB.WithContext(ctx).Create(comment)
+	if err := conn.Error; err != nil {
+		return err
+	}
 	return nil
 }
 
-func UnCommentAction(myID int64, vdID int64, commentID int64) error {
-	return nil
+func GetCommentList(ctx context.Context, myID int64, vdID int64) ([]*Comment, error) {
+	var res []*Comment
+	// 找到所有和 myID 相关的记录
+	var commentList []*Comment
+	conn := DB.WithContext(ctx).Where("user_id = ?", myID).Find(&commentList)
+	if err := conn.Error; err != nil {
+		return res, err
+	}
+
+	// 获取所有的评论 ID
+	var commentIDList []int64
+	for _, value := range commentList {
+		commentIDList = append(commentIDList, value.UserID)
+	}
+
+	// 找到所有对应的视频结构体
+	conn = DB.WithContext(ctx).Where("id = ?", commentIDList).Find(&res)
+	if err := conn.Error; err != nil {
+		return res, err
+	}
+	return res, nil
 }
