@@ -12,8 +12,9 @@ const TokenExpireDuration = JWTOverTime
 var MySecret = []byte(JWTSecret) //nolint:gochecknoglobals
 
 // 生成jwt //目前是只进行记录用户名.
-func GenToken(username string) (string, error) {
+func GenToken(username string, id int64) (string, error) {
 	c := MyClaims{
+		id,
 		username,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(TokenExpireDuration).Unix(),

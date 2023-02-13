@@ -15,6 +15,7 @@ const (
 
 // 目前jwt的claims中 只记录了用户名一个信息.
 type MyClaims struct {
+	ID       int64
 	Username string `json:"username"`
 	jwt.StandardClaims
 }
