@@ -8,7 +8,7 @@ import (
 	"github.com/808-not-found/tik_duck/pkg/consts"
 )
 
-func User(m *db.User) (*user.User) {
+func User(m *db.User) *user.User {
 	return &user.User{
 		Id:            m.ID,
 		Name:          m.Name,
@@ -20,8 +20,9 @@ func User(m *db.User) (*user.User) {
 
 // 传入的是 数据库的原始值 这里返回的应该是封装好了 用于 rpc 的值.
 func Video(ctx context.Context, m *db.Video, myID int64) (*user.Video, error) {
+	var res *user.Video
 	if m == nil {
-		return nil, nil
+		return res, nil
 	}
 
 	// 查询数据库中该视频的作者 db User
@@ -32,10 +33,13 @@ func Video(ctx context.Context, m *db.Video, myID int64) (*user.Video, error) {
 
 	// 封装转换 rpc User
 	var rpcAuthor *user.User
-	if myID == 0 {	// 未登录
+	if myID == 0 { // 未登录
 		rpcAuthor = User(&dbAuthor)
-	} else {	// 登录
+	} else { // 登录
 		rpcAuthor, err = DBUserToRPCUser(&dbAuthor, myID)
+		if err != nil {
+			return nil, err
+		}
 	}
 	// TODO: 完成以下
 	return &user.Video{

@@ -8,11 +8,14 @@ import (
 	"github.com/808-not-found/tik_duck/pkg/jwt"
 )
 
-func UserPublishActionService(ctx context.Context, req *user.PublishActionRequest) (*user.PublishActionResponse, error) {
-	var msg string = ""
-	resp := user.PublishActionResponse {
+func UserPublishActionService(
+	ctx context.Context,
+	req *user.PublishActionRequest,
+) (*user.PublishActionResponse, error) {
+	var msg string
+	resp := user.PublishActionResponse{
 		StatusCode: 0,
-		StatusMsg: &msg,
+		StatusMsg:  &msg,
 	}
 	// 用户鉴权
 	claims, err := jwt.ParseToken(req.Token)

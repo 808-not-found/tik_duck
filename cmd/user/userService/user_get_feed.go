@@ -12,10 +12,10 @@ import (
 
 // statusCode, statusMsg, videoList, nextTime, err := userservice.UserGetFeedService(ctx, req).
 func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (*user.FeedResponse, error) {
-	var msg string = ""
-	resp := user.FeedResponse {
+	var msg string
+	resp := user.FeedResponse{
 		StatusCode: 0,
-		StatusMsg: &msg,
+		StatusMsg:  &msg,
 	}
 
 	// 验证登录状态
@@ -43,7 +43,7 @@ func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (*user.FeedR
 	if len(dbVideos) == 0 {
 		nextTime = time.Now().Unix()
 	} else {
-		nextTime = dbVideos[len(dbVideos) - 1].PublishTime.Unix()
+		nextTime = dbVideos[len(dbVideos)-1].PublishTime.Unix()
 	}
 
 	// 封装数据
@@ -52,12 +52,12 @@ func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (*user.FeedR
 		resp.StatusCode = 1013
 		return &resp, err
 	}
-	res := user.FeedResponse {
+	res := user.FeedResponse{
 		StatusCode: 0,
-		VideoList: rpcVideos,
-		NextTime: &nextTime,
+		VideoList:  rpcVideos,
+		NextTime:   &nextTime,
 	}
-	
+
 	// 返回数据
 	return &res, err
 }

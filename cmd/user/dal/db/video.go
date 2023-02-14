@@ -26,17 +26,17 @@ func (v *Video) TableName() string {
 
 func UserGetFeed(ctx context.Context, latestTime *int64) ([]*Video, error) {
 	// 初始化数据
-	var cur_time time.Time
+	var curTime time.Time
 	if latestTime == nil || *latestTime == 0 {
-		cur_time = time.Now()
+		curTime = time.Now()
 	} else {
-		cur_time = time.Unix(*latestTime, 0)
+		curTime = time.Unix(*latestTime, 0)
 	}
 	const limit = 30
 
 	// 获取视频列表
 	var videoList []*Video
-	conn := DB.WithContext(ctx).Model(&Video{}).Limit(limit).Where("publish_time <= ?", cur_time).Find(&videoList)
+	conn := DB.WithContext(ctx).Model(&Video{}).Limit(limit).Where("publish_time <= ?", curTime).Find(&videoList)
 	if err := conn.Error; err != nil {
 		return nil, err
 	}
