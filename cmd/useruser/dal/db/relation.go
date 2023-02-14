@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"time"
 
 	"github.com/808-not-found/tik_duck/pkg/consts"
@@ -36,25 +37,69 @@ func (u *Follow) TableName() string {
 	return consts.FollowTableName
 }
 
-func FollowAction(myID int64, toID int64) error {
+// myID 关注 toID.
+func FollowAction(ctx context.Context, myID int64, toID int64) error {
+	// 增加follow count
+	var myUser *User
+	conn := DB.WithContext(ctx).Where("id = ?", myID).First(&myUser).Update("id", myUser.FollowCount+1)
+	if err := conn.Error; err != nil {
+		return err
+	}
+	// 增加follower count
+	var toUser *User
+	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("id", toUser.FollowerCount+1)
+	if err := conn.Error; err != nil {
+		return err
+	}
+	// 增加一条记录到follow表
+	follow := Follow{
+		FromUserID: myID,
+		ToUserID:   toID,
+	}
+	conn = DB.WithContext(ctx).Create(follow)
+	if err := conn.Error; err != nil {
+		return err
+	}
 	return nil
 }
 
-func UnFollowAction(myID int64, toID int64) error {
+func UnFollowAction(ctx context.Context, myID int64, toID int64) error {
+	// 减少follow count
+	var myUser *User
+	conn := DB.WithContext(ctx).Where("id = ?", myID).Find(&myUser).Update("follow_count", myUser.FollowCount-1)
+	if err := conn.Error; err != nil {
+		return err
+	}
+	// 减少follower count
+	var toUser *User
+	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("id", toUser.FollowerCount-1)
+	if err := conn.Error; err != nil {
+		return err
+	}
+	// 删除follow表中的一条记录
+	follow := Follow{
+		FromUserID: myID,
+		ToUserID:   toID,
+	}
+	conn = DB.WithContext(ctx).Delete(follow)
+	if err := conn.Error; err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func GetFollowList(myID int64) ([]*User, error) {
+func GetFollowList(ctx context.Context, myID int64) ([]*User, error) {
 	var res []*User
 	return res, nil
 }
 
-func GetFollowerList(myID int64) ([]*User, error) {
+func GetFollowerList(ctx context.Context, myID int64) ([]*User, error) {
 	var res []*User
 	return res, nil
 }
 
-func GetFriendList(myID int64) ([]*User, error) {
+func GetFriendList(ctx context.Context, myID int64) ([]*User, error) {
 	var res []*User
 	return res, nil
 }

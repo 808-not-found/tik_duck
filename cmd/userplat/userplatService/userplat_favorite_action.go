@@ -1,5 +1,5 @@
 package userplatservice
 
-func  UserplatFavoriteService(){
-	
+func UserplatFavoriteService() {
+
 }
