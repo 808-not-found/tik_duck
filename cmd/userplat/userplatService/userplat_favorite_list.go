@@ -30,7 +30,7 @@ func UserFavoriteListService(
 	}
 	// 查询数据库
 	var dbVideos []*db.Video
-	dbVideos, err = db.GetFavoriteList(ctx, myID)
+	dbVideos, err = db.GetFavoriteList(ctx, req.UserId)
 	if err != nil {
 		resp.StatusCode = 1006
 		return &resp, err

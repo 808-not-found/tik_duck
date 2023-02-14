@@ -51,6 +51,15 @@ func (like *Like) TableName() string {
 	return consts.LikeTableName
 }
 
+// 传入用户id 返回用户信息.
+func GetUser(ctx context.Context, userID int64) (User, error) {
+	res := User{}
+	if err := DB.WithContext(ctx).Where("id = ?", userID).Find(&res).Error; err != nil {
+		return res, err
+	}
+	return res, nil
+}
+
 // myID 点赞 vdID
 func LikeAction(ctx context.Context, myID int64, vdID int64) error {
 	// 增加favoritecount
@@ -92,11 +101,11 @@ func UnLikeAction(ctx context.Context, myID int64, vdID int64) error {
 	return nil
 }
 
-func GetFavoriteList(ctx context.Context, myID int64) ([]*Video, error) {
+func GetFavoriteList(ctx context.Context, userID int64) ([]*Video, error) {
 	var res []*Video
-	// 找到所有和 myID 相关的记录
+	// 找到所有和 userID 相关的记录
 	var favoriteList []*Like
-	conn := DB.WithContext(ctx).Where("user_id = ?", myID).Find(&favoriteList)
+	conn := DB.WithContext(ctx).Where("user_id = ?", userID).Find(&favoriteList)
 	if err := conn.Error; err != nil {
 		return res, err
 	}
