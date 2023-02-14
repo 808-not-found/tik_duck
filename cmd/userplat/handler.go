@@ -21,7 +21,7 @@ func (s *UserPlatServiceImpl) UserFavoriteAction(
 // UserFavoriteList implements the UserPlatServiceImpl interface.
 func (s *UserPlatServiceImpl) UserFavoriteList(
 	ctx context.Context, req *userplat.FavoriteListRequest,
-	) (resp *userplat.FavoriteListResponse, err error) {
+) (resp *userplat.FavoriteListResponse, err error) {
 	// TODO: Your code here...
 	return
 }
@@ -29,7 +29,7 @@ func (s *UserPlatServiceImpl) UserFavoriteList(
 // UserCommentAction implements the UserPlatServiceImpl interface.
 func (s *UserPlatServiceImpl) UserCommentAction(
 	ctx context.Context, req *userplat.CommentActionRequest,
-	) (resp *userplat.CommentActionResponse, err error) {
+) (resp *userplat.CommentActionResponse, err error) {
 	// TODO: Your code here...
 	return
 }
@@ -37,7 +37,7 @@ func (s *UserPlatServiceImpl) UserCommentAction(
 // UserCommentList implements the UserPlatServiceImpl interface.
 func (s *UserPlatServiceImpl) UserCommentList(
 	ctx context.Context, req *userplat.CommentListRequest,
-	) (resp *userplat.CommentListResponse, err error) {
+) (resp *userplat.CommentListResponse, err error) {
 	// TODO: Your code here...
 	return
 }
