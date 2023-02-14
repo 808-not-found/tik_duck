@@ -28,7 +28,7 @@ func UserRelationFollowerList(
 	}
 	// 请求数据库
 	var dbUsers []*db.User
-	dbUsers, err = db.GetFollowerList(myID)
+	dbUsers, err = db.GetFollowerList(ctx, myID)
 	if err != nil {
 		resp.StatusCode = 1008
 		return &resp, nil

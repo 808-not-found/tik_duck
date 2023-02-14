@@ -5,42 +5,31 @@ import (
 
 	"github.com/808-not-found/tik_duck/cmd/user/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
-	"github.com/808-not-found/tik_duck/pkg/consts"
 	"github.com/808-not-found/tik_duck/pkg/jwt"
 )
 
-func UserPublishActionService(ctx context.Context, req *user.PublishActionRequest) (int32, string, error) {
-	var statusCode int32
-	var statusMsg string
-
-	// 取出请求信息
-	token := req.Token
-	filePath := req.FilePath
-	coverPath := req.CoverPath
-	title := req.Title
-
+func UserPublishActionService(
+	ctx context.Context,
+	req *user.PublishActionRequest,
+) (*user.PublishActionResponse, error) {
+	var msg string
+	resp := user.PublishActionResponse{
+		StatusCode: 0,
+		StatusMsg:  &msg,
+	}
 	// 用户鉴权
-	claims, err := jwt.ParseToken(token)
+	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
-		statusCode = 1103
-		return statusCode, statusMsg, err
+		resp.StatusCode = 1011
+		return &resp, err
 	}
-	username := claims.Username
-	userInfo, err := db.QueryUser(ctx, username)
+	myID := claims.ID
+	// 写入数据
+	err = db.UserPublishAction(ctx, myID, req.FilePath, req.CoverPath, req.Title)
 	if err != nil {
-		statusCode = 1104
-		return statusCode, statusMsg, err
+		resp.StatusCode = 1012
+		return &resp, err
 	}
-	userID := userInfo.ID
-
-	// 向数据库中写入数据
-	err = db.UserPublishAction(ctx, userID, filePath, coverPath, title)
-	if err != nil {
-		statusCode = 1105
-		return statusCode, statusMsg, err
-	}
-
 	// 成功返回
-	statusMsg = consts.Success
-	return statusCode, statusMsg, nil
+	return &resp, nil
 }

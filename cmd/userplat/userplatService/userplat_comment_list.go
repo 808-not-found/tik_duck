@@ -1,5 +1,5 @@
 package userplatservice
 
-func  UserplatCommentListService(){
-	
+func UserplatCommentListService() {
+
 }

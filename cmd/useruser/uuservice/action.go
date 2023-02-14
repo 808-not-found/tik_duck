@@ -36,23 +36,15 @@ func UserRelationActionService(
 	}
 
 	if actionType == 1 {
-		// 关注
-		// 操作数据库：
-		// 1.增加一个关注数
-		// 2.增加一个粉丝数
-		// 3.向Follow表中增加一条记录
-		err := db.FollowAction(myID, toID)
+		// 关注 操作数据库
+		err := db.FollowAction(ctx, myID, toID)
 		if err != nil {
 			resp.StatusCode = 1003
 			return &resp, err
 		}
 	} else {
-		// 取关
-		// 操作数据库：
-		// 1.减少一个关注数
-		// 2.减少一个粉丝数
-		// 3.向Follow表中删除一条记录
-		err := db.UnFollowAction(myID, toID)
+		// 取关 操作数据库
+		err := db.UnFollowAction(ctx, myID, toID)
 		if err != nil {
 			resp.StatusCode = 1004
 			return &resp, err
