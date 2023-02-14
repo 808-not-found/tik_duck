@@ -6,25 +6,38 @@ import (
 	"github.com/808-not-found/tik_duck/cmd/user/dal/db"
 	"github.com/808-not-found/tik_duck/cmd/user/pack"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
-	"github.com/808-not-found/tik_duck/pkg/consts"
+	"github.com/808-not-found/tik_duck/pkg/jwt"
 )
 
-func UserPublishListService(ctx context.Context, userID int32) (int32, string, []*user.Video, error) {
+func UserPublishListService(ctx context.Context, req *user.PublishListRequest) (*user.PublishListResponse, error) {
 	// 创建返回参数
-	var statusCode int32
-	var statusMsg string
-	var videoList []*user.Video
-
-	// 向数据库获取视频列表
-	dbvideoList, err := db.UserPublishList(ctx, userID)
-	if err != nil {
-		statusCode = 1102
-		return statusCode, statusMsg, nil, err
+	var msg string = ""
+	resp := user.PublishListResponse {
+		StatusCode: 0,
+		StatusMsg: &msg,
 	}
-	// 将数据打包
-	videoList = pack.Videos(dbvideoList)
+
+	// 用户鉴权
+	claims, err := jwt.ParseToken(req.Token)
+	if err != nil {
+		resp.StatusCode = 1011
+		return &resp, nil
+	}
+	myID := claims.ID
+	// 获取数据
+	dbVideos, err := db.UserPublishList(ctx, int32(req.UserId))
+	if err != nil {
+		resp.StatusCode = 1012
+		return &resp, nil
+	}
+	// 封装数据
+	rpcVideos, err := pack.Videos(ctx, dbVideos, myID)
+	if err != nil {
+		resp.StatusCode = 1013
+		return &resp, nil
+	}
+	resp.VideoList = rpcVideos
 
 	// 成功返回
-	statusMsg = consts.Success
-	return statusCode, statusMsg, videoList, nil
+	return &resp, nil
 }
