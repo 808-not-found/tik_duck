@@ -37,23 +37,22 @@ func UserCommentActionService(
 	}
 	if actionType == 1 {
 		// 评论,操作数据库：
-		//  返回两个值一条为评论的信息，目前没有处理完这步
+		// 返回两个值一条为评论的信息，目前没有处理完这步
 
-		var dbComments *db.Comment
+		var dbComment *db.Comment
 		// dbComments, err = db.GetFavoriteList(ctx, req.UserId)
-		dbComments, err := db.CommentAction(ctx, myID, vdID, *commentText)
+		dbComment, err := db.CommentAction(ctx, myID, vdID, *commentText)
 		if err != nil {
 			resp.StatusCode = 2101
 			return &resp, err
 		}
 		// 数据库封装
-		rpcComments, err := pack.Comment(ctx, dbComments, myID)
+		rpcComment, err := pack.Comment(ctx, dbComment, myID)
 		if err != nil {
 			resp.StatusCode = 1007
 			return &resp, err
 		}
-		resp.Comment = rpcComments
-
+		resp.Comment = rpcComment
 		// return &resp, nil
 	} else {
 		// 取消评论,操作数据库

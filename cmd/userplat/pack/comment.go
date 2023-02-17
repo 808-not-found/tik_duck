@@ -12,11 +12,19 @@ func Comment(ctx context.Context, m *db.Comment, myID int64) (*userplat.Comment,
 	if m == nil {
 		return res, nil
 	}
-	// TODO
-
-	// return res, nil
+	dbUser, err := db.GetUser(ctx, m.UserID)
+	if err != nil {
+		return nil, err
+	}
+	rpcUser, err := DBUserToRPCUser(&dbUser, myID)
+	if err != nil {
+		return nil, err
+	}
 	return &userplat.Comment{
-		Id: m.ID,
+		Id:         m.ID,
+		User:       rpcUser,
+		Content:    m.Content,
+		CreateDate: m.CommentTime.Format("mm-dd"),
 	}, nil
 }
 
