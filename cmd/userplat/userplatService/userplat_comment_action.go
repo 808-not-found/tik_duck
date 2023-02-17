@@ -40,22 +40,21 @@ func UserCommentActionService(
 		//  返回两个值一条为评论的信息，目前没有处理完这步
 
 		var dbComments *db.Comment
-		//dbComments, err = db.GetFavoriteList(ctx, req.UserId)
+		// dbComments, err = db.GetFavoriteList(ctx, req.UserId)
 		dbComments, err := db.CommentAction(ctx, myID, vdID, *commentText)
 		if err != nil {
 			resp.StatusCode = 2101
 			return &resp, err
 		}
-		//数据库封装
-		rpcComments, err := pack.Comments(ctx, dbComments, myID)
+		// 数据库封装
+		rpcComments, err := pack.Comment(ctx, dbComments, myID)
 		if err != nil {
 			resp.StatusCode = 1007
 			return &resp, err
 		}
 		resp.Comment = rpcComments
 
-		return &resp, nil
-
+		// return &resp, nil
 	} else {
 		// 取消评论,操作数据库
 		err := db.UnCommentAction(ctx, myID, vdID, *commentID)
@@ -66,5 +65,4 @@ func UserCommentActionService(
 	}
 
 	return &resp, nil
-
 }

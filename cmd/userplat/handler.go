@@ -18,16 +18,16 @@ func (s *UserPlatServiceImpl) UserFavoriteAction(
 	//1: i32 StatusCode           //状态码，0-成功，其他值失败
 	//2: string StatusMsg         // 返回状态描述
 
-	//生成回应结构体
+	// 生成回应结构体
 	resp = new(userplat.FavoriteActionResponse)
-	//校验参数
+	// 校验参数
 	err = req.IsValid()
 	if err != nil {
 		resp.StatusCode = 1201
 		return resp, err
 	}
 	// 实现逻辑
-	//StatusCode, StatusMsg
+	// StatusCode, StatusMsg
 	resp, err = userplatservice.UserFavoriteActionService(ctx, req)
 	if err != nil {
 		resp.StatusCode = 1202
@@ -35,7 +35,6 @@ func (s *UserPlatServiceImpl) UserFavoriteAction(
 	}
 
 	return resp, nil
-
 }
 
 // UserFavoriteList implements the UserPlatServiceImpl interface.
@@ -47,16 +46,16 @@ func (s *UserPlatServiceImpl) UserFavoriteList(
 	//2: optional string StatusMsg //返回状态描述
 	//3: list<Video> VideoList //用户点赞视频列表
 
-	//生成回应结构体
+	// 生成回应结构体
 	resp = new(userplat.FavoriteListResponse)
-	//校验参数
+	// 校验参数
 	err = req.IsValid()
 	if err != nil {
 		resp.StatusCode = 1201
 		return resp, err
 	}
-	//实现逻辑
-	//StatusCode, StatusMsg, VideoList
+	// 实现逻辑
+	// StatusCode, StatusMsg, VideoList
 	resp, err = userplatservice.UserFavoriteListService(ctx, req)
 	if err != nil {
 		resp.StatusCode = 1202
@@ -64,7 +63,6 @@ func (s *UserPlatServiceImpl) UserFavoriteList(
 	}
 
 	return resp, nil
-
 }
 
 // UserCommentAction implements the UserPlatServiceImpl interface.
@@ -76,16 +74,16 @@ func (s *UserPlatServiceImpl) UserCommentAction(
 	//2: optional string StatusMsg //返回状态描述
 	//3: optional Comment Comment //评论成功返回评论内容，不需要重新拉取整个列表
 
-	//生成回应结构体
+	// 生成回应结构体
 	resp = new(userplat.CommentActionResponse)
-	//校验参数
+	// 校验参数
 	err = req.IsValid()
 	if err != nil {
 		resp.StatusCode = 1203
 		return resp, err
 	}
-	//实现逻辑
-	//StatusCode, StatusMsg, Comment  resp
+	// 实现逻辑
+	// StatusCode, StatusMsg, Comment  resp
 	resp, err = userplatservice.UserCommentActionService(ctx, req)
 	if err != nil {
 		resp.StatusCode = 1204
@@ -93,7 +91,6 @@ func (s *UserPlatServiceImpl) UserCommentAction(
 	}
 
 	return resp, nil
-
 }
 
 // UserCommentList implements the UserPlatServiceImpl interface.
@@ -105,16 +102,16 @@ func (s *UserPlatServiceImpl) UserCommentList(
 	//2: optional string StatusMsg //返回状态描述
 	//3: list<Comment> CommentList //评论列表
 
-	//生成回应结构体
+	// 生成回应结构体
 	resp = new(userplat.CommentListResponse)
-	//校验参数
+	// 校验参数
 	err = req.IsValid()
 	if err != nil {
 		resp.StatusCode = 1203
 		return resp, err
 	}
-	//实现逻辑
-	//StatusCode, StatusMsg, CommentList
+	// 实现逻辑
+	// StatusCode, StatusMsg, CommentList
 	resp, err = userplatservice.UserCommentListService(ctx, req)
 	if err != nil {
 		resp.StatusCode = 1204

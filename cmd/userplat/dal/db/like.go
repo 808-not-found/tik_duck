@@ -60,7 +60,7 @@ func GetUser(ctx context.Context, userID int64) (User, error) {
 	return res, nil
 }
 
-// myID 点赞 vdID
+// myID 点赞 vdID.
 func LikeAction(ctx context.Context, myID int64, vdID int64) error {
 	// 增加favoritecount
 	// var myUser *User
@@ -123,5 +123,4 @@ func GetFavoriteList(ctx context.Context, userID int64) ([]*Video, error) {
 	}
 
 	return res, nil
-
 }
