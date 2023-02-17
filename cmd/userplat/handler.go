@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-    
+
 	userplatservice "github.com/808-not-found/tik_duck/cmd/userplat/userplatService"
 	userplat "github.com/808-not-found/tik_duck/kitex_gen/userplat"
 )
@@ -21,20 +21,19 @@ func (s *UserPlatServiceImpl) UserFavoriteAction(
 	//生成回应结构体
 	resp = new(userplat.FavoriteActionResponse)
 	//校验参数
-	err = req.isValid()
+	err = req.IsValid()
 	if err != nil {
 		resp.StatusCode = 1201
 		return resp, err
 	}
 	// 实现逻辑
-	StatusCode, StatusMsg, err := userplatservice.UserFavoriteActionService(ctx, req)
+	//StatusCode, StatusMsg
+	resp, err = userplatservice.UserFavoriteActionService(ctx, req)
 	if err != nil {
 		resp.StatusCode = 1202
 		return resp, err
 	}
-	resp.StatusCode = StatusCode
-	resp.StatusMsg = &StatusMsg
-	//返回结构体
+
 	return resp, nil
 
 }
@@ -57,14 +56,12 @@ func (s *UserPlatServiceImpl) UserFavoriteList(
 		return resp, err
 	}
 	//实现逻辑
-	StatusCode, StatusMsg, VideoList, err := userplatservice.UserFavoriteListService(ctx, req)
+	//StatusCode, StatusMsg, VideoList
+	resp, err = userplatservice.UserFavoriteListService(ctx, req)
 	if err != nil {
 		resp.StatusCode = 1202
 		return resp, err
 	}
-	resp.StatusCode = StatusCode
-	resp.StatusMsg = &StatusMsg
-	resp.VideoList = VideoList
 
 	return resp, nil
 
@@ -88,14 +85,12 @@ func (s *UserPlatServiceImpl) UserCommentAction(
 		return resp, err
 	}
 	//实现逻辑
-	StatusCode, StatusMsg, Comment, err := userplatservice.UserCommentActionService(ctx, req)
+	//StatusCode, StatusMsg, Comment  resp
+	resp, err = userplatservice.UserCommentActionService(ctx, req)
 	if err != nil {
 		resp.StatusCode = 1204
 		return resp, err
 	}
-	resp.StatusCode = StatusCode
-	resp.StatusMsg = &StatusMsg
-	resp.Comment = Comment
 
 	return resp, nil
 
@@ -119,14 +114,12 @@ func (s *UserPlatServiceImpl) UserCommentList(
 		return resp, err
 	}
 	//实现逻辑
-	StatusCode, StatusMsg, CommentList, err := userplatservice.UserCommentListService(ctx, req)
+	//StatusCode, StatusMsg, CommentList
+	resp, err = userplatservice.UserCommentListService(ctx, req)
 	if err != nil {
 		resp.StatusCode = 1204
 		return resp, err
 	}
-	resp.StatusCode = StatusCode
-	resp.StatusMsg = &StatusMsg
-	resp.CommentList = CommentList
 
 	return resp, nil
 }
