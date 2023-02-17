@@ -88,6 +88,13 @@ func UserPublishList(ctx context.Context, req *user.PublishListRequest) (*user.P
 	return resp, err
 }
 
-// func UserPublishAction(ctx context.Context, req *user.PublishActionRequest) (*user.PublishActionResponse, error) {
-
-// }
+func UserPublishAction(ctx context.Context, req *user.PublishActionRequest) (*user.PublishActionResponse, error) {
+	resp, err := userClient.UserPublishAction(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode != 0 {
+		return nil, errors.New(*resp.StatusMsg) // nolint: all
+	}
+	return resp, err
+}

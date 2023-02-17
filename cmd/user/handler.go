@@ -59,15 +59,10 @@ func (s *UserServiceImpl) UserGetFeed(
 		return resp, err
 	}
 
-	statusCode, statusMsg, videoList, nextTime, err := userservice.UserGetFeedService(ctx, req)
+	resp, err = userservice.UserGetFeedService(ctx, req)
 	if err != nil {
-		resp.StatusCode = 1101
 		return resp, err
 	}
-	resp.StatusCode = statusCode
-	resp.StatusMsg = &statusMsg
-	resp.VideoList = videoList
-	resp.NextTime = &nextTime
 
 	return resp, nil
 }
@@ -137,12 +132,6 @@ func (s *UserServiceImpl) UserPublishList(
 	ctx context.Context,
 	req *user.PublishListRequest,
 ) (resp *user.PublishListResponse, err error) {
-	// TODO: Your code here...
-	// 1: i32 StatusCode //状态码，0-成功，其他值-失败
-	// 2: optional string StatusMsg //返回状态描述
-	// 3: list<Video> VideoList //用户发布的视频列表
-
-	// 生成返回结构体
 	resp = new(user.PublishListResponse)
 
 	// 判断请求是否合法
@@ -152,15 +141,10 @@ func (s *UserServiceImpl) UserPublishList(
 	}
 
 	// 通过接口查询视频列表
-	statusCode, statusMsg, videoList, err := userservice.UserPublishListService(ctx, int32(req.UserId))
+	resp, err = userservice.UserPublishListService(ctx, req)
 	if err != nil {
-		resp.StatusCode = 1102
 		return resp, err
 	}
-
-	resp.StatusCode = statusCode
-	resp.StatusMsg = &statusMsg
-	resp.VideoList = videoList
 
 	return resp, nil
 }
@@ -172,21 +156,19 @@ func (s *UserServiceImpl) UserPublishAction(
 	req *user.PublishActionRequest,
 ) (resp *user.PublishActionResponse, err error) {
 	// TODO: Your code here...
-	// 1: i32 StatusCode //状态码，0-成功，其他值-失败
-	// 2: optional string StatusMsg //返回状态描述
 	resp = new(user.PublishActionResponse)
+
+	// 判断合法性
 	if err = req.IsValid(); err != nil {
 		resp.StatusCode = 1101
 		return resp, err
 	}
 
-	statusCode, statusMsg, err := userservice.UserPublishActionService(ctx, req)
+	resp, err = userservice.UserPublishActionService(ctx, req)
 	if err != nil {
-		resp.StatusCode = 1102
-		return resp, nil
+		return resp, err
 	}
-	resp.StatusCode = statusCode
-	resp.StatusMsg = &statusMsg
+
 	return resp, err
 }
 

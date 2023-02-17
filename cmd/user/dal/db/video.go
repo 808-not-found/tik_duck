@@ -24,27 +24,24 @@ func (v *Video) TableName() string {
 	return consts.VideoTableName
 }
 
-func UserGetFeed(ctx context.Context, latestTime time.Time) ([]*Video, int64, error) {
+func UserGetFeed(ctx context.Context, latestTime *int64) ([]*Video, error) {
 	// 初始化数据
-	if latestTime.IsZero() {
-		latestTime = time.Now()
+	var curTime time.Time
+	if latestTime == nil || *latestTime == 0 {
+		curTime = time.Now()
+	} else {
+		curTime = time.Unix(*latestTime, 0)
 	}
 	const limit = 30
 
 	// 获取视频列表
 	var videoList []*Video
-	conn := DB.WithContext(ctx).Model(&Video{}).Limit(limit).Where("publish_time <= ?", latestTime).Find(&videoList)
+	conn := DB.WithContext(ctx).Model(&Video{}).Limit(limit).Where("publish_time <= ?", curTime).Find(&videoList)
 	if err := conn.Error; err != nil {
-		nilTime := time.Time{}
-		return nil, nilTime.Unix(), err
+		return nil, err
 	}
 
-	// 获取最早时间
-	var firstVideo Video
-	conn.Order("publish_time").First(&firstVideo)
-	nextTime := firstVideo.PublishTime.Unix()
-
-	return videoList, nextTime, nil
+	return videoList, nil
 }
 
 func UserPublishList(ctx context.Context, userID int32) ([]*Video, error) {
