@@ -17,7 +17,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	addr, _ := net.ResolveTCPAddr("tcp", "127.0.0.1:10001")
+	addr, _ := net.ResolveTCPAddr("tcp", "127.0.0.1:10002")
 	svr := userplat.NewServer(new(UserPlatServiceImpl),
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: consts.UserPlatServiceName}), // server name
 		server.WithServiceAddr(addr), server.WithRegistry(r))

@@ -2,28 +2,38 @@ package controller
 
 import (
 	"context"
+	"log"
 	"net/http"
 
+	"github.com/808-not-found/tik_duck/cmd/web/rpc"
+	"github.com/808-not-found/tik_duck/kitex_gen/userplat"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
-// FavoriteAction no practical effect, just check if token is valid.
 func FavoriteAction(ctx context.Context, c *app.RequestContext) {
-	token := c.Query("token")
-
-	if _, exist := usersLoginInfo[token]; exist {
-		c.JSON(http.StatusOK, Response{StatusCode: 0})
-	} else {
-		c.JSON(http.StatusOK, Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
+	var feedReq userplat.FavoriteActionRequest
+	if err := c.Bind(&feedReq); err != nil {
+		log.Fatalln(err)
+		return
 	}
+	resp, err := rpc.UserFavoriteAction(context.Background(), &feedReq)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	c.JSON(http.StatusOK, resp)
 }
 
-// FavoriteList all users have same favorite video list.
 func FavoriteList(ctx context.Context, c *app.RequestContext) {
-	c.JSON(http.StatusOK, VideoListResponse{
-		Response: Response{
-			StatusCode: 0,
-		},
-		VideoList: DemoVideos,
-	})
+	var feedReq userplat.FavoriteListRequest
+	if err := c.Bind(&feedReq); err != nil {
+		log.Fatalln(err)
+		return
+	}
+	resp, err := rpc.UserFavoriteList(context.Background(), &feedReq)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	c.JSON(http.StatusOK, resp)
 }
