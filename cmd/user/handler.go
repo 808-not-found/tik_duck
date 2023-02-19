@@ -52,12 +52,12 @@ func (s *UserServiceImpl) UserGetFeed(
 	// 4: optional i64 NextTime //本次返回的视频中，发布最早的时间，作为下次请求时的latest_time
 
 	// 创建回应结构体
-	resp = new(user.FeedResponse)
+	// resp = new(user.FeedResponse)
 
 	// 判断请求是否合法
-	if err = req.IsValid(); err != nil {
-		return resp, err
-	}
+	// if err = req.IsValid(); err != nil {
+	// 	return resp, err
+	// }
 
 	resp, err = userservice.UserGetFeedService(ctx, req)
 	if err != nil {
@@ -132,13 +132,13 @@ func (s *UserServiceImpl) UserPublishList(
 	ctx context.Context,
 	req *user.PublishListRequest,
 ) (resp *user.PublishListResponse, err error) {
-	resp = new(user.PublishListResponse)
+	// resp = new(user.PublishListResponse)
 
 	// 判断请求是否合法
-	if err = req.IsValid(); err != nil {
-		resp.StatusCode = 1101
-		return resp, err
-	}
+	// if err = req.IsValid(); err != nil {
+	// 	resp.StatusCode = 1101
+	// 	return resp, err
+	// }
 
 	// 通过接口查询视频列表
 	resp, err = userservice.UserPublishListService(ctx, req)
@@ -156,13 +156,13 @@ func (s *UserServiceImpl) UserPublishAction(
 	req *user.PublishActionRequest,
 ) (resp *user.PublishActionResponse, err error) {
 	// TODO: Your code here...
-	resp = new(user.PublishActionResponse)
+	// resp = new(user.PublishActionResponse)
 
 	// 判断合法性
-	if err = req.IsValid(); err != nil {
-		resp.StatusCode = 1101
-		return resp, err
-	}
+	// if err = req.IsValid(); err != nil {
+	// 	resp.StatusCode = 1101
+	// 	return resp, err
+	// }
 
 	resp, err = userservice.UserPublishActionService(ctx, req)
 	if err != nil {

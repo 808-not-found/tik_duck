@@ -20,20 +20,20 @@ func UserPublishListService(ctx context.Context, req *user.PublishListRequest) (
 	// 用户鉴权
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
-		resp.StatusCode = 1011
+		resp.StatusCode = 1026
 		return &resp, nil
 	}
 	myID := claims.ID
 	// 获取数据
 	dbVideos, err := db.UserPublishList(ctx, int32(req.UserId))
 	if err != nil {
-		resp.StatusCode = 1012
+		resp.StatusCode = 1027
 		return &resp, nil
 	}
 	// 封装数据
 	rpcVideos, err := pack.Videos(ctx, dbVideos, myID)
 	if err != nil {
-		resp.StatusCode = 1013
+		resp.StatusCode = 1028
 		return &resp, nil
 	}
 	resp.VideoList = rpcVideos
