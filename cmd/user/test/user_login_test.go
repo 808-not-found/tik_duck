@@ -1,15 +1,16 @@
-package userservice
+package userservice_test
 
 import (
 	"context"
 	"testing"
 
+	userservice "github.com/808-not-found/tik_duck/cmd/user/userService"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
 )
 
 func TestUserLoginService(t *testing.T) {
 	type args struct {
-		ctx context.Context
+		ctx context.Context //nolint
 		req *user.UserLoginRequest
 	}
 	tests := []struct {
@@ -25,7 +26,7 @@ func TestUserLoginService(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, got1, got2, got3, err := UserLoginService(tt.args.ctx, tt.args.req)
+			got, got1, got2, got3, err := userservice.UserLoginService(tt.args.ctx, tt.args.req)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("UserLoginService() error = %v, wantErr %v", err, tt.wantErr)
 				return

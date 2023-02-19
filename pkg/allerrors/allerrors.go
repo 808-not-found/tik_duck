@@ -65,5 +65,5 @@ func ErrUserRegisterRequestPassword() error {
 var errUserRequestID = errors.New("错误的用户id号")
 
 func ErrUserRequestID() error {
-	return fmt.Errorf("Err_UserLoginRequest %w", errUserRequestID)
+	return fmt.Errorf("Err_UserRequest %w", errUserRequestID)
 }

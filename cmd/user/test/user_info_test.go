@@ -1,16 +1,17 @@
-package userservice
+package userservice_test
 
 import (
 	"context"
 	"reflect"
 	"testing"
 
+	userservice "github.com/808-not-found/tik_duck/cmd/user/userService"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
 )
 
 func TestUserInfoService(t *testing.T) {
 	type args struct {
-		ctx context.Context
+		ctx context.Context //nolint
 		req *user.UserRequest
 	}
 	tests := []struct {
@@ -25,7 +26,7 @@ func TestUserInfoService(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, got1, got2, err := UserInfoService(tt.args.ctx, tt.args.req)
+			got, got1, got2, err := userservice.UserInfoService(tt.args.ctx, tt.args.req)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("UserInfoService() error = %v, wantErr %v", err, tt.wantErr)
 				return
