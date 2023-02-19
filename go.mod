@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/apache/thrift v0.13.0
+	github.com/bytedance/mockey v1.1.1
 	github.com/cloudwego/hertz v0.5.1
 	github.com/cloudwego/kitex v0.4.4
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -35,12 +36,14 @@ require (
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/pprof v0.0.0-20220608213341-c488b8fa1db3 // indirect
+	github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 // indirect
 	github.com/henrylee2cn/ameda v1.4.10 // indirect
 	github.com/henrylee2cn/goutil v0.0.0-20210127050712-89660552f6f8 // indirect
 	github.com/jhump/protoreflect v1.8.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/klauspost/cpuid/v2 v2.1.0 // indirect
 	github.com/mattn/go-sqlite3 v1.14.16 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -49,6 +52,8 @@ require (
 	github.com/oleiade/lane v1.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/smartystreets/assertions v0.0.0-20180927180507-b2de0cb4f26d // indirect
+	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/tidwall/gjson v1.13.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
