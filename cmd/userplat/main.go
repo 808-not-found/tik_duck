@@ -7,6 +7,7 @@ import (
 	db "github.com/808-not-found/tik_duck/cmd/userplat/dal/db"
 	userplat "github.com/808-not-found/tik_duck/kitex_gen/userplat/userplatservice"
 	"github.com/808-not-found/tik_duck/pkg/consts"
+	"github.com/808-not-found/tik_duck/pkg/middleware"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	server "github.com/cloudwego/kitex/server"
 	etcd "github.com/kitex-contrib/registry-etcd"
@@ -20,6 +21,8 @@ func main() {
 	addr, _ := net.ResolveTCPAddr("tcp", "127.0.0.1:10002")
 	svr := userplat.NewServer(new(UserPlatServiceImpl),
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: consts.UserPlatServiceName}), // server name
+		server.WithMiddleware(middleware.CommonMiddleware),                                              // middleWare
+		server.WithMiddleware(middleware.ServerMiddleware),
 		server.WithServiceAddr(addr), server.WithRegistry(r))
 	db.Init()
 	err = svr.Run()

@@ -1,7 +1,7 @@
 package rpc
 
 func InitRPC() {
-	initUserPlatRPC()
 	initUserRPC()
+	initUserPlatRPC()
 	initUserUserRPC()
 }
