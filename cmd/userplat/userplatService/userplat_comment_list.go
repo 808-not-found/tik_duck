@@ -16,30 +16,36 @@ func UserCommentListService(
 	var resp userplat.CommentListResponse
 
 	// 用户鉴权
-	claims, err := jwt.ParseToken(req.Token)
-	if err != nil {
-		resp.StatusCode = 1007
-		return &resp, nil
+	var myID int64
+	if req.Token == "" {
+		myID = 0
+	} else {
+		claims, err := jwt.ParseToken(req.Token)
+		if err != nil {
+			resp.StatusCode = 1031
+			return &resp, nil
+		}
+		myID = claims.ID
 	}
+
 	// 检查登录状态
-	myID := claims.ID
-	if myID == 0 {
-		resp.StatusCode = 1008
-		return &resp, err
-	}
+	// myID := claims.ID
+	// if myID == 0 {
+	// 	resp.StatusCode = 1008
+	// 	return &resp, err
+	// }
 
 	vdID := req.VideoId
 	// 查询数据库
-	var dbComments []*db.Comment
-	dbComments, err = db.GetCommentList(ctx, myID, vdID)
+	dbComments, err := db.GetCommentList(ctx, myID, vdID)
 	if err != nil {
-		resp.StatusCode = 1006
+		resp.StatusCode = 1032
 		return &resp, err
 	}
 	// 数据封装
 	rpcComments, err := pack.Comments(ctx, dbComments, myID, vdID)
 	if err != nil {
-		resp.StatusCode = 1007
+		resp.StatusCode = 1033
 		return &resp, err
 	}
 	resp.CommentList = rpcComments

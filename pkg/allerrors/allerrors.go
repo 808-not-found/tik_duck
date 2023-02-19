@@ -9,7 +9,7 @@ import (
 // 此文件下存放自定义错误以及错误码的定义
 // 0   ：一切正常
 // 1001: 基础接口-视频流错误
-// 1002:	基础接口-创建用户-数据库失败
+// 1002: 基础接口-创建用户-数据库失败
 // 1003: 基础接口-创建用户-鉴权失败
 // 1004: 基础接口-登陆用户-数据库用户运行问题的失败
 // 1005: 基础接口-登陆用户-登陆用户不存在
@@ -28,6 +28,18 @@ import (
 // 1026：base-视频列表-鉴权错误
 // 1027：base-视频列表-数据库查询错误
 // 1028：base-视频列表-数据封装错误
+
+// 1031：plat-commentList-鉴权错误
+// 1032: plat-commentList-数据库查询错误
+// 1033: plat-commentList-数据封装错误
+// 1034: plat-commentAction-鉴权错误
+// 1035: plat-commentAction-数据库操作错误
+// 1036: plat-commentAction-数据封装错误
+// 1037: plat-favoriteList-鉴权错误
+// 1038: plat-favoriteList-数据库查询错误
+// 1039: plat-favoriteList-数据封装错误
+// 1040: plat-favoriteAction-鉴权错误
+// 1041: plat-favoriteAction-数据库操作错误
 
 // jwt错误.
 var errJWTParseTokenRun = errors.New("jwt：不合法的token")
