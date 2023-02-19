@@ -23,8 +23,9 @@ func Feed(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := rpc.GetFeed(context.Background(), &feedReq)
+	log.Println("yes")
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)

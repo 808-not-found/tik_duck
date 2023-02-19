@@ -16,7 +16,7 @@ func main() {
 	go service.RunMessageServer()
 	err := os.Mkdir("public", os.ModePerm)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	h := server.Default(
 		server.WithStreamBody(true), server.WithTransport(standard.NewTransporter),
