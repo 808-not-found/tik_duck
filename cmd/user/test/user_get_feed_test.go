@@ -17,8 +17,8 @@ import (
 
 func TestUserGetFeedService(t *testing.T) {
 	nowTime := time.Now()
-	retVideo := make([]*db.Video, 1)
-	expectVideo := make([]*user.Video, 1)
+	retVideo := make([]*db.Video, 0)
+	expectVideo := make([]*user.Video, 0)
 	retVideo = append(retVideo, &db.Video{
 		ID: 1, AuthorID: 1, PublishTime: nowTime, FilePath: "public/123.mp4", CoverPath: "public/123.jpg",
 		FavoriteCount: 0, CommentCount: 0,
