@@ -11,7 +11,7 @@ import (
 	"gorm.io/plugin/opentelemetry/tracing"
 )
 
-var DB *gorm.DB
+var DB *gorm.DB // nolint:all
 
 func Init() {
 	var err error

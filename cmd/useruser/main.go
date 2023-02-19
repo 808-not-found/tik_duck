@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	db "github.com/808-not-found/tik_duck/cmd/user/dal/db"
+	db "github.com/808-not-found/tik_duck/cmd/useruser/dal/db"
 	useruser "github.com/808-not-found/tik_duck/kitex_gen/useruser/useruserservice"
 	"github.com/808-not-found/tik_duck/pkg/consts"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"

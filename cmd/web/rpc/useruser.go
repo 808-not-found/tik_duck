@@ -21,7 +21,7 @@ func initUserUserRPC() {
 	}
 
 	c, err := useruserservice.NewClient(
-		consts.UserServiceName,
+		consts.UserUserServiceName,
 		client.WithMuxConnection(1),
 		client.WithRPCTimeout(3*time.Second),
 		client.WithConnectTimeout(50*time.Millisecond), // nolint:all
