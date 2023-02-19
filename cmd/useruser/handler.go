@@ -17,9 +17,9 @@ func (s *UserUserServiceImpl) UserRelationAction(
 	req *useruser.RelationActionRequest,
 ) (resp *useruser.RelationActionResponse, err error) {
 	// TODO: Your code here...
-	if err = req.IsValid(); err != nil {
-		return resp, err
-	}
+	// if err = req.IsValid(); err != nil {
+	// 	return resp, err
+	// }
 
 	resp, err = uuservice.UserRelationActionService(ctx, req)
 
@@ -37,9 +37,9 @@ func (s *UserUserServiceImpl) UserRelationFollowList(
 	req *useruser.RelationFollowListRequest,
 ) (resp *useruser.RelationFollowListResponse, err error) {
 	// TODO: Your code here...
-	if err = req.IsValid(); err != nil {
-		return resp, err
-	}
+	// if err = req.IsValid(); err != nil {
+	// 	return resp, err
+	// }
 
 	resp, err = uuservice.UserRelationFollowListService(ctx, req)
 	if err != nil {
@@ -56,9 +56,9 @@ func (s *UserUserServiceImpl) UserRelationFollowerList(
 	req *useruser.RelationFollowerListRequest,
 ) (resp *useruser.RelationFollowerListResponse, err error) {
 	// TODO: Your code here...
-	if err = req.IsValid(); err != nil {
-		return resp, err
-	}
+	// if err = req.IsValid(); err != nil {
+	// 	return resp, err
+	// }
 
 	resp, err = uuservice.UserRelationFollowerList(ctx, req)
 	if err != nil {
@@ -75,9 +75,9 @@ func (s *UserUserServiceImpl) UserRelationFriendList(
 	req *useruser.RelationFriendListRequest,
 ) (resp *useruser.RelationFriendListResponse, err error) {
 	// TODO: Your code here...
-	if err = req.IsValid(); err != nil {
-		return resp, err
-	}
+	// if err = req.IsValid(); err != nil {
+	// 	return resp, err
+	// }
 
 	resp, err = uuservice.UserRelationFriendListService(ctx, req)
 	if err != nil {

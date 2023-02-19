@@ -20,14 +20,14 @@ func UserPublishActionService(
 	// 用户鉴权
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
-		resp.StatusCode = 1011
+		resp.StatusCode = 1024
 		return &resp, err
 	}
 	myID := claims.ID
 	// 写入数据
 	err = db.UserPublishAction(ctx, myID, req.FilePath, req.CoverPath, req.Title)
 	if err != nil {
-		resp.StatusCode = 1012
+		resp.StatusCode = 1025
 		return &resp, err
 	}
 	// 成功返回
