@@ -25,7 +25,7 @@ func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (*user.FeedR
 	} else {
 		claims, err := jwt.ParseToken(*req.Token)
 		if err != nil {
-			resp.StatusCode = 1011
+			resp.StatusCode = 1021
 			return &resp, err
 		}
 		myID = claims.ID
@@ -34,7 +34,7 @@ func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (*user.FeedR
 	// 查询数据库 videolist
 	dbVideos, err := db.UserGetFeed(ctx, req.LatestTime)
 	if err != nil {
-		resp.StatusCode = 1012
+		resp.StatusCode = 1022
 		return &resp, err
 	}
 
@@ -49,7 +49,7 @@ func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (*user.FeedR
 	// 封装数据
 	rpcVideos, err := pack.Videos(ctx, dbVideos, myID)
 	if err != nil {
-		resp.StatusCode = 1013
+		resp.StatusCode = 1023
 		return &resp, err
 	}
 	res := user.FeedResponse{
