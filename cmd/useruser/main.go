@@ -17,9 +17,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	addr, _ := net.ResolveTCPAddr("tcp", "127.0.0.1:10001")
+	addr, _ := net.ResolveTCPAddr("tcp", "127.0.0.1:10003")
 	svr := useruser.NewServer(new(UserUserServiceImpl),
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: consts.UserServiceName}), // server name
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: consts.UserUserServiceName}), // server name
 		server.WithServiceAddr(addr), server.WithRegistry(r))
 	db.Init()
 	err = svr.Run()
