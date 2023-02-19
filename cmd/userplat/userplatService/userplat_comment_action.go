@@ -27,12 +27,10 @@ func UserCommentActionService(
 		}
 		myID = claims.ID
 	}
-
 	// 获取必要信息
 	// 1.获取登录用户ID
 	// 2.获取当前视频ID
 	// 检查是进行评论还是删除
-	// myID := claims.ID
 	vdID := req.VideoId
 	actionType := req.ActionType
 	commentText := req.CommentText
@@ -69,6 +67,5 @@ func UserCommentActionService(
 			return &resp, err
 		}
 	}
-
 	return &resp, nil
 }
