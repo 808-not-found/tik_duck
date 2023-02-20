@@ -14,6 +14,7 @@ import (
 	"github.com/808-not-found/tik_duck/pkg/salt"
 	. "github.com/bytedance/mockey"
 	"github.com/stretchr/testify/assert"
+	"gorm.io/gorm"
 )
 
 //	struct UserLoginRequest {
@@ -105,13 +106,13 @@ func TestUserLoginService(t *testing.T) {
 		//设置期待值
 		expectID := int64(0)
 		expectToken := ""
-		expectstatusCode := int32(1006)
-
+		expectstatusCode := int32(1005)
+		expectErr := gorm.ErrRecordNotFound
 		var expectMsg string
 
 		// 设定mock函数
 		Mock(salt.PasswordsMatch).Return(false).Build()
-		Mock(db.QueryUser).Return(&retUser, nil).Build()
+		Mock(db.QueryUser).Return(&retUser, gorm.ErrRecordNotFound).Build()
 		Mock(jwt.GenToken).Return(expectToken, nil).Build()
 		//设置传入参数
 		req := user.UserLoginRequest{
@@ -120,13 +121,14 @@ func TestUserLoginService(t *testing.T) {
 		}
 
 		//调用函数
-		statusCode, resStatusMsg, resID, resToken, _ := userservice.UserLoginService(context.Background(), &req)
+		statusCode, resStatusMsg, resID, resToken, err := userservice.UserLoginService(context.Background(), &req)
 
 		//对比返回值
 		assert.Equal(t, expectID, resID)
 		assert.Equal(t, expectToken, resToken)
 		assert.Equal(t, expectMsg, resStatusMsg)
 		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, expectErr, err)
 	})
 
 	//Token返回错误
