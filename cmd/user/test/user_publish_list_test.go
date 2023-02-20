@@ -35,20 +35,7 @@ func TestUserPublishListService(t *testing.T) {
 		Title: "test",
 	},
 	)
-	expectVideo := make([]*user.Video, 0)
-	expectVideo = append(expectVideo, &user.Video{
-		Id: 1, Author: &user.User{
-			Id:            1,
-			Name:          "蒂萨久",
-			FollowCount:   nil,
-			FollowerCount: nil,
-			IsFollow:      false,
-		},
-		PlayPath:      "http://" + consts.WebServerPublicIP + ":" + consts.StaticPort + "/" + "public/123.mp4",
-		CoverPath:     "public/123.jpg",
-		FavoriteCount: 0, CommentCount: 0,
-		IsFavorite: false, Title: "test"},
-	)
+
 	// 用户鉴权失败
 	PatchConvey("TestMockUserPublishList_WorryClaims", t, func() {
 		expectstatusCode := int32(1026)
@@ -103,6 +90,20 @@ func TestUserPublishListService(t *testing.T) {
 	// 正常情况
 	PatchConvey("TestMockUserPublishList_normal", t, func() {
 		expectstatusCode := int32(0)
+		expectVideo := make([]*user.Video, 0)
+		expectVideo = append(expectVideo, &user.Video{
+			Id: 1, Author: &user.User{
+				Id:            1,
+				Name:          "蒂萨久",
+				FollowCount:   nil,
+				FollowerCount: nil,
+				IsFollow:      false,
+			},
+			PlayPath:      "http://" + consts.WebServerPublicIP + ":" + consts.StaticPort + "/" + "public/123.mp4",
+			CoverPath:     "public/123.jpg",
+			FavoriteCount: 0, CommentCount: 0,
+			IsFavorite: false, Title: "test"},
+		)
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{}, nil).Build()
 		Mock(db.UserPublishList).Return(retVideo, nil).Build()
 		Mock(pack.Videos).Return(expectVideo, nil).Build()
