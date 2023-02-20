@@ -1,13 +1,11 @@
 package pack
 
 import (
-	"errors"
 	"time"
 
 	"github.com/808-not-found/tik_duck/cmd/user/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
-	"gorm.io/gorm"
 )
 
 type Follow struct {
@@ -30,12 +28,9 @@ func DBUserToRPCUser(m *db.User, fromID int64) (*user.User, error) {
 	f := Follow{}
 
 	err := db.DB.Where("from_user_id = ? AND to_user_id = ?", fromID, m.ID).Find(&f).Error
-	switch {
-	case errors.Is(err, gorm.ErrRecordNotFound):
+	if err == nil {
 		IsFollowShip = false
-	case err != nil:
-		return nil, allerrors.ErrDBUserToRPCUserRun()
-	default:
+	} else {
 		IsFollowShip = true
 	}
 	return &user.User{

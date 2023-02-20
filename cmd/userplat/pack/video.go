@@ -2,14 +2,12 @@ package pack
 
 import (
 	"context"
-	"errors"
 	"time"
 
 	"github.com/808-not-found/tik_duck/cmd/userplat/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/userplat"
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
 	"github.com/808-not-found/tik_duck/pkg/consts"
-	"gorm.io/gorm"
 )
 
 type Like struct {
@@ -43,12 +41,9 @@ func DBUserToRPCUser(m *db.User, fromID int64) (*userplat.User, error) {
 	f := Follow{}
 
 	err := db.DB.Where("from_user_id = ? AND to_user_id = ?", fromID, m.ID).Find(&f).Error
-	switch {
-	case errors.Is(err, gorm.ErrRecordNotFound):
+	if err == nil {
 		IsFollowShip = false
-	case err != nil:
-		return nil, allerrors.ErrDBUserToRPCUserRun()
-	default:
+	} else {
 		IsFollowShip = true
 	}
 	return &userplat.User{
