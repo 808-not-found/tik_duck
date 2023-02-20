@@ -22,7 +22,7 @@ func UserCommentActionService(
 	} else {
 		claims, err := jwt.ParseToken(req.Token)
 		if err != nil {
-			resp.StatusCode = 1034
+			resp.StatusCode = 2034
 			return &resp, nil
 		}
 		myID = claims.ID
@@ -48,13 +48,13 @@ func UserCommentActionService(
 		// dbComments, err = db.GetFavoriteList(ctx, req.UserId)
 		dbComment, err := db.CommentAction(ctx, myID, vdID, *commentText)
 		if err != nil {
-			resp.StatusCode = 1035
+			resp.StatusCode = 2035
 			return &resp, err
 		}
 		// 数据库封装
 		rpcComment, err := pack.Comment(ctx, dbComment, myID)
 		if err != nil {
-			resp.StatusCode = 1036
+			resp.StatusCode = 2036
 			return &resp, err
 		}
 		resp.Comment = rpcComment
@@ -63,7 +63,7 @@ func UserCommentActionService(
 		// 取消评论,操作数据库
 		err := db.UnCommentAction(ctx, myID, vdID, *commentID)
 		if err != nil {
-			resp.StatusCode = 1035
+			resp.StatusCode = 2035
 			return &resp, err
 		}
 	}

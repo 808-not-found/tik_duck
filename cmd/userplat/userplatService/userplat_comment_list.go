@@ -22,7 +22,7 @@ func UserCommentListService(
 	} else {
 		claims, err := jwt.ParseToken(req.Token)
 		if err != nil {
-			resp.StatusCode = 1031
+			resp.StatusCode = 2031
 			return &resp, nil
 		}
 		myID = claims.ID
@@ -39,13 +39,13 @@ func UserCommentListService(
 	// 查询数据库
 	dbComments, err := db.GetCommentList(ctx, myID, vdID)
 	if err != nil {
-		resp.StatusCode = 1032
+		resp.StatusCode = 2032
 		return &resp, err
 	}
 	// 数据封装
 	rpcComments, err := pack.Comments(ctx, dbComments, myID, vdID)
 	if err != nil {
-		resp.StatusCode = 1033
+		resp.StatusCode = 2033
 		return &resp, err
 	}
 	resp.CommentList = rpcComments

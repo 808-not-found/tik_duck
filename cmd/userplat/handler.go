@@ -23,14 +23,14 @@ func (s *UserPlatServiceImpl) UserFavoriteAction(
 	// 校验参数
 	err = req.IsValid()
 	if err != nil {
-		resp.StatusCode = 1201
+		// resp.StatusCode = 1201
 		return resp, err
 	}
 	// 实现逻辑
 	// StatusCode, StatusMsg
 	resp, err = userplatservice.UserFavoriteActionService(ctx, req)
 	if err != nil {
-		resp.StatusCode = 1202
+		// resp.StatusCode = 1202
 		return resp, err
 	}
 
@@ -51,14 +51,14 @@ func (s *UserPlatServiceImpl) UserFavoriteList(
 	// 校验参数
 	err = req.IsValid()
 	if err != nil {
-		resp.StatusCode = 1201
+		// resp.StatusCode = 1201
 		return resp, err
 	}
 	// 实现逻辑
 	// StatusCode, StatusMsg, VideoList
 	resp, err = userplatservice.UserFavoriteListService(ctx, req)
 	if err != nil {
-		resp.StatusCode = 1202
+		// resp.StatusCode = 1202
 		return resp, err
 	}
 
@@ -79,14 +79,14 @@ func (s *UserPlatServiceImpl) UserCommentAction(
 	// 校验参数
 	err = req.IsValid()
 	if err != nil {
-		resp.StatusCode = 1203
+		// resp.StatusCode = 1203
 		return resp, err
 	}
 	// 实现逻辑
 	// StatusCode, StatusMsg, Comment  resp
 	resp, err = userplatservice.UserCommentActionService(ctx, req)
 	if err != nil {
-		resp.StatusCode = 1204
+		// resp.StatusCode = 1204
 		return resp, err
 	}
 
@@ -107,14 +107,14 @@ func (s *UserPlatServiceImpl) UserCommentList(
 	// 校验参数
 	err = req.IsValid()
 	if err != nil {
-		resp.StatusCode = 1203
+		// resp.StatusCode = 1203
 		return resp, err
 	}
 	// 实现逻辑
 	// StatusCode, StatusMsg, CommentList
 	resp, err = userplatservice.UserCommentListService(ctx, req)
 	if err != nil {
-		resp.StatusCode = 1204
+		// resp.StatusCode = 1204
 		return resp, err
 	}
 

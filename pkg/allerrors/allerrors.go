@@ -29,17 +29,17 @@ import (
 // 1027：base-视频列表-数据库查询错误
 // 1028：base-视频列表-数据封装错误
 
-// 1031：plat-commentList-鉴权错误
-// 1032: plat-commentList-数据库查询错误
-// 1033: plat-commentList-数据封装错误
-// 1034: plat-commentAction-鉴权错误
-// 1035: plat-commentAction-数据库操作错误
-// 1036: plat-commentAction-数据封装错误
-// 1037: plat-favoriteList-鉴权错误
-// 1038: plat-favoriteList-数据库查询错误
-// 1039: plat-favoriteList-数据封装错误
-// 1040: plat-favoriteAction-鉴权错误
-// 1041: plat-favoriteAction-数据库操作错误
+// 2031：plat-commentList-鉴权错误
+// 2032: plat-commentList-数据库查询错误
+// 2033: plat-commentList-数据封装错误
+// 2034: plat-commentAction-鉴权错误
+// 2035: plat-commentAction-数据库操作错误
+// 2036: plat-commentAction-数据封装错误
+// 2037: plat-favoriteList-鉴权错误
+// 2038: plat-favoriteList-数据库查询错误
+// 2039: plat-favoriteList-数据封装错误
+// 2040: plat-favoriteAction-鉴权错误
+// 2041: plat-favoriteAction-数据库操作错误
 
 // 3001: uu-action-token
 // 3002: uu-action-登陆状态

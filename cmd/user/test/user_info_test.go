@@ -15,6 +15,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//	struct UserRequest {
+//	    1: i64 UserId (go.tag = 'json:"user_id"') //用户id
+//	    2: string Token (go.tag = 'json:"token"') //用户鉴权token
+//	}
+//
+//	struct UserResponse {
+//	    1: i32 StatusCode (go.tag = 'json:"status_code"') //状态码，0-成功，其他值-失败
+//	    2: optional string StatusMsg (go.tag = 'json:"status_msg"') //返回状态描述
+//	    3: User User (go.tag = 'json:"user"') //用户信息
+//	}
 func TestUserInfoService(t *testing.T) {
 	//构建通用信息
 	nowTime := time.Now()

@@ -21,7 +21,7 @@ func UserFavoriteActionService(
 	} else {
 		claims, err := jwt.ParseToken(req.Token)
 		if err != nil {
-			resp.StatusCode = 1040
+			resp.StatusCode = 2040
 			return &resp, nil
 		}
 		myID = claims.ID
@@ -44,14 +44,14 @@ func UserFavoriteActionService(
 		// 点赞,操作数据库：
 		err := db.LikeAction(ctx, myID, vdID)
 		if err != nil {
-			resp.StatusCode = 1041
+			resp.StatusCode = 2041
 			return &resp, err
 		}
 	} else {
 		// 取消点赞,操作数据库
 		err := db.UnLikeAction(ctx, myID, vdID)
 		if err != nil {
-			resp.StatusCode = 1041
+			resp.StatusCode = 2041
 			return &resp, err
 		}
 	}

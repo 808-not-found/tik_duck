@@ -22,7 +22,7 @@ func UserFavoriteListService(
 	} else {
 		claims, err := jwt.ParseToken(req.Token)
 		if err != nil {
-			resp.StatusCode = 1037
+			resp.StatusCode = 2037
 			return &resp, nil
 		}
 		myID = claims.ID
@@ -36,13 +36,13 @@ func UserFavoriteListService(
 	// 查询数据库
 	dbVideos, err := db.GetFavoriteList(ctx, req.UserId)
 	if err != nil {
-		resp.StatusCode = 1038
+		resp.StatusCode = 2038
 		return &resp, err
 	}
 	// 数据封装
 	rpcVideos, err := pack.Videos(ctx, dbVideos, myID)
 	if err != nil {
-		resp.StatusCode = 1039
+		resp.StatusCode = 2039
 		return &resp, err
 	}
 	resp.VideoList = rpcVideos
