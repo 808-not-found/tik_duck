@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/808-not-found/tik_duck/pkg/consts"
@@ -36,8 +37,9 @@ func CommentAction(ctx context.Context, myID int64, vdID int64, commentText stri
 		VideoID: vdID,
 		Content: commentText,
 	}
-
-	conn = DB.WithContext(ctx).Create(comment)
+	log.Println(comment)
+	log.Println("!!!!!!!!!!!!")
+	conn = DB.WithContext(ctx).Create(&comment)
 	res = &comment
 	if err := conn.Error; err != nil {
 		return res, err
@@ -59,7 +61,7 @@ func UnCommentAction(ctx context.Context, myID int64, vdID int64, commentID int6
 		VideoID: vdID,
 		ID:      commentID, // 应该是删除的commentID的内容的ID
 	}
-	conn = DB.WithContext(ctx).Create(comment)
+	conn = DB.WithContext(ctx).Delete(&comment)
 	if err := conn.Error; err != nil {
 		return err
 	}
