@@ -4,45 +4,107 @@ import (
 	"context"
 	"testing"
 
+	"github.com/808-not-found/tik_duck/cmd/user/dal/db"
 	userservice "github.com/808-not-found/tik_duck/cmd/user/userService"
-	"github.com/808-not-found/tik_duck/kitex_gen/user"
+	user "github.com/808-not-found/tik_duck/kitex_gen/user"
+	"github.com/808-not-found/tik_duck/pkg/allerrors"
+	"github.com/808-not-found/tik_duck/pkg/consts"
+	"github.com/808-not-found/tik_duck/pkg/jwt"
+	. "github.com/bytedance/mockey"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestUserRegisterService(t *testing.T) {
-	type args struct {
-		ctx context.Context //nolint
-		req *user.UserRegisterRequest
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    int32
-		want1   string
-		want2   int64
-		want3   string
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, got1, got2, got3, err := userservice.UserRegisterService(tt.args.ctx, tt.args.req)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("UserRegisterService() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != tt.want {
-				t.Errorf("UserRegisterService() got = %v, want %v", got, tt.want)
-			}
-			if got1 != tt.want1 {
-				t.Errorf("UserRegisterService() got1 = %v, want %v", got1, tt.want1)
-			}
-			if got2 != tt.want2 {
-				t.Errorf("UserRegisterService() got2 = %v, want %v", got2, tt.want2)
-			}
-			if got3 != tt.want3 {
-				t.Errorf("UserRegisterService() got3 = %v, want %v", got3, tt.want3)
-			}
-		})
-	}
+	//构建通用信息
+
+	//正常情况测试
+	PatchConvey("TestUserRegisterService_normal", t, func() {
+		//设置期待值
+		expectID := int64(1)
+		expectToken := "right_Token"
+		var expectMsg string = consts.Success
+		expectstatusCode := int32(0)
+
+		// 设定mock函数
+		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
+		Mock(db.CreateUser).Return(nil).Build()
+		Mock(jwt.GenToken).Return(expectToken, nil).Build()
+		Mock(db.GetUserID).Return(int64(1), nil).Build()
+		//设置传入参数
+		req := user.UserRegisterRequest{
+			Username: "蒂萨久",
+			Password: "114514",
+		}
+
+		//调用函数
+		statusCode, resStatusMsg, resID, resToken, err := userservice.UserRegisterService(context.Background(), &req)
+
+		//对比返回值
+		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectMsg, resStatusMsg)
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, nil, err)
+	})
+
+	//数据库创建失败
+	PatchConvey("TestUserRegisterService_WrongCreate", t, func() {
+		expectID := int64(0)
+		expectToken := ""
+		var expectMsg string
+		expectstatusCode := int32(1002)
+		expectErr := allerrors.ErrTestnotnil()
+
+		// 设定mock函数
+		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
+		Mock(db.CreateUser).Return(allerrors.ErrTestnotnil()).Build()
+		Mock(jwt.GenToken).Return(expectToken, nil).Build()
+		Mock(db.GetUserID).Return(int64(1), nil).Build()
+		//设置传入参数
+		req := user.UserRegisterRequest{
+			Username: "蒂萨久",
+			Password: "114514",
+		}
+
+		//调用函数
+		statusCode, resStatusMsg, resID, resToken, err := userservice.UserRegisterService(context.Background(), &req)
+
+		//对比返回值
+		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectMsg, resStatusMsg)
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, expectErr, err)
+	})
+
+	//Token生成失败
+	PatchConvey("TestUserRegisterService_WrongToken", t, func() {
+		expectID := int64(0)
+		expectToken := ""
+		var expectMsg string
+		expectstatusCode := int32(1003)
+		expectErr := allerrors.ErrTestnotnil()
+
+		// 设定mock函数
+		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
+		Mock(db.CreateUser).Return(nil).Build()
+		Mock(jwt.GenToken).Return("", allerrors.ErrTestnotnil()).Build()
+		Mock(db.GetUserID).Return(int64(1), nil).Build()
+		//设置传入参数
+		req := user.UserRegisterRequest{
+			Username: "蒂萨久",
+			Password: "114514",
+		}
+
+		//调用函数
+		statusCode, resStatusMsg, resID, resToken, err := userservice.UserRegisterService(context.Background(), &req)
+
+		//对比返回值
+		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectMsg, resStatusMsg)
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, expectErr, err)
+	})
+
 }
