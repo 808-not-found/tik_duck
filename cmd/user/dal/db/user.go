@@ -54,6 +54,16 @@ func QueryUser(ctx context.Context, userName string) (*User, error) {
 	return &res, nil
 }
 
+func GetUserID(ctx context.Context, userName string) (int64, error) {
+	res := User{}
+	var resID int64
+	if err := DB.WithContext(ctx).Where("name = ?", userName).Find(&res).Error; err != nil {
+		return resID, err
+	}
+	resID = res.ID
+	return resID, nil
+}
+
 // 传入用户信息内容 在数据库创建用户.
 func CreateUsers(ctx context.Context, users []*User) error {
 	return DB.WithContext(ctx).Create(users).Error

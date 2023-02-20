@@ -2,7 +2,6 @@ package userservice_test
 
 import (
 	"context"
-	//"gorm.io/gorm"
 	"testing"
 	"time"
 
@@ -10,6 +9,7 @@ import (
 	userservice "github.com/808-not-found/tik_duck/cmd/user/userService"
 	user "github.com/808-not-found/tik_duck/kitex_gen/user"
 	"github.com/808-not-found/tik_duck/pkg/allerrors"
+	"github.com/808-not-found/tik_duck/pkg/consts"
 	"github.com/808-not-found/tik_duck/pkg/jwt"
 	"github.com/808-not-found/tik_duck/pkg/salt"
 	. "github.com/bytedance/mockey"
@@ -45,6 +45,7 @@ func TestUserLoginService(t *testing.T) {
 		//设置期待值
 		expectID := int64(1)
 		expectToken := "right_Token"
+		var expectMsg string = consts.Success
 		expectstatusCode := int32(0)
 
 		// 设定mock函数
@@ -60,21 +61,23 @@ func TestUserLoginService(t *testing.T) {
 		}
 
 		//调用函数
-		statusCode, _, resID, resToken, err := userservice.UserLoginService(context.Background(), &req)
+		statusCode, resStatusMsg, resID, resToken, err := userservice.UserLoginService(context.Background(), &req)
 
 		//对比返回值
 		assert.Equal(t, expectID, resID)
 		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectMsg, resStatusMsg)
 		assert.Equal(t, expectstatusCode, statusCode)
 		assert.Equal(t, nil, err)
 	})
 
 	//用户密码错误
-	PatchConvey("TestUserLoginService_WorryPassword", t, func() {
+	PatchConvey("TestUserLoginService_WrongPassword", t, func() {
 		//设置期待值
 		expectID := int64(0)
 		expectToken := ""
 		expectstatusCode := int32(1006)
+		var expectMsg string
 
 		// 设定mock函数
 		Mock(salt.PasswordsMatch).Return(false).Build()
@@ -87,20 +90,24 @@ func TestUserLoginService(t *testing.T) {
 		}
 
 		//调用函数
-		statusCode, _, resID, resToken, _ := userservice.UserLoginService(context.Background(), &req)
+		statusCode, resStatusMsg, resID, resToken, err := userservice.UserLoginService(context.Background(), &req)
 
 		//对比返回值
-		assert.Equal(t, expectstatusCode, statusCode)
 		assert.Equal(t, expectID, resID)
 		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectMsg, resStatusMsg)
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, nil, err)
 	})
 
 	//用户不存在
-	PatchConvey("TestUserLoginService_WorryUsername", t, func() {
+	PatchConvey("TestUserLoginService_WrongUsername", t, func() {
 		//设置期待值
 		expectID := int64(0)
 		expectToken := ""
 		expectstatusCode := int32(1006)
+
+		var expectMsg string
 
 		// 设定mock函数
 		Mock(salt.PasswordsMatch).Return(false).Build()
@@ -113,20 +120,24 @@ func TestUserLoginService(t *testing.T) {
 		}
 
 		//调用函数
-		statusCode, _, resID, resToken, _ := userservice.UserLoginService(context.Background(), &req)
+		statusCode, resStatusMsg, resID, resToken, _ := userservice.UserLoginService(context.Background(), &req)
 
 		//对比返回值
-		assert.Equal(t, expectstatusCode, statusCode)
 		assert.Equal(t, expectID, resID)
 		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectMsg, resStatusMsg)
+		assert.Equal(t, expectstatusCode, statusCode)
 	})
 
 	//Token返回错误
-	PatchConvey("TestUserLoginService_WrroyToken", t, func() {
+	PatchConvey("TestUserLoginService_WrongToken", t, func() {
 		//设置期待值
 		expectID := int64(0)
+		expectToken := ""
 		expectstatusCode := int32(1007)
 		expecterr := allerrors.ErrTestnotnil()
+		var expectMsg string
+
 		// 设定mock函数
 		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
 		Mock(salt.PasswordsMatch).Return(true).Build()
@@ -140,20 +151,24 @@ func TestUserLoginService(t *testing.T) {
 		}
 
 		//调用函数
-		statusCode, _, resID, _, err := userservice.UserLoginService(context.Background(), &req)
+		statusCode, resStatusMsg, resID, resToken, err := userservice.UserLoginService(context.Background(), &req)
 
 		//对比返回值
 		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectMsg, resStatusMsg)
 		assert.Equal(t, expectstatusCode, statusCode)
 		assert.Equal(t, expecterr, err)
 	})
 
 	//用户名登陆时的未知错误
-	PatchConvey("TestUserLoginService_UnknownWrror", t, func() {
+	PatchConvey("TestUserLoginService_UnknownWrong", t, func() {
 		//设置期待值
 		expectID := int64(0)
+		expectToken := ""
 		expectstatusCode := int32(1004)
 		expecterr := allerrors.ErrTestnotnil()
+		var expectMsg string
 		// 设定mock函数
 		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
 		Mock(db.QueryUser).Return(&db.User{}, allerrors.ErrTestnotnil()).Build()
@@ -165,10 +180,12 @@ func TestUserLoginService(t *testing.T) {
 		}
 
 		//调用函数
-		statusCode, _, resID, _, err := userservice.UserLoginService(context.Background(), &req)
+		statusCode, resStatusMsg, resID, resToken, err := userservice.UserLoginService(context.Background(), &req)
 
 		//对比返回值
 		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectMsg, resStatusMsg)
 		assert.Equal(t, expectstatusCode, statusCode)
 		assert.Equal(t, expecterr, err)
 	})

@@ -11,10 +11,8 @@ import (
 
 func UserPublishListService(ctx context.Context, req *user.PublishListRequest) (*user.PublishListResponse, error) {
 	// 创建返回参数
-	var msg string
 	resp := user.PublishListResponse{
 		StatusCode: 0,
-		StatusMsg:  &msg,
 	}
 
 	// 用户鉴权
