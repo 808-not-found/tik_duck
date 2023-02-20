@@ -106,5 +106,4 @@ func TestUserRegisterService(t *testing.T) {
 		assert.Equal(t, expectstatusCode, statusCode)
 		assert.Equal(t, expectErr, err)
 	})
-
 }
