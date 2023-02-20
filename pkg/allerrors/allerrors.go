@@ -41,6 +41,23 @@ import (
 // 1040: plat-favoriteAction-鉴权错误
 // 1041: plat-favoriteAction-数据库操作错误
 
+// 3001: uu-action-token
+// 3002: uu-action-登陆状态
+// 3003: uu-action-db-关注
+// 3004: uu-action-db-取关
+// 3005: uu-关注列表-token
+// 3006: uu-关注列表-登录状态
+// 3007：uu-关注列表-db
+// 3008: uu-关注列表-pack
+// 3009: uu-粉丝列表-token
+// 3010: uu-粉丝列表-登陆状态
+// 3011: uu-粉丝列表-db
+// 3012: uu-粉丝列表-pack
+// 3013: uu-朋友列表-token
+// 3014: uu-朋友列表-登录状态
+// 3015: uu-朋友列表-db
+// 3016: uu-朋友列表-pack
+
 // jwt错误.
 var errJWTParseTokenRun = errors.New("jwt：不合法的token")
 

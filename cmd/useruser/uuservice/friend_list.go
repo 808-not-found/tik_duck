@@ -17,27 +17,27 @@ func UserRelationFriendListService(
 	// 用户鉴权
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
-		resp.StatusCode = 1001
+		resp.StatusCode = 3013
 		return &resp, nil
 	}
 	// 检查登录状态
 	myID := claims.ID
 	if myID == 0 {
-		resp.StatusCode = 1002
+		resp.StatusCode = 3014
 		return &resp, nil
 	}
 	// 查询数据库
 	var dbUsers []*db.User
 	dbUsers, err = db.GetFriendList(ctx, myID)
 	if err != nil {
-		resp.StatusCode = 1009
+		resp.StatusCode = 3015
 		return &resp, nil
 	}
 	// 封装数据
 	var rpcUsers []*useruser.User
 	rpcUsers, err = pack.Users(dbUsers, myID)
 	if err != nil {
-		resp.StatusCode = 1010
+		resp.StatusCode = 3016
 		return &resp, nil
 	}
 	resp.UserList = rpcUsers

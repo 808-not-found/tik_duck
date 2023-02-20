@@ -18,26 +18,26 @@ func UserRelationFollowListService(
 	// 用户鉴权
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
-		resp.StatusCode = 1001
+		resp.StatusCode = 3005
 		return &resp, err
 	}
 	// 验证登录状态
 	myID := claims.ID
 	if myID == 0 {
-		resp.StatusCode = 1002
+		resp.StatusCode = 3006
 		return &resp, err
 	}
 	// 查询数据库
 	var dbUsers []*db.User
 	dbUsers, err = db.GetFollowList(ctx, myID)
 	if err != nil {
-		resp.StatusCode = 1006
+		resp.StatusCode = 3007
 		return &resp, err
 	}
 	// 数据封装
 	rpcUsers, err := pack.Users(dbUsers, myID)
 	if err != nil {
-		resp.StatusCode = 1007
+		resp.StatusCode = 3008
 		return &resp, err
 	}
 	resp.UserList = rpcUsers

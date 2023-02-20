@@ -17,7 +17,7 @@ func UserRelationActionService(
 	// 用户鉴权
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
-		resp.StatusCode = 1001
+		resp.StatusCode = 3001
 		return &resp, nil
 	}
 
@@ -31,7 +31,7 @@ func UserRelationActionService(
 
 	// 检查登录状态
 	if myID == 0 {
-		resp.StatusCode = 1002
+		resp.StatusCode = 3002
 		return &resp, err
 	}
 
@@ -39,14 +39,14 @@ func UserRelationActionService(
 		// 关注 操作数据库
 		err := db.FollowAction(ctx, myID, toID)
 		if err != nil {
-			resp.StatusCode = 1003
+			resp.StatusCode = 3003
 			return &resp, err
 		}
 	} else {
 		// 取关 操作数据库
 		err := db.UnFollowAction(ctx, myID, toID)
 		if err != nil {
-			resp.StatusCode = 1004
+			resp.StatusCode = 3004
 			return &resp, err
 		}
 	}
