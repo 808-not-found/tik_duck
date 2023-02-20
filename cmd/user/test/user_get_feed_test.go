@@ -15,10 +15,21 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//	struct FeedRequest {
+//	    1: optional i64 LatestTime (go.tag = 'json:"latest_time"') //可选参数，限制返回视频的最新投稿时间戳，精确到秒，不填表示当前时间
+//	    2: optional string Token (go.tag = 'json:"token"') // 可选参数，登录用户设置
+//	}
+//
+//	struct FeedResponse {
+//	    1: i32 StatusCode (go.tag = 'json:"status_code"') //状态码，0-成功，其他值失败
+//	    2: optional string StatusMsg (go.tag = 'json:"status_msg"') //返回状态描述
+//	    3: list<Video> VideoList (go.tag = 'json:"video_list"') //视频列表
+//	    4: optional i64 NextTime (go.tag = 'json:"next_time"') //本次返回的视频中，发布最早的时间，作为下次请求时的latest_time
+//	}
 func TestUserGetFeedService(t *testing.T) {
+	// 构建通用信息
 	nowTime := time.Now()
 	retVideo := make([]*db.Video, 0)
-	expectVideo := make([]*user.Video, 0)
 	retVideo = append(retVideo, &db.Video{
 		ID: 1, AuthorID: 1, PublishTime: nowTime, FilePath: "public/123.mp4", CoverPath: "public/123.jpg",
 		FavoriteCount: 0, CommentCount: 0,
@@ -34,22 +45,30 @@ func TestUserGetFeedService(t *testing.T) {
 		Password:      "114514",
 		Salt:          "1919810",
 	}
-	expectVideo = append(expectVideo, &user.Video{
-		Id: 1, Author: &user.User{
-			Id:            1,
-			Name:          "蒂萨久",
-			FollowCount:   nil,
-			FollowerCount: nil,
-			IsFollow:      false,
-		},
-		PlayPath:      "http://" + consts.WebServerPublicIP + ":" + consts.StaticPort + "/" + "public/123.mp4",
-		CoverPath:     "public/123.jpg",
-		FavoriteCount: 0, CommentCount: 0,
-		IsFavorite: false, Title: "test"},
-	)
-	PatchConvey("TestMockUserGetFeedService", t, func() {
-		Mock(db.UserGetFeed).Return(retVideo, nil).Build() // mock函数
-		Mock(db.GetUser).Return(retUser, nil).Build()      // mock函数
+
+	// 正确情况测试
+	PatchConvey("TestMockUserGetFeedService_normal", t, func() {
+		//设置期待值
+		expectstatusCode := int32(0)
+		expectVideo := make([]*user.Video, 0)
+		expectVideo = append(expectVideo, &user.Video{
+			Id: 1, Author: &user.User{
+				Id:            1,
+				Name:          "蒂萨久",
+				FollowCount:   nil,
+				FollowerCount: nil,
+				IsFollow:      false,
+			},
+			PlayPath:      "http://" + consts.WebServerPublicIP + ":" + consts.StaticPort + "/" + "public/123.mp4",
+			CoverPath:     "public/123.jpg",
+			FavoriteCount: 0, CommentCount: 0,
+			IsFavorite: false, Title: "test"},
+		)
+
+		// 设定mock函数
+		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
+		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
+		Mock(db.GetUser).Return(retUser, nil).Build()
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
 		Mock(pack.DBUserToRPCUser).Return(&user.User{
 			Id:            1,
@@ -58,9 +77,16 @@ func TestUserGetFeedService(t *testing.T) {
 			FollowerCount: nil,
 			IsFollow:      false,
 		}, nil).Build()
+
+		//设置传入参数
 		Token := "123412"
+
+		//调用函数
 		res, err := userservice.UserGetFeedService(context.Background(), &user.FeedRequest{Token: &Token})
-		assert.Equal(t, res.VideoList, expectVideo)
+
+		//对比返回值
+		assert.Equal(t, expectstatusCode, res.StatusCode)
+		assert.Equal(t, expectVideo, res.VideoList)
 		assert.Equal(t, err, nil)
 	})
 }

@@ -2,47 +2,174 @@ package userservice_test
 
 import (
 	"context"
+	//"gorm.io/gorm"
 	"testing"
+	"time"
 
+	"github.com/808-not-found/tik_duck/cmd/user/dal/db"
 	userservice "github.com/808-not-found/tik_duck/cmd/user/userService"
-	"github.com/808-not-found/tik_duck/kitex_gen/user"
+	user "github.com/808-not-found/tik_duck/kitex_gen/user"
+	"github.com/808-not-found/tik_duck/pkg/allerrors"
+	"github.com/808-not-found/tik_duck/pkg/jwt"
+	"github.com/808-not-found/tik_duck/pkg/salt"
+	. "github.com/bytedance/mockey"
+	"github.com/stretchr/testify/assert"
 )
 
+//	struct UserLoginRequest {
+//	    1: string Username (go.tag = 'json:"username"') //登录用户名
+//	    2: string Password (go.tag = 'json:"password"') //登录密码
+//	}
+//
+//	struct UserLoginResponse {
+//	    1: i32 StatusCode (go.tag = 'json:"status_code"') //状态码，0-成功，其他值失败
+//	    2: optional string StatusMsg (go.tag = 'json:"status_msg"') //返回状态描述
+//	    3: i64 UserId (go.tag = 'json:"user_id"') //用户id
+//	    4: string Token (go.tag = 'json:"token"') //用户鉴权token
+//	}
 func TestUserLoginService(t *testing.T) {
-	type args struct {
-		ctx context.Context //nolint
-		req *user.UserLoginRequest
+	//构建通用信息
+	nowTime := time.Now()
+	retUser := db.User{
+		ID:            1,
+		CreateTime:    nowTime,
+		Name:          "蒂萨久",
+		FollowCount:   0,
+		FollowerCount: 0,
+		Password:      "114514",
+		Salt:          "1919810",
 	}
-	tests := []struct {
-		name    string
-		args    args
-		want    int32
-		want1   string
-		want2   int64
-		want3   string
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, got1, got2, got3, err := userservice.UserLoginService(tt.args.ctx, tt.args.req)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("UserLoginService() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != tt.want {
-				t.Errorf("UserLoginService() got = %v, want %v", got, tt.want)
-			}
-			if got1 != tt.want1 {
-				t.Errorf("UserLoginService() got1 = %v, want %v", got1, tt.want1)
-			}
-			if got2 != tt.want2 {
-				t.Errorf("UserLoginService() got2 = %v, want %v", got2, tt.want2)
-			}
-			if got3 != tt.want3 {
-				t.Errorf("UserLoginService() got3 = %v, want %v", got3, tt.want3)
-			}
-		})
-	}
+
+	//正常情况测试
+	PatchConvey("TestUserLoginService_normal", t, func() {
+		//设置期待值
+		expectID := int64(1)
+		expectToken := "right_Token"
+		expectstatusCode := int32(0)
+
+		// 设定mock函数
+		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
+		Mock(salt.PasswordsMatch).Return(true).Build()
+		Mock(db.QueryUser).Return(&retUser, nil).Build()
+		Mock(jwt.GenToken).Return(expectToken, nil).Build()
+
+		//设置传入参数
+		req := user.UserLoginRequest{
+			Username: "蒂萨久",
+			Password: "114514",
+		}
+
+		//调用函数
+		statusCode, _, resID, resToken, err := userservice.UserLoginService(context.Background(), &req)
+
+		//对比返回值
+		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectToken, resToken)
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, nil, err)
+	})
+
+	//用户密码错误
+	PatchConvey("TestUserLoginService_WorryPassword", t, func() {
+		//设置期待值
+		expectID := int64(0)
+		expectToken := ""
+		expectstatusCode := int32(1006)
+
+		// 设定mock函数
+		Mock(salt.PasswordsMatch).Return(false).Build()
+		Mock(db.QueryUser).Return(&retUser, nil).Build()
+		Mock(jwt.GenToken).Return(expectToken, nil).Build()
+		//设置传入参数
+		req := user.UserLoginRequest{
+			Username: "蒂萨久",
+			Password: "114514",
+		}
+
+		//调用函数
+		statusCode, _, resID, resToken, _ := userservice.UserLoginService(context.Background(), &req)
+
+		//对比返回值
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectToken, resToken)
+	})
+
+	//用户不存在
+	PatchConvey("TestUserLoginService_WorryUsername", t, func() {
+		//设置期待值
+		expectID := int64(0)
+		expectToken := ""
+		expectstatusCode := int32(1006)
+
+		// 设定mock函数
+		Mock(salt.PasswordsMatch).Return(false).Build()
+		Mock(db.QueryUser).Return(&retUser, nil).Build()
+		Mock(jwt.GenToken).Return(expectToken, nil).Build()
+		//设置传入参数
+		req := user.UserLoginRequest{
+			Username: "蒂萨久",
+			Password: "114514",
+		}
+
+		//调用函数
+		statusCode, _, resID, resToken, _ := userservice.UserLoginService(context.Background(), &req)
+
+		//对比返回值
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectToken, resToken)
+	})
+
+	//Token返回错误
+	PatchConvey("TestUserLoginService_WrroyToken", t, func() {
+		//设置期待值
+		expectID := int64(0)
+		expectstatusCode := int32(1007)
+		expecterr := allerrors.ErrTestnotnil()
+		// 设定mock函数
+		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
+		Mock(salt.PasswordsMatch).Return(true).Build()
+		Mock(db.QueryUser).Return(&retUser, nil).Build()
+		Mock(jwt.GenToken).Return("", allerrors.ErrTestnotnil()).Build()
+
+		//设置传入参数
+		req := user.UserLoginRequest{
+			Username: "蒂萨久",
+			Password: "114514",
+		}
+
+		//调用函数
+		statusCode, _, resID, _, err := userservice.UserLoginService(context.Background(), &req)
+
+		//对比返回值
+		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, expecterr, err)
+	})
+
+	//用户名登陆时的未知错误
+	PatchConvey("TestUserLoginService_UnknownWrror", t, func() {
+		//设置期待值
+		expectID := int64(0)
+		expectstatusCode := int32(1004)
+		expecterr := allerrors.ErrTestnotnil()
+		// 设定mock函数
+		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
+		Mock(db.QueryUser).Return(&db.User{}, allerrors.ErrTestnotnil()).Build()
+
+		//设置传入参数
+		req := user.UserLoginRequest{
+			Username: "蒂萨久",
+			Password: "114514",
+		}
+
+		//调用函数
+		statusCode, _, resID, _, err := userservice.UserLoginService(context.Background(), &req)
+
+		//对比返回值
+		assert.Equal(t, expectID, resID)
+		assert.Equal(t, expectstatusCode, statusCode)
+		assert.Equal(t, expecterr, err)
+	})
 }

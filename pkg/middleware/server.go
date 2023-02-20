@@ -10,9 +10,9 @@ import (
 
 var _ endpoint.Middleware = ServerMiddleware
 
-// ServerMiddleware server middleware print client address
+// ServerMiddleware server middleware print client address.
 func ServerMiddleware(next endpoint.Endpoint) endpoint.Endpoint {
-	return func(ctx context.Context, req, resp interface{}) (err error) {
+	return func(ctx context.Context, req, resp any) (err error) {
 		ri := rpcinfo.GetRPCInfo(ctx)
 		// get client information
 		klog.Infof("client address: %v\n", ri.From().Address())

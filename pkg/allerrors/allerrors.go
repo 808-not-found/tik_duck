@@ -88,3 +88,11 @@ var errUserRequestID = errors.New("错误的用户id号")
 func ErrUserRequestID() error {
 	return fmt.Errorf("Err_UserRequest %w", errUserRequestID)
 }
+
+// 测试用 表示非nil错误
+// 基础接口参数校验 获取用户信息id不合法.
+var errTestnotnil = errors.New("notnil")
+
+func ErrTestnotnil() error {
+	return fmt.Errorf("Err_Test %w", errTestnotnil)
+}

@@ -45,15 +45,6 @@ func GetUser(ctx context.Context, userID int64) (User, error) {
 	return res, nil
 }
 
-// 传入用户信息内容 在数据库创建用户.
-func CreateUsers(ctx context.Context, users []*User) error {
-	return DB.WithContext(ctx).Create(users).Error
-}
-
-func CreateUser(ctx context.Context, user *User) error {
-	return DB.WithContext(ctx).Create(user).Error
-}
-
 // 传入用户名称 查找用户信息.
 func QueryUser(ctx context.Context, userName string) (*User, error) {
 	res := User{}
@@ -61,4 +52,13 @@ func QueryUser(ctx context.Context, userName string) (*User, error) {
 		return nil, err
 	}
 	return &res, nil
+}
+
+// 传入用户信息内容 在数据库创建用户.
+func CreateUsers(ctx context.Context, users []*User) error {
+	return DB.WithContext(ctx).Create(users).Error
+}
+
+func CreateUser(ctx context.Context, user *User) error {
+	return DB.WithContext(ctx).Create(user).Error
 }
