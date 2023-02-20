@@ -24,7 +24,7 @@ func Feed(ctx context.Context, c *app.RequestContext) {
 	feedReq.Token = &token
 	feedReq.LatestTime = &latestTime
 	resp, err := rpc.GetFeed(context.Background(), &feedReq)
-	log.Println("yes")
+	// test video
 	if err != nil {
 		log.Println(err)
 		return

@@ -54,7 +54,7 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 	}
 
 	var userPublishActionReq user.PublishActionRequest
-	userPublishActionReq.CoverPath = "http://www.hrbust.edu.cn/images/xjgk.jpg"
+	userPublishActionReq.CoverPath = "https://bubbleioa.top/wp-content/uploads/2018/10/63738985_p0-2.jpg"
 	userPublishActionReq.FilePath = saveFile
 	userPublishActionReq.Title = title
 	userPublishActionReq.Token = token

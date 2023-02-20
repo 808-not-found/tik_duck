@@ -1,6 +1,13 @@
 version: "3"
 
 services:
+  nginx-static:
+    image: flashspys/nginx-static
+    container_name: nginx-static
+    ports:
+      - 8081:80
+    volumes: 
+      - ./cmd/web/public:/static/public
   mysql:
     image: "mysql:latest"
     volumes:
