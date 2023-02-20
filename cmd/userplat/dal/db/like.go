@@ -111,11 +111,14 @@ func GetFavoriteList(ctx context.Context, userID int64) ([]*Video, error) {
 	}
 
 	// 获取所有的视频 ID
-	var favoriteIDList []int64
+	setList := make(map[int64]bool)
 	for _, value := range favoriteList {
-		favoriteIDList = append(favoriteIDList, value.VideoID)
+		setList[value.VideoID] = true
 	}
-
+	var favoriteIDList []int64
+	for k := range setList {
+		favoriteIDList = append(favoriteIDList, k)
+	}
 	// 找到所有对应的视频结构体
 	conn = DB.WithContext(ctx).Where("id = ?", favoriteIDList).Find(&res)
 	if err := conn.Error; err != nil {
