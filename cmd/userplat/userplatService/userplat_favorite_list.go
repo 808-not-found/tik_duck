@@ -16,29 +16,33 @@ func UserFavoriteListService(
 	var resp userplat.FavoriteListResponse
 
 	// 用户鉴权
-	claims, err := jwt.ParseToken(req.Token)
-	if err != nil {
-		resp.StatusCode = 1007
-		return &resp, nil
+	var myID int64
+	if req.Token == "" {
+		myID = 0
+	} else {
+		claims, err := jwt.ParseToken(req.Token)
+		if err != nil {
+			resp.StatusCode = 1037
+			return &resp, nil
+		}
+		myID = claims.ID
 	}
-
 	// 检查登录状态
-	myID := claims.ID
-	if myID == 0 {
-		resp.StatusCode = 1008
-		return &resp, err
-	}
+	// myID := claims.ID
+	// if myID == 0 {
+	// 	resp.StatusCode = 1008
+	// 	return &resp, err
+	// }
 	// 查询数据库
-	var dbVideos []*db.Video
-	dbVideos, err = db.GetFavoriteList(ctx, req.UserId)
+	dbVideos, err := db.GetFavoriteList(ctx, req.UserId)
 	if err != nil {
-		resp.StatusCode = 1006
+		resp.StatusCode = 1038
 		return &resp, err
 	}
 	// 数据封装
 	rpcVideos, err := pack.Videos(ctx, dbVideos, myID)
 	if err != nil {
-		resp.StatusCode = 1007
+		resp.StatusCode = 1039
 		return &resp, err
 	}
 	resp.VideoList = rpcVideos

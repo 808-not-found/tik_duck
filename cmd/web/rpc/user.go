@@ -8,6 +8,7 @@ import (
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	userservice "github.com/808-not-found/tik_duck/kitex_gen/user/userservice"
 	"github.com/808-not-found/tik_duck/pkg/consts"
+	"github.com/808-not-found/tik_duck/pkg/middleware"
 	"github.com/cloudwego/kitex/client"
 	etcd "github.com/kitex-contrib/registry-etcd"
 )
@@ -22,6 +23,8 @@ func initUserRPC() {
 
 	c, err := userservice.NewClient(
 		consts.UserServiceName,
+		client.WithMiddleware(middleware.CommonMiddleware),
+		client.WithInstanceMW(middleware.ClientMiddleware),
 		client.WithMuxConnection(1),
 		client.WithRPCTimeout(3*time.Second),
 		client.WithConnectTimeout(50*time.Millisecond), // nolint:all

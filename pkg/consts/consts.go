@@ -10,7 +10,7 @@ const (
 	UserTableName       = "user"
 	VideoTableName      = "video"
 	EtcdAddress         = "127.0.0.1:2379"
-	UserServiceName     = "user"
+	UserServiceName     = "usersvr"
 	UserUserServiceName = "useruser"
 	UserPlatServiceName = "userplat"
 
