@@ -12,10 +12,8 @@ import (
 
 // statusCode, statusMsg, videoList, nextTime, err := userservice.UserGetFeedService(ctx, req).
 func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (*user.FeedResponse, error) {
-	var msg string
 	resp := user.FeedResponse{
 		StatusCode: 0,
-		StatusMsg:  &msg,
 	}
 
 	// 验证登录状态
