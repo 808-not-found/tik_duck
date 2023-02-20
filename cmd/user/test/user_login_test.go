@@ -49,8 +49,8 @@ func TestUserLoginService(t *testing.T) {
 
 		// 设定mock函数
 		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
-		Mock(salt.PasswordsMatch).Return(true).Build()
 		Mock(db.QueryUser).Return(&retUser, nil).Build()
+		Mock(salt.PasswordsMatch).Return(true).Build()
 		Mock(jwt.GenToken).Return(expectToken, nil).Build()
 
 		//设置传入参数
