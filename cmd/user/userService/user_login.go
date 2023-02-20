@@ -22,7 +22,7 @@ func UserLoginService(ctx context.Context, req *user.UserLoginRequest) (int32, s
 	// 比对失败
 	userinfo, err := db.QueryUser(ctx, reqUsername)
 	switch {
-	case errors.Is(err, gorm.ErrRecordNotFound):
+	case errors.Is(err, gorm.ErrRecordNotFound): // 没有此用户
 		statusCode = 1005
 		return statusCode, "", 0, "", err
 	case err != nil:

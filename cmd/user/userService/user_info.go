@@ -38,7 +38,7 @@ func UserInfoService(ctx context.Context, req *user.UserRequest) (int32, string,
 		statusCode = 1010
 		return statusCode, "", nil, err
 	}
-
+	// 查询关注关系
 	userinfo, err := pack.DBUserToRPCUser(&reqAimInfo, reqfromid)
 	if err != nil {
 		statusCode = 1011
