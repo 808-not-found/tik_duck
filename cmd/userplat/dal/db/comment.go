@@ -26,7 +26,7 @@ func CommentAction(ctx context.Context, myID int64, vdID int64, commentText stri
 	// var myUser *User
 	var res *Comment // 返回值为一条评论内容
 	var myVideo *Video
-	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("id", myVideo.CommentCount+1)
+	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("comment_count", myVideo.CommentCount+1)
 	if err := conn.Error; err != nil {
 		return res, err
 	}
@@ -36,8 +36,7 @@ func CommentAction(ctx context.Context, myID int64, vdID int64, commentText stri
 		VideoID: vdID,
 		Content: commentText,
 	}
-
-	conn = DB.WithContext(ctx).Create(comment)
+	conn = DB.WithContext(ctx).Create(&comment)
 	res = &comment
 	if err := conn.Error; err != nil {
 		return res, err
@@ -49,7 +48,7 @@ func UnCommentAction(ctx context.Context, myID int64, vdID int64, commentID int6
 	// 减少commentcount
 	// var myUser *User
 	var myVideo *Video
-	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("id", myVideo.CommentCount-1)
+	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("comment_count", myVideo.CommentCount-1)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -59,7 +58,7 @@ func UnCommentAction(ctx context.Context, myID int64, vdID int64, commentID int6
 		VideoID: vdID,
 		ID:      commentID, // 应该是删除的commentID的内容的ID
 	}
-	conn = DB.WithContext(ctx).Create(comment)
+	conn = DB.WithContext(ctx).Delete(&comment)
 	if err := conn.Error; err != nil {
 		return err
 	}

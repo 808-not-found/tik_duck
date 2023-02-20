@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/808-not-found/tik_duck/cmd/web/rpc"
 	"github.com/808-not-found/tik_duck/kitex_gen/useruser"
@@ -17,10 +18,10 @@ type UserListResponse struct {
 
 func RelationAction(ctx context.Context, c *app.RequestContext) {
 	var feedReq useruser.RelationActionRequest
-	if err := c.Bind(&feedReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
+	feedReq.Token = c.Query("token")
+	feedReq.ToUserId, _ = strconv.ParseInt(c.Query("to_user_id"), 10, 64)
+	actionType, _ := strconv.ParseInt(c.Query("action_type"), 10, 64)
+	feedReq.ActionType = int32(actionType)
 	resp, err := rpc.UserRelationAction(context.Background(), &feedReq)
 	if err != nil {
 		log.Fatalln(err)
@@ -31,10 +32,9 @@ func RelationAction(ctx context.Context, c *app.RequestContext) {
 
 func FollowList(ctx context.Context, c *app.RequestContext) {
 	var feedReq useruser.RelationFollowListRequest
-	if err := c.Bind(&feedReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
+	feedReq.Token = c.Query("token")
+	feedReq.UserId, _ = strconv.ParseInt(c.Query("user_id"), 10, 64)
+
 	resp, err := rpc.UserRelationFollowList(context.Background(), &feedReq)
 	if err != nil {
 		log.Fatalln(err)
@@ -45,10 +45,9 @@ func FollowList(ctx context.Context, c *app.RequestContext) {
 
 func FollowerList(ctx context.Context, c *app.RequestContext) {
 	var feedReq useruser.RelationFollowerListRequest
-	if err := c.Bind(&feedReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
+	feedReq.Token = c.Query("token")
+	feedReq.UserId, _ = strconv.ParseInt(c.Query("user_id"), 10, 64)
+
 	resp, err := rpc.UserRelationFollowerList(context.Background(), &feedReq)
 	if err != nil {
 		log.Fatalln(err)
@@ -59,10 +58,9 @@ func FollowerList(ctx context.Context, c *app.RequestContext) {
 
 func FriendList(ctx context.Context, c *app.RequestContext) {
 	var feedReq useruser.RelationFriendListRequest
-	if err := c.Bind(&feedReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
+	feedReq.Token = c.Query("token")
+	feedReq.UserId, _ = strconv.ParseInt(c.Query("user_id"), 10, 64)
+
 	resp, err := rpc.UserRelationFriendList(context.Background(), &feedReq)
 	if err != nil {
 		log.Fatalln(err)
