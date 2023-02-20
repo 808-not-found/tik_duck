@@ -665,8 +665,8 @@ func (p *FeedResponse) Field4DeepEqual(src *int64) bool {
 type Video struct {
 	Id            int64  `thrift:"Id,1" frugal:"1,default,i64" json:"id"`
 	Author        *User  `thrift:"Author,2" frugal:"2,default,User" json:"author"`
-	PlayPath      string `thrift:"PlayPath,3" frugal:"3,default,string" json:"play_path"`
-	CoverPath     string `thrift:"CoverPath,4" frugal:"4,default,string" json:"cover_path"`
+	PlayPath      string `thrift:"PlayPath,3" frugal:"3,default,string" json:"play_url"`
+	CoverPath     string `thrift:"CoverPath,4" frugal:"4,default,string" json:"cover_url"`
 	FavoriteCount int64  `thrift:"FavoriteCount,5" frugal:"5,default,i64" json:"favorite_count"`
 	CommentCount  int64  `thrift:"CommentCount,6" frugal:"6,default,i64" json:"comment_count"`
 	IsFavorite    bool   `thrift:"IsFavorite,7" frugal:"7,default,bool" json:"is_favorite"`

@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/808-not-found/tik_duck/cmd/web/rpc"
 	"github.com/808-not-found/tik_duck/kitex_gen/userplat"
@@ -22,10 +23,15 @@ type CommentActionResponse struct {
 
 func CommentAction(ctx context.Context, c *app.RequestContext) {
 	var feedReq userplat.CommentActionRequest
-	if err := c.Bind(&feedReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
+	actionType, _ := strconv.ParseInt(c.Query("action_type"), 10, 64)
+	feedReq.ActionType = int32(actionType)
+	cid, _ := strconv.ParseInt(c.Query("comment_id"), 10, 64)
+	ct := c.Query("comment_text")
+	feedReq.CommentId = &cid
+	feedReq.CommentText = &ct
+	feedReq.Token = c.Query("token")
+	feedReq.VideoId, _ = strconv.ParseInt(c.Query("video_id"), 10, 64)
+
 	resp, err := rpc.UserCommentAction(context.Background(), &feedReq)
 	if err != nil {
 		log.Fatalln(err)
@@ -36,10 +42,8 @@ func CommentAction(ctx context.Context, c *app.RequestContext) {
 
 func CommentList(ctx context.Context, c *app.RequestContext) {
 	var feedReq userplat.CommentListRequest
-	if err := c.Bind(&feedReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
+	feedReq.Token = c.Query("token")
+	feedReq.VideoId, _ = strconv.ParseInt(c.Query("video_id"), 10, 64)
 	resp, err := rpc.UserCommentList(context.Background(), &feedReq)
 	if err != nil {
 		log.Fatalln(err)

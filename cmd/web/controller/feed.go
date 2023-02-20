@@ -21,7 +21,11 @@ func Feed(ctx context.Context, c *app.RequestContext) {
 	var feedReq user.FeedRequest
 	token := c.Query("token")
 	latestTime, _ := strconv.ParseInt(c.Query("latest_time"), 10, 64)
-	feedReq.Token = &token
+	if token != "" {
+		feedReq.Token = &token
+	} else {
+		feedReq.Token = nil
+	}
 	feedReq.LatestTime = &latestTime
 	resp, err := rpc.GetFeed(context.Background(), &feedReq)
 	// test video

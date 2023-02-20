@@ -29,10 +29,6 @@ func FavoriteList(ctx context.Context, c *app.RequestContext) {
 	var feedReq userplat.FavoriteListRequest
 	feedReq.Token = c.Query("token")
 	feedReq.UserId, _ = strconv.ParseInt(c.Query("user_id"), 10, 64)
-	if err := c.Bind(&feedReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
 	resp, err := rpc.UserFavoriteList(context.Background(), &feedReq)
 	if err != nil {
 		log.Fatalln(err)

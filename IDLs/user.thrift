@@ -13,8 +13,8 @@ struct FeedResponse {
 struct Video {
     1: i64 Id (go.tag = 'json:"id"') //视频唯一标识
     2: User Author (go.tag = 'json:"author"') //视频作者信息
-    3: string PlayPath (go.tag = 'json:"play_path"') //视频播放路径
-    4: string CoverPath (go.tag = 'json:"cover_path"') //视频封面路径
+    3: string PlayPath (go.tag = 'json:"play_url"') //视频播放路径
+    4: string CoverPath (go.tag = 'json:"cover_url"') //视频封面路径
     5: i64 FavoriteCount (go.tag = 'json:"favorite_count"') //视频的点赞总数
     6: i64 CommentCount (go.tag = 'json:"comment_count"') //视频的评论总数
     7: bool IsFavorite (go.tag = 'json:"is_favorite"') // true- 已点赞，false-未点赞

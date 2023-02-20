@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/808-not-found/tik_duck/pkg/consts"
@@ -37,8 +36,6 @@ func CommentAction(ctx context.Context, myID int64, vdID int64, commentText stri
 		VideoID: vdID,
 		Content: commentText,
 	}
-	log.Println(comment)
-	log.Println("!!!!!!!!!!!!")
 	conn = DB.WithContext(ctx).Create(&comment)
 	res = &comment
 	if err := conn.Error; err != nil {
