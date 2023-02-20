@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/808-not-found/tik_duck/cmd/useruser/dal/db"
-
 	uuservice "github.com/808-not-found/tik_duck/cmd/useruser/uuservice"
 	useruser "github.com/808-not-found/tik_duck/kitex_gen/useruser"
 	"github.com/808-not-found/tik_duck/pkg/allerrors"
