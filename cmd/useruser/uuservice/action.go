@@ -18,7 +18,7 @@ func UserRelationActionService(
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
 		resp.StatusCode = 3001
-		return &resp, nil
+		return &resp, err
 	}
 
 	// 获取必要信息
