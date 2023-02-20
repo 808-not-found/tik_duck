@@ -17,27 +17,27 @@ func UserRelationFollowerList(
 	// 用户鉴权
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
-		resp.StatusCode = 1001
+		resp.StatusCode = 3009
 		return &resp, nil
 	}
 	// 登录状态检查
 	myID := claims.ID
 	if myID == 0 {
-		resp.StatusCode = 1002
+		resp.StatusCode = 3010
 		return &resp, nil
 	}
 	// 请求数据库
 	var dbUsers []*db.User
 	dbUsers, err = db.GetFollowerList(ctx, myID)
 	if err != nil {
-		resp.StatusCode = 1008
+		resp.StatusCode = 3011
 		return &resp, nil
 	}
 	// 封装数据
 	var rpcUsers []*useruser.User
 	rpcUsers, err = pack.Users(dbUsers, myID)
 	if err != nil {
-		resp.StatusCode = 1009
+		resp.StatusCode = 3012
 		return &resp, nil
 	}
 	resp.UserList = rpcUsers
