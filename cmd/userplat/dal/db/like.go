@@ -65,7 +65,7 @@ func LikeAction(ctx context.Context, myID int64, vdID int64) error {
 	// 增加favoritecount
 	// var myUser *User
 	var myVideo *Video
-	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("id", myVideo.FavoriteCount+1)
+	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("favorite_count", myVideo.FavoriteCount+1)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -74,7 +74,7 @@ func LikeAction(ctx context.Context, myID int64, vdID int64) error {
 		UserID:  myID,
 		VideoID: vdID,
 	}
-	conn = DB.WithContext(ctx).Create(like)
+	conn = DB.WithContext(ctx).Create(&like)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -85,7 +85,7 @@ func UnLikeAction(ctx context.Context, myID int64, vdID int64) error {
 	// 减少favoritecount
 	// var myUser *User
 	var myVideo *Video
-	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("id", myVideo.FavoriteCount-1)
+	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("favorite_count", myVideo.FavoriteCount-1)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func UnLikeAction(ctx context.Context, myID int64, vdID int64) error {
 		UserID:  myID,
 		VideoID: vdID,
 	}
-	conn = DB.WithContext(ctx).Create(like)
+	conn = DB.WithContext(ctx).Create(&like)
 	if err := conn.Error; err != nil {
 		return err
 	}

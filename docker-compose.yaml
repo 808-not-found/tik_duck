@@ -6,7 +6,7 @@ services:
     container_name: nginx-static
     ports:
       - 8081:80
-    volumes: 
+    volumes:
       - ./cmd/web/public:/static/public
   mysql:
     image: "mysql:latest"
