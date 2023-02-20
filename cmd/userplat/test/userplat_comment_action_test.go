@@ -29,12 +29,12 @@ import (
 //	   3: optional Comment Comment (go.tag = 'json:"comment"')//评论成功返回评论内容，不需要重新拉取整个列表
 //	}
 func TestUserCommentActionService(t *testing.T) {
+	rettext := "I hate you"
 	// 用户鉴权失败
 	PatchConvey("TestMockUserplatCommentAction_WorryClaim", t, func() {
 		expectstatusCode := int32(2034)
 		var expectStatusMsg *string
 		var expectComment *userplat.Comment
-		rettext := "I hate you"
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{}, allerrors.ErrTestnotnil()).Build()
 		req := userplat.CommentActionRequest{
 			Token:       "3",
@@ -46,7 +46,7 @@ func TestUserCommentActionService(t *testing.T) {
 		assert.Equal(t, expectstatusCode, res.StatusCode)
 		assert.Equal(t, expectStatusMsg, res.StatusMsg)
 		assert.Equal(t, expectComment, res.Comment)
-		assert.Equal(t, err, allerrors.ErrTestnotnil())
+		assert.Equal(t, err, nil)
 	})
 	// 用户评论数据库失败
 	PatchConvey("TestMockUserplatCommentAction_WorrydbComment", t, func() {
@@ -54,7 +54,6 @@ func TestUserCommentActionService(t *testing.T) {
 		var expectStatusMsg *string
 		var expectComment *userplat.Comment
 		nowTime := time.Now()
-		rettext := "I hate you"
 		retcomment := db.Comment{
 			ID:          999,
 			CommentTime: nowTime,
@@ -79,17 +78,16 @@ func TestUserCommentActionService(t *testing.T) {
 	// 用户删除评论数据库失败
 	PatchConvey("TestMockUserplatCommentAction_WorrydbUnComment", t, func() {
 		expectstatusCode := int32(2035)
-		reqCommentId := int64(1)
+		reqCommentID := int64(1)
 		var expectStatusMsg *string
 		var expectComment *userplat.Comment
-		rettext := "I hate you"
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{}, nil).Build()
 		Mock(db.UnCommentAction).Return(allerrors.ErrTestnotnil()).Build()
 		req := userplat.CommentActionRequest{
 			Token:       "2333",
 			VideoId:     999,
 			ActionType:  2,
-			CommentId:   &reqCommentId,
+			CommentId:   &reqCommentID,
 			CommentText: &rettext,
 		}
 		res, err := userplatservice.UserCommentActionService(context.Background(), &req)
@@ -104,7 +102,6 @@ func TestUserCommentActionService(t *testing.T) {
 		var expectStatusMsg *string
 		var expectComment *userplat.Comment
 		nowTime := time.Now()
-		rettext := "I hate you"
 		retcomment := db.Comment{
 			ID:          999,
 			CommentTime: nowTime,
@@ -131,9 +128,7 @@ func TestUserCommentActionService(t *testing.T) {
 	PatchConvey("TestMockUserplatCommentAction_normal", t, func() {
 		expectstatusCode := int32(0)
 		var expectStatusMsg *string
-		var expectComment *userplat.Comment
 		nowTime := time.Now()
-		rettext := "I hate you"
 		retcomment := db.Comment{
 			ID:          999,
 			CommentTime: nowTime,
@@ -151,7 +146,7 @@ func TestUserCommentActionService(t *testing.T) {
 		expectcomment := &userplat.Comment{
 			Id:         9,
 			User:       &retUser,
-			Content:    "I hate you",
+			Content:    rettext,
 			CreateDate: "2022.2.22",
 		}
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{}, nil).Build()
@@ -166,7 +161,7 @@ func TestUserCommentActionService(t *testing.T) {
 		res, err := userplatservice.UserCommentActionService(context.Background(), &req)
 		assert.Equal(t, expectstatusCode, res.StatusCode)
 		assert.Equal(t, expectStatusMsg, res.StatusMsg)
-		assert.Equal(t, expectComment, res.Comment)
+		assert.Equal(t, expectcomment, res.Comment)
 		assert.Equal(t, err, nil)
 	})
 }

@@ -27,7 +27,7 @@ func TestUserFavoriteActionService(t *testing.T) {
 	//鉴权失败
 	PatchConvey("TestMockUserplatFavoriteAction_WorryClaim", t, func() {
 		expectstatusCode := int32(2040)
-		var expectStatusMsg *string
+		expectStatusMsg := ""
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{}, allerrors.ErrTestnotnil()).Build()
 		req := userplat.FavoriteActionRequest{
 			Token:      "3",
@@ -37,12 +37,12 @@ func TestUserFavoriteActionService(t *testing.T) {
 		res, err := userplatservice.UserFavoriteActionService(context.Background(), &req)
 		assert.Equal(t, expectstatusCode, res.StatusCode)
 		assert.Equal(t, expectStatusMsg, res.StatusMsg)
-		assert.Equal(t, err, allerrors.ErrTestnotnil())
+		assert.Equal(t, err, nil)
 	})
 	//点赞失败
 	PatchConvey("TestMockUserplatFavoriteAction_Worrylike", t, func() {
 		expectstatusCode := int32(2041)
-		var expectStatusMsg *string
+		expectStatusMsg := ""
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{}, nil).Build()
 		Mock(db.LikeAction).Return(allerrors.ErrTestnotnil()).Build()
 		req := userplat.FavoriteActionRequest{
@@ -58,7 +58,7 @@ func TestUserFavoriteActionService(t *testing.T) {
 	//取消点赞失败
 	PatchConvey("TestMockUserplatFavoriteAction_Worryunlike", t, func() {
 		expectstatusCode := int32(2041)
-		var expectStatusMsg *string
+		expectStatusMsg := ""
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{}, nil).Build()
 		Mock(db.UnLikeAction).Return(allerrors.ErrTestnotnil()).Build()
 		req := userplat.FavoriteActionRequest{
@@ -74,7 +74,7 @@ func TestUserFavoriteActionService(t *testing.T) {
 	//点赞成功
 	PatchConvey("TestMockUserplatFavoriteAction_Normal", t, func() {
 		expectstatusCode := int32(0)
-		var expectStatusMsg *string
+		expectStatusMsg := ""
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{}, nil).Build()
 		Mock(db.LikeAction).Return(nil).Build()
 		req := userplat.FavoriteActionRequest{

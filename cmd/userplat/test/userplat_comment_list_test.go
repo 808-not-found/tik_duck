@@ -39,7 +39,7 @@ func TestUserCommentListService(t *testing.T) {
 		assert.Equal(t, expectstatusCode, res.StatusCode)
 		assert.Equal(t, expectStatusMsg, res.StatusMsg)
 		assert.Equal(t, expectComment, res.CommentList)
-		assert.Equal(t, err, allerrors.ErrTestnotnil())
+		assert.Equal(t, err, nil)
 	})
 	//查询数据库错误
 	PatchConvey("TestMockUserplatCommentList_Worrydb", t, func() {

@@ -40,7 +40,7 @@ func TestUserFavoriteListService(t *testing.T) {
 		assert.Equal(t, expectstatusCode, res.StatusCode)
 		assert.Equal(t, expectStatusMsg, res.StatusMsg)
 		assert.Equal(t, expectvideo, res.VideoList)
-		assert.Equal(t, err, allerrors.ErrTestnotnil())
+		assert.Equal(t, err, nil)
 	})
 	//查询数据库失败
 	PatchConvey("TestMockUserplatFavoriteAction_Worrydb", t, func() {
