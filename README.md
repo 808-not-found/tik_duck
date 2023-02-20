@@ -21,6 +21,8 @@
 
 `docker-compose up -d` 启动 MySQL 和 Etcd 服务。
 
+分别在 `cmd/user` `cmd/useruser` `cmd/userplat` `cmd/web` 下运行 `go run .` 启动服务。
+
 ## 远程开发
 
 本项目已经配置好 gitpod 与 github codespaces 的初始化文件，在你 fork 本仓库后，可以根据性能需求和连接稳定性选择其中之一进行远程开发，不需要在本地额外配置开发环境。**这两个远程开发平台有时间限制，退出页面之前请确保关闭工作区！**
