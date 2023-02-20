@@ -136,7 +136,7 @@ func TestUserRelationFollowListService(t *testing.T) {
 	})
 
 	//查询数据库失败
-	PatchConvey("TestUserRelationFollowListService_WrongFollowAction", t, func() {
+	PatchConvey("TestUserRelationFollowListService_WrongDB", t, func() {
 		//设置期待值
 		expectstatusCode := int32(3007)
 		expectErr := allerrors.ErrTestnotnil()
@@ -166,7 +166,7 @@ func TestUserRelationFollowListService(t *testing.T) {
 	})
 
 	// 数据封装失败
-	PatchConvey("TestUserRelationFollowListService_WrongUnFollowAction", t, func() {
+	PatchConvey("TestUserRelationFollowListService_WrongPack", t, func() {
 		//设置期待值
 		expectstatusCode := int32(3008)
 		expectErr := allerrors.ErrTestnotnil()
