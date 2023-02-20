@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/808-not-found/tik_duck/cmd/web/rpc"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
@@ -18,10 +19,10 @@ type FeedResponse struct {
 
 func Feed(ctx context.Context, c *app.RequestContext) {
 	var feedReq user.FeedRequest
-	if err := c.Bind(&feedReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
+	token := c.Query("token")
+	latestTime, _ := strconv.ParseInt(c.Query("latest_time"), 10, 64)
+	feedReq.Token = &token
+	feedReq.LatestTime = &latestTime
 	resp, err := rpc.GetFeed(context.Background(), &feedReq)
 	log.Println("yes")
 	if err != nil {

@@ -16,7 +16,7 @@ const (
 
 	WebServerPort     = "8080"
 	WebServerPublicIP = "43.154.129.150"
-	StaticPort        = "8081"
+	StaticPort        = "8080"
 
 	MySQLDefaultDSN = "tik_duck:duck@tcp(localhost:9910)/tik_duck?charset=utf8mb4&parseTime=True"
 	TCP             = "tcp"

@@ -68,12 +68,12 @@ func Login(ctx context.Context, c *app.RequestContext) {
 func UserInfo(ctx context.Context, c *app.RequestContext) {
 	var userInfoReq user.UserRequest
 	userInfoReq.Token = c.Query("token")
-	userID, err := strconv.Atoi(c.Query("user_id"))
+	userID, err := strconv.ParseInt(c.Query("user_id"), 10, 64)
 	if err != nil {
 		log.Fatalln(err)
 		c.JSON(http.StatusServiceUnavailable, err)
 	}
-	userInfoReq.UserId = int64(userID)
+	userInfoReq.UserId = userID
 	resp, err := rpc.UserInfo(context.Background(), &userInfoReq)
 	if err != nil {
 		log.Fatalln(err)
