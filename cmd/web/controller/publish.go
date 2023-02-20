@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 
 	"github.com/808-not-found/tik_duck/cmd/web/rpc"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
@@ -67,11 +68,11 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 
 // PublishList all users have same publish video list.
 func PublishList(ctx context.Context, c *app.RequestContext) {
+	token := c.Query("token")
+	userID := c.Query("user_id")
 	var userPublishListReq user.PublishListRequest
-	if err := c.Bind(&userPublishListReq); err != nil {
-		log.Fatalln(err)
-		return
-	}
+	userPublishListReq.Token = token
+	userPublishListReq.UserId, _ = strconv.ParseInt(userID, 10, 64)
 	resp, err := rpc.UserPublishList(context.Background(), &userPublishListReq)
 	if err != nil {
 		log.Fatalln(err)
