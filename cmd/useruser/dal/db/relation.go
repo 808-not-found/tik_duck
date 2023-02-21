@@ -108,9 +108,15 @@ func GetFollowList(ctx context.Context, myID int64) ([]*User, error) {
 	}
 
 	// 获取所有的用户 ID
-	var followIDList []int64
+	var setList map[int64]bool
 	for _, value := range followList {
-		followIDList = append(followIDList, value.ToUserID)
+		if value != nil {
+			setList[value.ToUserID] = true // nolint:all
+		}
+	}
+	var followIDList []int64
+	for k := range setList {
+		followIDList = append(followIDList, k)
 	}
 
 	// 找到所有对应的用户结构体
@@ -133,9 +139,15 @@ func GetFollowerList(ctx context.Context, userID int64) ([]*User, error) {
 	log.Println("followerList结构体长度：", len(followerList))
 
 	// 获取用户 ID
-	var followerIDList []int64
+	var setList map[int64]bool
 	for _, value := range followerList {
-		followerIDList = append(followerIDList, value.FromUserID)
+		if value != nil {
+			setList[value.FromUserID] = true
+		}
+	}
+	var followerIDList []int64
+	for k := range setList {
+		followerIDList = append(followerIDList, k)
 	}
 
 	// 找到所有对应的用户结构体

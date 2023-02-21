@@ -110,10 +110,16 @@ func GetFavoriteList(ctx context.Context, userID int64) ([]*Video, error) {
 		return res, err
 	}
 
-	// 获取所有的视频 ID
-	var favoriteIDList []int64
+	// 获取所有的视频 ID 去重
+	var setList map[int64]bool
 	for _, value := range favoriteList {
-		favoriteIDList = append(favoriteIDList, value.VideoID)
+		if value != nil {
+			setList[value.VideoID] = true // nolint:all
+		}
+	}
+	var favoriteIDList []int64
+	for k := range setList {
+		favoriteIDList = append(favoriteIDList, k)
 	}
 
 	// 找到所有对应的视频结构体
