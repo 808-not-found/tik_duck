@@ -46,7 +46,7 @@ func Register(ctx context.Context, c *app.RequestContext) {
 	userRegisterReq.Password = c.Query("password")
 	resp, err := rpc.UserRegister(context.Background(), &userRegisterReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusServiceUnavailable, err)
 	}
 	c.JSON(http.StatusOK, resp)
@@ -59,7 +59,7 @@ func Login(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := rpc.UserLogin(context.Background(), &userLoginReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusServiceUnavailable, err)
 	}
 	c.JSON(http.StatusOK, resp)
@@ -70,13 +70,13 @@ func UserInfo(ctx context.Context, c *app.RequestContext) {
 	userInfoReq.Token = c.Query("token")
 	userID, err := strconv.ParseInt(c.Query("user_id"), 10, 64)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusServiceUnavailable, err)
 	}
 	userInfoReq.UserId = userID
 	resp, err := rpc.UserInfo(context.Background(), &userInfoReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusServiceUnavailable, err)
 	}
 	c.JSON(http.StatusOK, resp)

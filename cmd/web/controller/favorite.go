@@ -19,7 +19,7 @@ func FavoriteAction(ctx context.Context, c *app.RequestContext) {
 	feedReq.Token = c.Query("token")
 	resp, err := rpc.UserFavoriteAction(context.Background(), &feedReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)
@@ -31,7 +31,7 @@ func FavoriteList(ctx context.Context, c *app.RequestContext) {
 	feedReq.UserId, _ = strconv.ParseInt(c.Query("user_id"), 10, 64)
 	resp, err := rpc.UserFavoriteList(context.Background(), &feedReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)
