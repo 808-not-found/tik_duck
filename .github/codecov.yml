@@ -3,6 +3,7 @@ ignore:
   - "**/*_test.go"
   - "**/*.gen.go"
   - "kitex_gen/"
+  - "cmd/web/" # web only used to connect to rpc
 comment: # this is a top-level key
   layout: "reach, diff, flags, files"
   behavior: default

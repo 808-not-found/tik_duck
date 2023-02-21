@@ -13,6 +13,7 @@ const (
 	UserServiceName     = "usersvr"
 	UserUserServiceName = "useruser"
 	UserPlatServiceName = "userplat"
+	ChatService         = "chat"
 
 	WebServerPort     = "8080"
 	WebServerPublicIP = "192.168.0.106"
