@@ -67,17 +67,6 @@ CREATE TABLE `like` (
   `deleted_at` timestamp NULL DEFAULT NULL COMMENT 'User account delete time'
 );
 
-CREATE TABLE `message` (
-  `id` bigint PRIMARY KEY AUTO_INCREMENT,
-  `send_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `from_user_id` bigint NOT NULL,
-  `to_user_id` bigint NOT NULL,
-  `content` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'User account create time',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'User account update time',
-  `deleted_at` timestamp NULL DEFAULT NULL COMMENT 'User account delete time'
-);
-
 CREATE INDEX `video_index_0` ON `video` (`id`);
 
 CREATE INDEX `video_index_1` ON `video` (`author_id`);
