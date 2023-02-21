@@ -42,6 +42,7 @@ func UserCommentActionService(
 			return &resp, err
 		}
 		resp.Comment = rpcComment
+		return &resp, nil
 	} else {
 		// 取消评论
 		err := db.UnCommentAction(ctx, myID, vdID, *commentID)
