@@ -6,9 +6,11 @@ import (
 	"github.com/808-not-found/tik_duck/cmd/useruser/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/useruser"
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
+	"gorm.io/gorm"
 )
 
 type Follow struct {
+	gorm.Model
 	ID         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	FollowTime time.Time `gorm:"column:follow_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	FromUserID int64     `gorm:"column:from_user_id;NOT NULL"`
