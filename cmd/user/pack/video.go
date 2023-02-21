@@ -43,7 +43,8 @@ func Video(ctx context.Context, m *db.Video, myID int64) (*user.Video, error) {
 	}
 
 	var like bool
-	err = db.IsFavorite(ctx, myID, m.ID)
+	err = db.DB.WithContext(ctx).Where("user_id = ? AND video_id = ?", myID, m.ID).Error
+	// err = db.IsFavorite(ctx, myID, m.ID)
 	if err != nil {
 		like = false
 	} else {
