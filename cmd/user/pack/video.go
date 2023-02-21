@@ -41,6 +41,14 @@ func Video(ctx context.Context, m *db.Video, myID int64) (*user.Video, error) {
 			return nil, err
 		}
 	}
+
+	var like bool
+	err = db.IsFavorite(ctx, myID, m.ID)
+	if err != nil {
+		like = false
+	} else {
+		like = true
+	}
 	// TODO: 完成以下
 	return &user.Video{
 		Id:            m.ID,
@@ -49,7 +57,7 @@ func Video(ctx context.Context, m *db.Video, myID int64) (*user.Video, error) {
 		CoverPath:     m.CoverPath,
 		FavoriteCount: m.FavoriteCount,
 		CommentCount:  m.CommentCount,
-		IsFavorite:    false, // 残缺
+		IsFavorite:    like, // 残缺
 		Title:         m.Title,
 	}, nil
 }
