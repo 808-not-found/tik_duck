@@ -34,7 +34,7 @@ func BenchmarkUserInfoService(b *testing.B) {
 			Token:  "1231312",
 			UserId: 1231231,
 		}
-		userservice.UserInfoService(context.Background(), &req)
+		_, _, _, _ = userservice.UserInfoService(context.Background(), &req)
 	}
 }
 func BenchmarkUserInfoServiceParallel(b *testing.B) {
@@ -46,7 +46,7 @@ func BenchmarkUserInfoServiceParallel(b *testing.B) {
 				Token:  "1231312",
 				UserId: 1231231,
 			}
-			userservice.UserInfoService(context.Background(), &req)
+			_, _, _, _ = userservice.UserInfoService(context.Background(), &req)
 		}
 	})
 }

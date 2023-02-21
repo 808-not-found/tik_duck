@@ -27,7 +27,7 @@ func BenchmarkUserLoginService(b *testing.B) {
 			Username: "ljz",
 			Password: "20020210",
 		}
-		userservice.UserLoginService(context.Background(), &req)
+		_, _, _, _, _ = userservice.UserLoginService(context.Background(), &req)
 	}
 }
 func BenchmarkUserLoginServiceParallel(b *testing.B) {
@@ -39,7 +39,7 @@ func BenchmarkUserLoginServiceParallel(b *testing.B) {
 				Username: "ljz",
 				Password: "20020210",
 			}
-			userservice.UserLoginService(context.Background(), &req)
+			_, _, _, _, _ = userservice.UserLoginService(context.Background(), &req)
 		}
 	})
 }

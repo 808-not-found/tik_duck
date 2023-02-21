@@ -29,7 +29,7 @@ func BenchmarkUserPublishActionService(b *testing.B) {
 			CoverPath: "public/8.jpg",
 			Title:     "17",
 		}
-		userservice.UserPublishActionService(context.Background(), &req)
+		_, _ = userservice.UserPublishActionService(context.Background(), &req)
 	}
 }
 func BenchmarkUserPublishActionServiceParallel(b *testing.B) {
@@ -43,7 +43,7 @@ func BenchmarkUserPublishActionServiceParallel(b *testing.B) {
 				CoverPath: "public/8.jpg",
 				Title:     "17",
 			}
-			userservice.UserPublishActionService(context.Background(), &req)
+			_, _ = userservice.UserPublishActionService(context.Background(), &req)
 		}
 	})
 }

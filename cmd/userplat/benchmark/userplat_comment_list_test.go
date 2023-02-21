@@ -26,7 +26,7 @@ func BenchmarkUserCommentListService(b *testing.B) {
 			Token:   "3",
 			VideoId: 777,
 		}
-		userplatservice.UserCommentListService(context.Background(), &req)
+		_, _ = userplatservice.UserCommentListService(context.Background(), &req)
 	}
 }
 func BenchmarkUserCommentListServiceParallel(b *testing.B) {
@@ -38,7 +38,7 @@ func BenchmarkUserCommentListServiceParallel(b *testing.B) {
 				Token:   "3",
 				VideoId: 777,
 			}
-			userplatservice.UserCommentListService(context.Background(), &req)
+			_, _ = userplatservice.UserCommentListService(context.Background(), &req)
 		}
 	})
 }
