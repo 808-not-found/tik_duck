@@ -27,6 +27,30 @@ import (
 //	    2: optional string StatusMsg (go.tag = 'json:"status_msg"') //返回状态描述
 //	    3: User User (go.tag = 'json:"user"') //用户信息
 //	}
+func BenchmarkUserInfoService(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		//设置传入参数
+		req := user.UserRequest{
+			Token:  "1231312",
+			UserId: 1231231,
+		}
+		userservice.UserInfoService(context.Background(), &req)
+	}
+}
+func BenchmarkUserInfoServiceParallel(b *testing.B) {
+	b.ResetTimer()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			//设置传入参数
+			req := user.UserRequest{
+				Token:  "1231312",
+				UserId: 1231231,
+			}
+			userservice.UserInfoService(context.Background(), &req)
+		}
+	})
+}
 func TestUserInfoService(t *testing.T) {
 	//构建通用信息
 	nowTime := time.Now()

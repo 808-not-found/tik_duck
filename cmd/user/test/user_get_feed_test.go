@@ -27,6 +27,26 @@ import (
 //	    3: list<Video> VideoList (go.tag = 'json:"video_list"') //视频列表
 //	    4: optional i64 NextTime (go.tag = 'json:"next_time"') //本次返回的视频中，发布最早的时间，作为下次请求时的latest_time
 //	}
+func BenchmarkUserGetFeedService(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		//设置传入参数
+		Token := "520222"
+		req := user.FeedRequest{Token: &Token}
+		userservice.UserGetFeedService(context.Background(), &req)
+	}
+}
+func BenchmarkUserGetFeedServiceParallel(b *testing.B) {
+	b.ResetTimer()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			//设置传入参数
+			Token := "520222"
+			req := user.FeedRequest{Token: &Token}
+			userservice.UserGetFeedService(context.Background(), &req)
+		}
+	})
+}
 func TestUserGetFeedService(t *testing.T) {
 	// 构建通用信息
 	nowTime := time.Now()
