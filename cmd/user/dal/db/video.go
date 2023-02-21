@@ -20,8 +20,30 @@ type Video struct {
 	Title         string    `gorm:"column:title;NOT NULL"`
 }
 
+type Like struct {
+	gorm.Model
+	ID       int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	LikeTime time.Time `gorm:"column:like_time;default:CURRENT_TIMESTAMP;NOT NULL"`
+	UserID   int64     `gorm:"column:user_id;default:0;NOT NULL"`
+	VideoID  int64     `gorm:"column:video_id;default:0;NOT NULL"`
+}
+
 func (v *Video) TableName() string {
 	return consts.VideoTableName
+}
+
+func (v *Like) TableName() string {
+	return consts.LikeTableName
+}
+
+func IsFavorite(ctx context.Context, userID int64, vdeioID int64) error {
+	var like *Like
+	conn := DB.WithContext(ctx).Where("user_id = ? AND video_id = ?", userID, vdeioID).First(&like)
+	if err := conn.Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func UserGetFeed(ctx context.Context, latestTime *int64) ([]*Video, error) {
