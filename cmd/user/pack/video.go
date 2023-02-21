@@ -55,7 +55,7 @@ func Video(ctx context.Context, m *db.Video, myID int64) (*user.Video, error) {
 		Id:            m.ID,
 		Author:        rpcAuthor,
 		PlayPath:      "http://" + consts.WebServerPublicIP + ":" + consts.StaticPort + "/" + m.FilePath,
-		CoverPath:     m.CoverPath,
+		CoverPath:     "http://" + consts.WebServerPublicIP + ":" + consts.StaticPort + "/" + m.CoverPath,
 		FavoriteCount: m.FavoriteCount,
 		CommentCount:  m.CommentCount,
 		IsFavorite:    like,

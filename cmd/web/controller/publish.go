@@ -7,9 +7,11 @@ import (
 	"net/http"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/808-not-found/tik_duck/cmd/web/rpc"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
+	"github.com/808-not-found/tik_duck/pkg/cover"
 	"github.com/808-not-found/tik_duck/pkg/jwt"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
@@ -44,6 +46,7 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 	filename := filepath.Base(data.Filename)
 	finalName := fmt.Sprintf("%s_%s", quser.Username, filename)
 	saveFile := filepath.Join("./public/", finalName)
+	saveCover := strings.ReplaceAll(saveFile, ".mp4", ".png")
 	if err2 := c.SaveUploadedFile(data, saveFile); err2 != nil {
 		hlog.Error(err2)
 		c.JSON(http.StatusOK, Response{
@@ -52,9 +55,13 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 		})
 		return
 	}
-
+	err = cover.GetSnapshot(saveFile, saveCover, 1)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	var userPublishActionReq user.PublishActionRequest
-	userPublishActionReq.CoverPath = "https://bubbleioa.top/wp-content/uploads/2018/10/63738985_p0-2.jpg"
+	userPublishActionReq.CoverPath = saveCover
 	userPublishActionReq.FilePath = saveFile
 	userPublishActionReq.Title = title
 	userPublishActionReq.Token = token

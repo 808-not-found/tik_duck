@@ -39,9 +39,9 @@ func UserGetFeedService(ctx context.Context, req *user.FeedRequest) (*user.FeedR
 	// 获取最早时间
 	var nextTime int64
 	if len(dbVideos) == 0 {
-		nextTime = time.Now().Unix()
+		nextTime = time.Now().Unix() - 1
 	} else {
-		nextTime = dbVideos[len(dbVideos)-1].PublishTime.Unix()
+		nextTime = dbVideos[len(dbVideos)-1].PublishTime.Unix() - 1
 	}
 
 	// 封装数据
