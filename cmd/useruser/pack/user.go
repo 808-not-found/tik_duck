@@ -27,11 +27,11 @@ func User(m *db.User, fromID int64) (*useruser.User, error) {
 	var reserr error
 	f := Follow{}
 
-	err := db.DB.Where("from_user_id = ? AND to_user_id = ?", fromID, m.ID).Find(&f).Error
+	err := db.DB.Where("from_user_id = ? AND to_user_id = ?", fromID, m.ID).First(&f).Error
 	if err == nil {
-		IsFollowShip = false
-	} else {
 		IsFollowShip = true
+	} else {
+		IsFollowShip = false
 	}
 	return &useruser.User{
 		Id:            m.ID,
