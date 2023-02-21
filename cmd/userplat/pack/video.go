@@ -13,6 +13,7 @@ import (
 )
 
 type Like struct {
+	gorm.Model
 	ID       int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	LikeTime time.Time `gorm:"column:like_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	UserID   int64     `gorm:"column:user_id;NOT NULL"`

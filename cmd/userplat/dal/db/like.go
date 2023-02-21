@@ -94,7 +94,9 @@ func UnLikeAction(ctx context.Context, myID int64, vdID int64) error {
 		UserID:  myID,
 		VideoID: vdID,
 	}
-	conn = DB.WithContext(ctx).Create(&like)
+	// 删除follow表中的一条记录
+
+	conn = DB.WithContext(ctx).Where("user_id = ? AND video_id = ?", myID, vdID).Delete(&like)
 	if err := conn.Error; err != nil {
 		return err
 	}
