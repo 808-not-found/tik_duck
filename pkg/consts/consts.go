@@ -15,7 +15,7 @@ const (
 	UserPlatServiceName = "userplat"
 
 	WebServerPort     = "8080"
-	WebServerPublicIP = "192.168.0.106"
+	WebServerPublicIP = "192.168.126.88"
 	StaticPort        = "8081"
 
 	MySQLDefaultDSN = "tik_duck:duck@tcp(localhost:9910)/tik_duck?charset=utf8mb4&parseTime=True"

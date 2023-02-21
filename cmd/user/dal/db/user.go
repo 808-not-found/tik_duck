@@ -72,3 +72,12 @@ func CreateUsers(ctx context.Context, users []*User) error {
 func CreateUser(ctx context.Context, user *User) error {
 	return DB.WithContext(ctx).Create(user).Error
 }
+
+func CheckUserExist(ctx context.Context, username string) (bool, error) {
+	U := User{}
+	err := DB.Where("name = ?", username).First(&U).Error
+	if err == nil {
+		return true, nil
+	}
+	return false, nil
+}

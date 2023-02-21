@@ -23,6 +23,11 @@ func UserRegisterService(ctx context.Context, req *user.UserRegisterRequest) (in
 		FollowCount:   0,
 		FollowerCount: 0,
 	}
+	Exist, _ := db.CheckUserExist(ctx, req.Username)
+	if Exist {
+		statusCode = 1012
+		return statusCode, "", 0, "", nil
+	}
 	err := db.CreateUser(ctx, &userinfo)
 	if err != nil {
 		statusCode = 1002
