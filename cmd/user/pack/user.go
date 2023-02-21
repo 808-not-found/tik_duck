@@ -34,7 +34,6 @@ func DBUserToRPCUser(m *db.User, fromID int64) (*user.User, error) {
 	err := db.DB.Where("from_user_id = ? AND to_user_id = ?", fromID, m.ID).First(&f).Error
 	if err == nil {
 		IsFollowShip = true
-
 	} else {
 		IsFollowShip = false
 	}

@@ -72,6 +72,7 @@ func TestUserGetFeedService(t *testing.T) {
 		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
 		Mock(db.GetUser).Return(retUser, nil).Build()
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
+		Mock(db.IsFavorite).Return(allerrors.ErrTestnotnil()).Build()
 		Mock(pack.DBUserToRPCUser).Return(&user.User{
 			Id:            1,
 			Name:          "蒂萨久",
@@ -118,6 +119,7 @@ func TestUserGetFeedService(t *testing.T) {
 		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
 		Mock(db.GetUser).Return(retUser, nil).Build()
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
+		Mock(db.IsFavorite).Return(allerrors.ErrTestnotnil()).Build()
 		Mock(pack.User).Return(&user.User{
 			Id:            1,
 			Name:          "蒂萨久",

@@ -4,12 +4,11 @@ import (
 	"context"
 	"time"
 
-	"gorm.io/gorm"
-
 	"github.com/808-not-found/tik_duck/cmd/userplat/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/userplat"
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
 	"github.com/808-not-found/tik_duck/pkg/consts"
+	"gorm.io/gorm"
 )
 
 type Like struct {
