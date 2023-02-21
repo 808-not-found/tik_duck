@@ -85,23 +85,4 @@ func GetCommentList(ctx context.Context, myID int64, vdID int64) ([]*Comment, er
 		return commentList, err
 	}
 	return commentList, nil
-
-	// // 获取所有的评论 ID
-	// setList := make(map[int64]bool)
-	// for _, value := range commentList {
-	// 	if value != nil {
-	// 		setList[value.VideoID] = true // nolint:all
-	// 	}
-	// }
-	// var commentIDList []int64
-	// for k := range setList {
-	// 	commentIDList = append(commentIDList, k)
-	// }
-
-	// // 找到所有对应的视频结构体
-	// conn = DB.WithContext(ctx).Where("id = ?", commentIDList).Find(&res)
-	// if err := conn.Error; err != nil {
-	// 	return res, err
-	// }
-	// return res, nil
 }
