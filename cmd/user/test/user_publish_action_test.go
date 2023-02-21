@@ -24,6 +24,7 @@ import (
 //	    1: i32 StatusCode (go.tag = 'json:"status_code"') //状态码，0-成功，其他值-失败
 //	    2: optional string StatusMsg (go.tag = 'json:"status_msg"') //返回状态描述
 //	}
+
 func TestUserPublishActionService(t *testing.T) {
 	//用户鉴权失败
 	PatchConvey("TestMockUserPublishAction_WorryClaims", t, func() {

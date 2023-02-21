@@ -27,6 +27,7 @@ import (
 //	    3: list<Video> VideoList (go.tag = 'json:"video_list"') //视频列表
 //	    4: optional i64 NextTime (go.tag = 'json:"next_time"') //本次返回的视频中，发布最早的时间，作为下次请求时的latest_time
 //	}
+
 func TestUserGetFeedService(t *testing.T) {
 	// 构建通用信息
 	nowTime := time.Now()

@@ -28,6 +28,7 @@ import (
 //	    3: i64 UserId (go.tag = 'json:"user_id"') //用户id
 //	    4: string Token (go.tag = 'json:"token"') //用户鉴权token
 //	}
+
 func TestUserLoginService(t *testing.T) {
 	//构建通用信息
 	nowTime := time.Now()
