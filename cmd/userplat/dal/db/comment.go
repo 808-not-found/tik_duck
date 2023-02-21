@@ -75,9 +75,15 @@ func GetCommentList(ctx context.Context, myID int64, vdID int64) ([]*Comment, er
 	}
 
 	// 获取所有的评论 ID
-	var commentIDList []int64
+	var setList map[int64]bool
 	for _, value := range commentList {
-		commentIDList = append(commentIDList, value.UserID)
+		if value != nil {
+			setList[value.VideoID] = true // nolint:all
+		}
+	}
+	var commentIDList []int64
+	for k := range setList {
+		commentIDList = append(commentIDList, k)
 	}
 
 	// 找到所有对应的视频结构体
