@@ -69,7 +69,7 @@ func UnCommentAction(ctx context.Context, myID int64, vdID int64, commentID int6
 		VideoID: vdID,
 		ID:      commentID, // 应该是删除的commentID的内容的ID
 	}
-	conn = DB.WithContext(ctx).Delete(&comment)
+	conn = DB.WithContext(ctx).Where("user_id = ? AND video_id = ?", myID, vdID).Delete(&comment)
 	if err := conn.Error; err != nil {
 		return err
 	}
