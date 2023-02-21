@@ -77,3 +77,13 @@ func UserPublishAction(ctx context.Context, userID int64, filePath string, cover
 	}
 	return nil
 }
+
+func IsFavorite(ctx context.Context, userID int64, vdeioID int64) error {
+	var like *Like
+	conn := DB.WithContext(ctx).Where("user_id = ? AND video_id = ?", userID, vdeioID).First(&like)
+	if err := conn.Error; err != nil {
+		return err
+	}
+
+	return nil
+}
