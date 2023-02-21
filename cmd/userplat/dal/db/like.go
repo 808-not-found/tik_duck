@@ -123,7 +123,6 @@ func GetFavoriteList(ctx context.Context, userID int64) ([]*Video, error) {
 	for k := range setList {
 		favoriteIDList = append(favoriteIDList, k)
 	}
-
 	// 找到所有对应的视频结构体
 	conn = DB.WithContext(ctx).Where("id = ?", favoriteIDList).Find(&res)
 	if err := conn.Error; err != nil {
