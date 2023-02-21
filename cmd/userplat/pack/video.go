@@ -2,7 +2,6 @@ package pack
 
 import (
 	"context"
-	"errors"
 	"time"
 
 	"github.com/808-not-found/tik_duck/cmd/userplat/dal/db"
@@ -13,6 +12,7 @@ import (
 )
 
 type Like struct {
+	gorm.Model
 	ID       int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	LikeTime time.Time `gorm:"column:like_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	UserID   int64     `gorm:"column:user_id;NOT NULL"`
@@ -24,6 +24,7 @@ func (m *Like) TableName() string {
 }
 
 type Follow struct {
+	gorm.Model
 	ID         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	FollowTime time.Time `gorm:"column:follow_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	FromUserID int64     `gorm:"column:from_user_id;NOT NULL"`
@@ -43,12 +44,9 @@ func DBUserToRPCUser(m *db.User, fromID int64) (*userplat.User, error) {
 	f := Follow{}
 
 	err := db.DB.Where("from_user_id = ? AND to_user_id = ?", fromID, m.ID).Find(&f).Error
-	switch {
-	case errors.Is(err, gorm.ErrRecordNotFound):
+	if err == nil {
 		IsFollowShip = false
-	case err != nil:
-		return nil, allerrors.ErrDBUserToRPCUserRun()
-	default:
+	} else {
 		IsFollowShip = true
 	}
 	return &userplat.User{

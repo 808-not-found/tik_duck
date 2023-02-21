@@ -24,7 +24,7 @@ func RelationAction(ctx context.Context, c *app.RequestContext) {
 	feedReq.ActionType = int32(actionType)
 	resp, err := rpc.UserRelationAction(context.Background(), &feedReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)
@@ -37,7 +37,7 @@ func FollowList(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := rpc.UserRelationFollowList(context.Background(), &feedReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)
@@ -50,7 +50,7 @@ func FollowerList(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := rpc.UserRelationFollowerList(context.Background(), &feedReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)
@@ -63,7 +63,7 @@ func FriendList(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := rpc.UserRelationFriendList(context.Background(), &feedReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)

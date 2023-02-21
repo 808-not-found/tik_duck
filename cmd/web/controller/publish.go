@@ -60,7 +60,7 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 	userPublishActionReq.Token = token
 	resp, err := rpc.UserPublishAction(context.Background(), &userPublishActionReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)
@@ -75,7 +75,7 @@ func PublishList(ctx context.Context, c *app.RequestContext) {
 	userPublishListReq.UserId, _ = strconv.ParseInt(userID, 10, 64)
 	resp, err := rpc.UserPublishList(context.Background(), &userPublishListReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)

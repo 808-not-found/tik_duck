@@ -72,13 +72,49 @@ func TestUserGetFeedService(t *testing.T) {
 		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
 		Mock(db.GetUser).Return(retUser, nil).Build()
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
-		Mock(pack.DBUserToRPCUser).Return(&user.User{
-			Id:            1,
-			Name:          "蒂萨久",
-			FollowCount:   nil,
-			FollowerCount: nil,
-			IsFollow:      false,
-		}, nil).Build()
+
+		Mock(pack.Videos).Return(expectVideo, nil).Build()
+
+		//设置传入参数
+		Token := "123412"
+
+		//调用函数
+		res, err := userservice.UserGetFeedService(context.Background(), &user.FeedRequest{Token: &Token})
+
+		//对比返回值
+		assert.Equal(t, expectstatusCode, res.StatusCode)
+		assert.Equal(t, expectVideo, res.VideoList)
+		assert.Equal(t, expectMsg, res.StatusMsg)
+		assert.Equal(t, nil, err)
+	})
+
+	// 正确情况测试_登陆状态_关注状态
+	PatchConvey("TestMockUserGetFeedService_normal_WithToken", t, func() {
+		//设置期待值
+		expectstatusCode := int32(0)
+		expectVideo := make([]*user.Video, 0)
+		expectVideo = append(expectVideo, &user.Video{
+			Id: 1, Author: &user.User{
+				Id:            1,
+				Name:          "蒂萨久",
+				FollowCount:   nil,
+				FollowerCount: nil,
+				IsFollow:      false,
+			},
+			PlayPath:      "http://" + consts.WebServerPublicIP + ":" + consts.StaticPort + "/" + "public/123.mp4",
+			CoverPath:     "public/123.jpg",
+			FavoriteCount: 0, CommentCount: 0,
+			IsFavorite: true, Title: "test"},
+		)
+		var expectMsg *string
+
+		// 设定mock函数
+		// 这部分主要是设定 被测试函数内部调用的别的函数 修改他们返回的结果
+		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
+		Mock(db.GetUser).Return(retUser, nil).Build()
+		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
+
+		Mock(pack.Videos).Return(expectVideo, nil).Build()
 
 		//设置传入参数
 		Token := "123412"
@@ -118,13 +154,8 @@ func TestUserGetFeedService(t *testing.T) {
 		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
 		Mock(db.GetUser).Return(retUser, nil).Build()
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
-		Mock(pack.User).Return(&user.User{
-			Id:            1,
-			Name:          "蒂萨久",
-			FollowCount:   nil,
-			FollowerCount: nil,
-			IsFollow:      false,
-		}).Build()
+
+		Mock(pack.Videos).Return(expectVideo, nil).Build()
 
 		//设置传入参数
 

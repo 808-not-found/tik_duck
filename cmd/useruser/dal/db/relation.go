@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"log"
 	"sort"
 	"time"
 
@@ -42,13 +43,22 @@ func (u *Follow) TableName() string {
 func FollowAction(ctx context.Context, myID int64, toID int64) error {
 	// 增加follow count
 	var myUser *User
-	conn := DB.WithContext(ctx).Where("id = ?", myID).First(&myUser).Update("id", myUser.FollowCount+1)
+	// conn := DB.Model(&myUser).WithContext(ctx).Where("id = ?", myID)
+	conn := DB.WithContext(ctx).Where("id = ?", myID).First(&myUser).Update("follow_count", myUser.FollowCount+1)
+	// conn := DB.WithContext(ctx)
+	// conn.Where("id = ?", myID).First(&myUser)
+	// cnt1 := myUser.FollowCount
+	// conn.Model(&myUser).Update("id", cnt1 + 1)
 	if err := conn.Error; err != nil {
 		return err
 	}
 	// 增加follower count
 	var toUser *User
-	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("id", toUser.FollowerCount+1)
+	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("follower_count", toUser.FollowerCount+1)
+	// conn = DB.WithContext(ctx)
+	// conn.Where("id = ?", toID).First(&toUser)
+	// cnt2 := myUser.FollowerCount
+	// conn.Model(&toUser).Update("id", cnt + 1)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -57,7 +67,7 @@ func FollowAction(ctx context.Context, myID int64, toID int64) error {
 		FromUserID: myID,
 		ToUserID:   toID,
 	}
-	conn = DB.WithContext(ctx).Create(follow)
+	conn = DB.WithContext(ctx).Create(&follow)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -73,16 +83,14 @@ func UnFollowAction(ctx context.Context, myID int64, toID int64) error {
 	}
 	// 减少follower count
 	var toUser *User
-	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("id", toUser.FollowerCount-1)
+	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("follower_count", toUser.FollowerCount-1)
 	if err := conn.Error; err != nil {
 		return err
 	}
 	// 删除follow表中的一条记录
-	follow := Follow{
-		FromUserID: myID,
-		ToUserID:   toID,
-	}
-	conn = DB.WithContext(ctx).Delete(follow)
+	var follow *Follow
+	log.Println("follow结构体", follow)
+	conn = DB.WithContext(ctx).Where("from_user_id = ? AND to_user_id = ?", myID, toID).Delete(&follow)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -99,38 +107,51 @@ func GetFollowList(ctx context.Context, myID int64) ([]*User, error) {
 		return res, err
 	}
 
+	// log.Printf("%+v", followList)
 	// 获取所有的用户 ID
 	var followIDList []int64
-	for _, value := range followList {
-		followIDList = append(followIDList, value.ToUserID)
+	for _, follow := range followList {
+		followIDList = append(followIDList, follow.ToUserID)
 	}
 
-	// 找到所有对应的用户结构体
-	conn = DB.WithContext(ctx).Where("id = ?", followIDList).Find(&res)
-	if err := conn.Error; err != nil {
-		return res, err
-	}
-
-	return res, nil
-}
-
-func GetFollowerList(ctx context.Context, myID int64) ([]*User, error) {
-	var res []*User
-	// 找到所有相关结构体
-	var followerList []*Follow
-	conn := DB.WithContext(ctx).Where("to_user_id = ?", myID).Find(&followerList)
-	if err := conn; err != nil {
+	// 特判为空的情况
+	if len(followIDList) == 0 {
 		return res, nil
 	}
 
+	log.Println("followList结构体长度：", len(followList))
+	conn = DB.WithContext(ctx).Find(&res, followIDList)
+	if err := conn.Error; err != nil {
+		return res, err
+	}
+	log.Printf("%+v", res)
+	return res, nil
+}
+
+func GetFollowerList(ctx context.Context, userID int64) ([]*User, error) {
+	var res []*User
+	// 找到所有相关结构体
+	var followerList []*Follow
+	conn := DB.WithContext(ctx).Where("to_user_id = ?", userID).Find(&followerList)
+	if err := conn.Error; err != nil {
+		return res, nil
+	}
+	log.Println("followerList结构体长度：", len(followerList))
+
 	// 获取用户 ID
 	var followerIDList []int64
-	for _, value := range followerList {
-		followerIDList = append(followerIDList, value.FromUserID)
+	for _, follower := range followerList {
+		followerIDList = append(followerIDList, follower.FromUserID)
+	}
+
+	// 特判为空的情况
+	if len(followerIDList) == 0 {
+		return res, nil
 	}
 
 	// 找到所有对应的用户结构体
-	conn = DB.WithContext(ctx).Where("id = ?", followerIDList).Find(&res)
+	log.Println(followerIDList)
+	conn = DB.WithContext(ctx).Find(&res, followerIDList)
 	if err := conn.Error; err != nil {
 		return res, err
 	}
@@ -158,7 +179,7 @@ func GetFriendList(ctx context.Context, myID int64) ([]*User, error) {
 
 	// 双指针取出重复值
 	n, m := len(myFollow), len(myFollower)
-	for i, j := 1, 1; i <= n && j <= m; i++ {
+	for i, j := 0, 0; i < n && j < m; i++ {
 		for myFollower[j].ID < myFollow[i].ID {
 			j++
 		}

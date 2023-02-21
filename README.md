@@ -2,6 +2,13 @@
 
 [![codecov](https://codecov.io/gh/808-not-found/tik_duck/branch/master/graph/badge.svg?token=ZRGZZ0HMMG)](https://codecov.io/gh/808-not-found/tik_duck)
 
+## 相关文档
+
+- [测试运行流程](运行测试文档.md)
+- [验收文档](验收文档.md)
+- [单元测试文档](标准test格式.md)
+- [待办和已完成](待办和已完成.md)
+
 ## 项目工具依赖
 
 - [Go 1.18](https://go.dev/)
@@ -39,8 +46,8 @@
 
 ## 调用关系
 
-> 当前为第一版，接口说明请参考飞书内部文档\
-> 值得注意的是，尽管中文我们称他们为基础接口、互动接口、社交接口\
+> 当前为第一版，接口说明请参考飞书内部文档
+> 值得注意的是，尽管中文我们称他们为基础接口、互动接口、社交接口
 > 但是我们将他们分别表述为 user, user_platform, user_user
 
 ![call_relation.svg](./call_relation.svg)

@@ -1,7 +1,6 @@
 package pack
 
 import (
-	"errors"
 	"time"
 
 	"github.com/808-not-found/tik_duck/cmd/useruser/dal/db"
@@ -11,10 +10,13 @@ import (
 )
 
 type Follow struct {
-	ID         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	gorm.Model
+	ID         int64     `gorm:"column:id;primary_key;AUTO_INCERMENT"`
 	FollowTime time.Time `gorm:"column:follow_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	FromUserID int64     `gorm:"column:from_user_id;NOT NULL"`
 	ToUserID   int64     `gorm:"column:to_user_id;NOT NULL"`
+	CreateTime time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
+	UpdateTime time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 }
 
 func (m *Follow) TableName() string {
@@ -29,14 +31,11 @@ func User(m *db.User, fromID int64) (*useruser.User, error) {
 	var reserr error
 	f := Follow{}
 
-	err := db.DB.Where("FromUserID = ? AND ToUserID = ?", fromID, m.ID).Find(&f).Error
-	switch {
-	case errors.Is(err, gorm.ErrRecordNotFound):
-		IsFollowShip = false
-	case err != nil:
-		return nil, allerrors.ErrDBUserToRPCUserRun()
-	default:
+	err := db.DB.Where("from_user_id = ? AND to_user_id = ?", fromID, m.ID).First(&f).Error
+	if err == nil {
 		IsFollowShip = true
+	} else {
+		IsFollowShip = false
 	}
 	return &useruser.User{
 		Id:            m.ID,

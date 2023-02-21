@@ -14,7 +14,6 @@ func UserRelationFollowListService(
 	req *useruser.RelationFollowListRequest,
 ) (*useruser.RelationFollowListResponse, error) {
 	var resp useruser.RelationFollowListResponse
-
 	// 用户鉴权
 	claims, err := jwt.ParseToken(req.Token)
 	if err != nil {
@@ -29,7 +28,7 @@ func UserRelationFollowListService(
 	}
 	// 查询数据库
 	var dbUsers []*db.User
-	dbUsers, err = db.GetFollowList(ctx, myID)
+	dbUsers, err = db.GetFollowList(ctx, req.UserId)
 	if err != nil {
 		resp.StatusCode = 3007
 		return &resp, err
@@ -41,6 +40,5 @@ func UserRelationFollowListService(
 		return &resp, err
 	}
 	resp.UserList = rpcUsers
-
 	return &resp, nil
 }
