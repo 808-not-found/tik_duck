@@ -111,10 +111,10 @@ func GetFavoriteList(ctx context.Context, userID int64) ([]*Video, error) {
 	}
 
 	// 获取所有的视频 ID 去重
-	var setList map[int64]bool
+	setList := make(map[int64]bool)
 	for _, value := range favoriteList {
 		if value != nil {
-			setList[value.VideoID] = true // nolint:all
+			setList[value.VideoID] = true
 		}
 	}
 	var favoriteIDList []int64
