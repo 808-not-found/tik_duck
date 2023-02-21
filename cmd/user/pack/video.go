@@ -57,7 +57,7 @@ func Video(ctx context.Context, m *db.Video, myID int64) (*user.Video, error) {
 		CoverPath:     m.CoverPath,
 		FavoriteCount: m.FavoriteCount,
 		CommentCount:  m.CommentCount,
-		IsFavorite:    like, // 残缺
+		IsFavorite:    like,
 		Title:         m.Title,
 	}, nil
 }
