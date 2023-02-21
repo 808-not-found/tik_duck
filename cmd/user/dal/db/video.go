@@ -36,16 +36,6 @@ func (v *Like) TableName() string {
 	return consts.LikeTableName
 }
 
-func IsFavorite(ctx context.Context, userID int64, vdeioID int64) error {
-	var like *Like
-	conn := DB.WithContext(ctx).Where("user_id = ? AND video_id = ?", userID, vdeioID).First(&like)
-	if err := conn.Error; err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func UserGetFeed(ctx context.Context, latestTime *int64) ([]*Video, error) {
 	// 初始化数据
 	var curTime time.Time

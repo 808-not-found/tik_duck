@@ -65,9 +65,7 @@ func UnCommentAction(ctx context.Context, myID int64, vdID int64, commentID int6
 	}
 	// 减少一条记录到Comment表
 	comment := Comment{
-		UserID:  myID,
-		VideoID: vdID,
-		ID:      commentID, // 应该是删除的commentID的内容的ID
+		ID: commentID, //  应该是删除的commentID的内容的ID
 	}
 	conn = DB.WithContext(ctx).Delete(&comment)
 	if err := conn.Error; err != nil {
