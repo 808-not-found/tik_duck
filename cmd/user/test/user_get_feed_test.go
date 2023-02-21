@@ -72,14 +72,8 @@ func TestUserGetFeedService(t *testing.T) {
 		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
 		Mock(db.GetUser).Return(retUser, nil).Build()
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
-		Mock(db.IsFavorite).Return(allerrors.ErrTestnotnil()).Build()
-		Mock(pack.DBUserToRPCUser).Return(&user.User{
-			Id:            1,
-			Name:          "蒂萨久",
-			FollowCount:   nil,
-			FollowerCount: nil,
-			IsFollow:      false,
-		}, nil).Build()
+
+		Mock(pack.Videos).Return(expectVideo, nil).Build()
 
 		//设置传入参数
 		Token := "123412"
@@ -119,14 +113,8 @@ func TestUserGetFeedService(t *testing.T) {
 		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
 		Mock(db.GetUser).Return(retUser, nil).Build()
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
-		Mock(db.IsFavorite).Return(nil).Build()
-		Mock(pack.DBUserToRPCUser).Return(&user.User{
-			Id:            1,
-			Name:          "蒂萨久",
-			FollowCount:   nil,
-			FollowerCount: nil,
-			IsFollow:      false,
-		}, nil).Build()
+
+		Mock(pack.Videos).Return(expectVideo, nil).Build()
 
 		//设置传入参数
 		Token := "123412"
@@ -166,14 +154,8 @@ func TestUserGetFeedService(t *testing.T) {
 		Mock(db.UserGetFeed).Return(retVideo, nil).Build()
 		Mock(db.GetUser).Return(retUser, nil).Build()
 		Mock(jwt.ParseToken).Return(&jwt.MyClaims{ID: 1}, nil).Build()
-		Mock(db.IsFavorite).Return(allerrors.ErrTestnotnil()).Build()
-		Mock(pack.User).Return(&user.User{
-			Id:            1,
-			Name:          "蒂萨久",
-			FollowCount:   nil,
-			FollowerCount: nil,
-			IsFollow:      false,
-		}).Build()
+
+		Mock(pack.Videos).Return(expectVideo, nil).Build()
 
 		//设置传入参数
 
