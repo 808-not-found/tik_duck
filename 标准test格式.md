@@ -1,9 +1,5 @@
 # 测试部分
 
-### 0. 声明
-
-    临时存在 等测试部分完成删除
-
 ### 1. 标准格式
 
 ```go
@@ -155,17 +151,14 @@ funcTestUserGetFeedService(t *testing.T) {
 1. 关于链式方法：
 
    - 直接 mock 上层函数
-
 2. 关于错误码：
 
    - 在 pkg/allerrors 中有错误码的具体说明
    - 尽量到达所有错误码情况以提高覆盖率
-
 3. 当要求返回错误 err 不是 nil 时
 
    - 引入"github.com/808-not-found/tik_duck/pkg/allerrors"包
    - 之后使用 allerrors.ErrTestnotnil()
-
 4. 测试命令
 
    - go test -gcflags="all=-l -N" -v ./...
