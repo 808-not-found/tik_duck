@@ -108,7 +108,7 @@ func GetFollowList(ctx context.Context, myID int64) ([]*User, error) {
 	}
 
 	// 获取所有的用户 ID
-	var setList map[int64]bool
+	setList := make(map[int64]bool)
 	for _, value := range followList {
 		if value != nil {
 			setList[value.ToUserID] = true // nolint:all
@@ -139,7 +139,7 @@ func GetFollowerList(ctx context.Context, userID int64) ([]*User, error) {
 	log.Println("followerList结构体长度：", len(followerList))
 
 	// 获取用户 ID
-	var setList map[int64]bool
+	setList := make(map[int64]bool)
 	for _, value := range followerList {
 		if value != nil {
 			setList[value.FromUserID] = true

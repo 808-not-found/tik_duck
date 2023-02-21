@@ -75,7 +75,7 @@ func GetCommentList(ctx context.Context, myID int64, vdID int64) ([]*Comment, er
 	}
 
 	// 获取所有的评论 ID
-	var setList map[int64]bool
+	setList := make(map[int64]bool)
 	for _, value := range commentList {
 		if value != nil {
 			setList[value.VideoID] = true // nolint:all
