@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"gorm.io/gorm"
+
 	"github.com/808-not-found/tik_duck/cmd/userplat/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/userplat"
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
@@ -22,6 +24,7 @@ func (m *Like) TableName() string {
 }
 
 type Follow struct {
+	gorm.Model
 	ID         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	FollowTime time.Time `gorm:"column:follow_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	FromUserID int64     `gorm:"column:from_user_id;NOT NULL"`
