@@ -85,5 +85,4 @@ func GetCommentList(ctx context.Context, myID int64, vdID int64) ([]*Comment, er
 		return commentList, err
 	}
 	return commentList, nil
-
 }

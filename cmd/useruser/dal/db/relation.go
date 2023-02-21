@@ -107,14 +107,14 @@ func GetFollowList(ctx context.Context, myID int64) ([]*User, error) {
 		return res, err
 	}
 
-	//log.Printf("%+v", followList)
+	// log.Printf("%+v", followList)
 	// 获取所有的用户 ID
 	var followIDList []int64
 	for _, follow := range followList {
 		followIDList = append(followIDList, follow.ToUserID)
 	}
 
-	//特判为空的情况
+	// 特判为空的情况
 	if len(followIDList) == 0 {
 		return res, nil
 	}
@@ -144,7 +144,7 @@ func GetFollowerList(ctx context.Context, userID int64) ([]*User, error) {
 		followerIDList = append(followerIDList, follower.FromUserID)
 	}
 
-	//特判为空的情况
+	// 特判为空的情况
 	if len(followerIDList) == 0 {
 		return res, nil
 	}
