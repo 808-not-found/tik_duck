@@ -11,10 +11,12 @@ import (
 
 type Follow struct {
 	gorm.Model
-	ID         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	ID         int64     `gorm:"column:id;primary_key;AUTO_INCERMENT"`
 	FollowTime time.Time `gorm:"column:follow_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	FromUserID int64     `gorm:"column:from_user_id;NOT NULL"`
 	ToUserID   int64     `gorm:"column:to_user_id;NOT NULL"`
+	CreateTime time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
+	UpdateTime time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 }
 
 func (m *Follow) TableName() string {
