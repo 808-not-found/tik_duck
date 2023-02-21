@@ -122,7 +122,7 @@ func TestUserCommentActionService(t *testing.T) {
 		assert.Equal(t, expectstatusCode, res.StatusCode)
 		assert.Equal(t, expectStatusMsg, res.StatusMsg)
 		assert.Equal(t, expectComment, res.Comment)
-		assert.Equal(t, err, allerrors.ErrTestnotnil())
+		assert.Equal(t, allerrors.ErrTestnotnil(), err)
 	})
 	// 用户评论成功
 	PatchConvey("TestMockUserplatCommentAction_normal", t, func() {
