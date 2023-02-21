@@ -4,15 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/808-not-found/tik_duck/cmd/useruser/dal/db"
 	uuservice "github.com/808-not-found/tik_duck/cmd/useruser/uuservice"
 	useruser "github.com/808-not-found/tik_duck/kitex_gen/useruser"
-	"github.com/808-not-found/tik_duck/pkg/allerrors"
 	//"github.com/808-not-found/tik_duck/pkg/consts"
 	//"github.com/808-not-found/tik_duck/cmd/useruser/pack"
-	"github.com/808-not-found/tik_duck/pkg/jwt"
-	. "github.com/bytedance/mockey"
-	"github.com/stretchr/testify/assert"
 )
 
 //	struct RelationActionRequest {
@@ -30,11 +25,12 @@ func BenchmarkUserRelationActionService(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		//设置传入参数
-		req := useruser.UserRequest{
-			Token:  "1231312",
-			UserId: 1231231,
+		req := useruser.RelationActionRequest{
+			Token:      "1231312",
+			ToUserId:   1231231,
+			ActionType: 1,
 		}
-		_, _, _, _ = uuservice.UserRelationActionService(context.Background(), &req)
+		_, _ = uuservice.UserRelationActionService(context.Background(), &req)
 	}
 }
 func BenchmarkUserRelationActionServiceParallel(b *testing.B) {
@@ -42,11 +38,12 @@ func BenchmarkUserRelationActionServiceParallel(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			//设置传入参数
-			req := useruser.UserRequest{
-				Token:  "1231312",
-				UserId: 1231231,
+			req := useruser.RelationActionRequest{
+				Token:      "1231312",
+				ToUserId:   1231231,
+				ActionType: 1,
 			}
-			_, _, _, _ = uuservice.UserRelationActionService(context.Background(), &req)
+			_, _ = uuservice.UserRelationActionService(context.Background(), &req)
 		}
 	})
 }
