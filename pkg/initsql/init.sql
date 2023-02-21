@@ -90,12 +90,6 @@ CREATE INDEX `follow_index_4` ON `follow` (`from_user_id`);
 
 CREATE INDEX `follow_index_5` ON `follow` (`to_user_id`);
 
-CREATE INDEX `message_index_3` ON `message` (`id`);
-
-CREATE INDEX `message_index_4` ON `message` (`from_user_id`);
-
-CREATE INDEX `message_index_5` ON `message` (`to_user_id`);
-
 CREATE INDEX `comment_index_6` ON `comment` (`id`);
 
 CREATE INDEX `comment_index_7` ON `comment` (`user_id`);
@@ -119,10 +113,6 @@ ALTER TABLE `video` ADD FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
 ALTER TABLE `follow` ADD FOREIGN KEY (`from_user_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `follow` ADD FOREIGN KEY (`to_user_id`) REFERENCES `user` (`id`);
-
-ALTER TABLE `message` ADD FOREIGN KEY (`from_user_id`) REFERENCES `user` (`id`);
-
-ALTER TABLE `message` ADD FOREIGN KEY (`to_user_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `comment` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
