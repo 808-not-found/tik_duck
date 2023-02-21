@@ -42,13 +42,14 @@ func UserCommentActionService(
 			return &resp, err
 		}
 		resp.Comment = rpcComment
-	} else {
-		// 取消评论
-		err := db.UnCommentAction(ctx, myID, vdID, *commentID)
-		if err != nil {
-			resp.StatusCode = 2035
-			return &resp, err
-		}
+		return &resp, nil
 	}
+	// 取消评论
+	err = db.UnCommentAction(ctx, myID, vdID, *commentID)
+	if err != nil {
+		resp.StatusCode = 2035
+		return &resp, err
+	}
+
 	return &resp, nil
 }
