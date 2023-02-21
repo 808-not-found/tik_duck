@@ -8,6 +8,11 @@ tasks:
     cmds:
       - task --list
 
+  run:
+    desc: Run all service in local env
+    cmds:
+      - cd cmd/web && (go run ../user & go run ../useruser & go run ../userplat & go run .)
+
   lint:
     silent: true
     desc: Run 'golangci-lint'.
