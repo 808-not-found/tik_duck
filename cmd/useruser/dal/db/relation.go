@@ -122,14 +122,15 @@ func GetFollowList(ctx context.Context, myID int64) ([]*User, error) {
 	return res, nil
 }
 
-func GetFollowerList(ctx context.Context, myID int64) ([]*User, error) {
+func GetFollowerList(ctx context.Context, userID int64) ([]*User, error) {
 	var res []*User
 	// 找到所有相关结构体
 	var followerList []*Follow
-	conn := DB.WithContext(ctx).Where("to_user_id = ?", myID).Find(&followerList)
-	if err := conn; err != nil {
+	conn := DB.WithContext(ctx).Where("to_user_id = ?", userID).Find(&followerList)
+	if err := conn.Error; err != nil {
 		return res, nil
 	}
+	log.Println("followerList结构体长度：", len(followerList))
 
 	// 获取用户 ID
 	var followerIDList []int64
