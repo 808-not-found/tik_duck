@@ -34,7 +34,7 @@ func CommentAction(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := rpc.UserCommentAction(context.Background(), &feedReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)
@@ -46,7 +46,7 @@ func CommentList(ctx context.Context, c *app.RequestContext) {
 	feedReq.VideoId, _ = strconv.ParseInt(c.Query("video_id"), 10, 64)
 	resp, err := rpc.UserCommentList(context.Background(), &feedReq)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, resp)
