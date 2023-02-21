@@ -42,13 +42,22 @@ func (u *Follow) TableName() string {
 func FollowAction(ctx context.Context, myID int64, toID int64) error {
 	// 增加follow count
 	var myUser *User
-	conn := DB.WithContext(ctx).Where("id = ?", myID).First(&myUser).Update("id", myUser.FollowCount+1)
+	// conn := DB.Model(&myUser).WithContext(ctx).Where("id = ?", myID)
+	conn := DB.WithContext(ctx).Where("id = ?", myID).First(&myUser).Update("follow_count", myUser.FollowCount+1)
+	// conn := DB.WithContext(ctx)
+	// conn.Where("id = ?", myID).First(&myUser)
+	// cnt1 := myUser.FollowCount
+	// conn.Model(&myUser).Update("id", cnt1 + 1)
 	if err := conn.Error; err != nil {
 		return err
 	}
 	// 增加follower count
 	var toUser *User
-	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("id", toUser.FollowerCount+1)
+	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("follower_count", toUser.FollowerCount+1)
+	// conn = DB.WithContext(ctx)
+	// conn.Where("id = ?", toID).First(&toUser)
+	// cnt2 := myUser.FollowerCount
+	// conn.Model(&toUser).Update("id", cnt + 1)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -57,7 +66,7 @@ func FollowAction(ctx context.Context, myID int64, toID int64) error {
 		FromUserID: myID,
 		ToUserID:   toID,
 	}
-	conn = DB.WithContext(ctx).Create(follow)
+	conn = DB.WithContext(ctx).Create(&follow)
 	if err := conn.Error; err != nil {
 		return err
 	}

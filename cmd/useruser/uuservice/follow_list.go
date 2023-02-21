@@ -28,7 +28,7 @@ func UserRelationFollowListService(
 	}
 	// 查询数据库
 	var dbUsers []*db.User
-	dbUsers, err = db.GetFollowList(ctx, myID)
+	dbUsers, err = db.GetFollowList(ctx, req.UserId)
 	if err != nil {
 		resp.StatusCode = 3007
 		return &resp, err
