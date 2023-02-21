@@ -1,6 +1,6 @@
 # 测试部分
 
-### 1. 标准格式
+### 1. 单元标准格式
 
 ```go
 package userservice_test
@@ -146,22 +146,47 @@ funcTestUserGetFeedService(t *testing.T) {
 
 ```
 
-### 2. 测试时发现的问题
+### 2. 基准测试格式
+
+```go
+func BenchmarkUserInfoService(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		//设置传入参数
+		req := user.UserRequest{
+			xxxx
+		}
+		userservice.UserInfoService(context.Background(), &req)
+	}
+}
+func BenchmarkUserInfoServiceParallel(b *testing.B) {
+	b.ResetTimer()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			//设置传入参数
+			req := user.UserRequest{
+				xxxx
+			}
+			userservice.UserInfoService(context.Background(), &req)
+		}
+	})
+}
+
+```
+
+### 3. 测试时发现的问题
 
 1. 关于链式方法：
 
    - 直接 mock 上层函数
-
 2. 关于错误码：
 
    - 在 pkg/allerrors 中有错误码的具体说明
    - 尽量到达所有错误码情况以提高覆盖率
-
 3. 当要求返回错误 err 不是 nil 时
 
    - 引入"github.com/808-not-found/tik_duck/pkg/allerrors"包
    - 之后使用 allerrors.ErrTestnotnil()
-
 4. 测试命令
 
    - go test -gcflags="all=-l -N" -v ./...
