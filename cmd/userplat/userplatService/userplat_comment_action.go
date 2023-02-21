@@ -30,25 +30,28 @@ func UserCommentActionService(
 
 	if actionType == 1 {
 		// 评论
-		dbComment, err := db.CommentAction(ctx, myID, vdID, *commentText)
+		var dbComment *db.Comment
+		dbComment, err = db.CommentAction(ctx, myID, vdID, *commentText)
 		if err != nil {
 			resp.StatusCode = 2035
 			return &resp, err
 		}
 		// 封装
-		rpcComment, err := pack.Comment(ctx, dbComment, myID)
+		var rpcComment *userplat.Comment
+		rpcComment, err = pack.Comment(ctx, dbComment, myID)
 		if err != nil {
 			resp.StatusCode = 2036
 			return &resp, err
 		}
 		resp.Comment = rpcComment
-	} else {
-		// 取消评论
-		err := db.UnCommentAction(ctx, myID, vdID, *commentID)
-		if err != nil {
-			resp.StatusCode = 2035
-			return &resp, err
-		}
+		return &resp, nil
 	}
+	// 取消评论
+	err = db.UnCommentAction(ctx, myID, vdID, *commentID)
+	if err != nil {
+		resp.StatusCode = 2035
+		return &resp, err
+	}
+
 	return &resp, nil
 }

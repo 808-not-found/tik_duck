@@ -6,13 +6,17 @@ import (
 	"github.com/808-not-found/tik_duck/cmd/user/dal/db"
 	"github.com/808-not-found/tik_duck/kitex_gen/user"
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
+	"gorm.io/gorm"
 )
 
 type Follow struct {
-	ID         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	gorm.Model
+	ID         int64     `gorm:"column:id;primary_key;AUTO_INCERMENT"`
 	FollowTime time.Time `gorm:"column:follow_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	FromUserID int64     `gorm:"column:from_user_id;NOT NULL"`
 	ToUserID   int64     `gorm:"column:to_user_id;NOT NULL"`
+	CreateTime time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
+	UpdateTime time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 }
 
 func (m *Follow) TableName() string {
@@ -33,6 +37,7 @@ func DBUserToRPCUser(m *db.User, fromID int64) (*user.User, error) {
 	} else {
 		IsFollowShip = false
 	}
+
 	return &user.User{
 		Id:            m.ID,
 		Name:          m.Name,

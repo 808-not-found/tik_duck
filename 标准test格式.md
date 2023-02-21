@@ -1,10 +1,6 @@
 # 测试部分
 
-### 0. 声明
-
-    临时存在 等测试部分完成删除
-
-### 1. 标准格式
+### 1. 单元标准格式
 
 ```go
 package userservice_test
@@ -150,7 +146,35 @@ funcTestUserGetFeedService(t *testing.T) {
 
 ```
 
-### 2. 测试时发现的问题
+### 2. 基准测试格式
+
+```go
+func BenchmarkUserInfoService(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		//设置传入参数
+		req := user.UserRequest{
+			xxxx
+		}
+		userservice.UserInfoService(context.Background(), &req)
+	}
+}
+func BenchmarkUserInfoServiceParallel(b *testing.B) {
+	b.ResetTimer()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			//设置传入参数
+			req := user.UserRequest{
+				xxxx
+			}
+			userservice.UserInfoService(context.Background(), &req)
+		}
+	})
+}
+
+```
+
+### 3. 测试时发现的问题
 
 1. 关于链式方法：
 

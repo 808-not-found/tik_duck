@@ -107,24 +107,24 @@ func GetFollowList(ctx context.Context, myID int64) ([]*User, error) {
 		return res, err
 	}
 
+	// log.Printf("%+v", followList)
 	// 获取所有的用户 ID
-	var setList map[int64]bool
-	for _, value := range followList {
-		if value != nil {
-			setList[value.ToUserID] = true // nolint:all
-		}
-	}
 	var followIDList []int64
-	for k := range setList {
-		followIDList = append(followIDList, k)
+	for _, follow := range followList {
+		followIDList = append(followIDList, follow.ToUserID)
 	}
 
-	// 找到所有对应的用户结构体
-	conn = DB.WithContext(ctx).Where("id = ?", followIDList).Find(&res)
+	// 特判为空的情况
+	if len(followIDList) == 0 {
+		return res, nil
+	}
+
+	log.Println("followList结构体长度：", len(followList))
+	conn = DB.WithContext(ctx).Find(&res, followIDList)
 	if err := conn.Error; err != nil {
 		return res, err
 	}
-
+	log.Printf("%+v", res)
 	return res, nil
 }
 
@@ -139,19 +139,19 @@ func GetFollowerList(ctx context.Context, userID int64) ([]*User, error) {
 	log.Println("followerList结构体长度：", len(followerList))
 
 	// 获取用户 ID
-	var setList map[int64]bool
-	for _, value := range followerList {
-		if value != nil {
-			setList[value.FromUserID] = true
-		}
-	}
 	var followerIDList []int64
-	for k := range setList {
-		followerIDList = append(followerIDList, k)
+	for _, follower := range followerList {
+		followerIDList = append(followerIDList, follower.FromUserID)
+	}
+
+	// 特判为空的情况
+	if len(followerIDList) == 0 {
+		return res, nil
 	}
 
 	// 找到所有对应的用户结构体
-	conn = DB.WithContext(ctx).Where("id = ?", followerIDList).Find(&res)
+	log.Println(followerIDList)
+	conn = DB.WithContext(ctx).Find(&res, followerIDList)
 	if err := conn.Error; err != nil {
 		return res, err
 	}
@@ -179,7 +179,7 @@ func GetFriendList(ctx context.Context, myID int64) ([]*User, error) {
 
 	// 双指针取出重复值
 	n, m := len(myFollow), len(myFollower)
-	for i, j := 1, 1; i <= n && j <= m; i++ {
+	for i, j := 0, 0; i < n && j < m; i++ {
 		for myFollower[j].ID < myFollow[i].ID {
 			j++
 		}

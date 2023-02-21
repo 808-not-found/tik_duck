@@ -8,9 +8,11 @@ import (
 	"github.com/808-not-found/tik_duck/kitex_gen/userplat"
 	allerrors "github.com/808-not-found/tik_duck/pkg/allerrors"
 	"github.com/808-not-found/tik_duck/pkg/consts"
+	"gorm.io/gorm"
 )
 
 type Like struct {
+	gorm.Model
 	ID       int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	LikeTime time.Time `gorm:"column:like_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	UserID   int64     `gorm:"column:user_id;NOT NULL"`
@@ -22,6 +24,7 @@ func (m *Like) TableName() string {
 }
 
 type Follow struct {
+	gorm.Model
 	ID         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
 	FollowTime time.Time `gorm:"column:follow_time;default:CURRENT_TIMESTAMP;NOT NULL"`
 	FromUserID int64     `gorm:"column:from_user_id;NOT NULL"`

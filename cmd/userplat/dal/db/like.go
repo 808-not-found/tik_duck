@@ -94,7 +94,9 @@ func UnLikeAction(ctx context.Context, myID int64, vdID int64) error {
 		UserID:  myID,
 		VideoID: vdID,
 	}
-	conn = DB.WithContext(ctx).Create(&like)
+	// 删除follow表中的一条记录
+
+	conn = DB.WithContext(ctx).Where("user_id = ? AND video_id = ?", myID, vdID).Delete(&like)
 	if err := conn.Error; err != nil {
 		return err
 	}
@@ -111,19 +113,18 @@ func GetFavoriteList(ctx context.Context, userID int64) ([]*Video, error) {
 	}
 
 	// 获取所有的视频 ID 去重
-	var setList map[int64]bool
+	setList := make(map[int64]bool)
 	for _, value := range favoriteList {
 		if value != nil {
-			setList[value.VideoID] = true // nolint:all
+			setList[value.VideoID] = true
 		}
 	}
 	var favoriteIDList []int64
 	for k := range setList {
 		favoriteIDList = append(favoriteIDList, k)
 	}
-
 	// 找到所有对应的视频结构体
-	conn = DB.WithContext(ctx).Where("id = ?", favoriteIDList).Find(&res)
+	conn = DB.WithContext(ctx).Where("id IN ?", favoriteIDList).Find(&res)
 	if err := conn.Error; err != nil {
 		return res, err
 	}

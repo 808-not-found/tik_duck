@@ -20,14 +20,27 @@ type Video struct {
 	Title         string    `gorm:"column:title;NOT NULL"`
 }
 
+type Like struct {
+	gorm.Model
+	ID       int64     `gorm:"column:id;primary_key;AUTO_INCREMENT"`
+	LikeTime time.Time `gorm:"column:like_time;default:CURRENT_TIMESTAMP;NOT NULL"`
+	UserID   int64     `gorm:"column:user_id;default:0;NOT NULL"`
+	VideoID  int64     `gorm:"column:video_id;default:0;NOT NULL"`
+}
+
 func (v *Video) TableName() string {
 	return consts.VideoTableName
+}
+
+func (v *Like) TableName() string {
+	return consts.LikeTableName
 }
 
 func UserGetFeed(ctx context.Context, latestTime *int64) ([]*Video, error) {
 	// 初始化数据
 	var curTime time.Time
-	if latestTime == nil || *latestTime == 0 {
+	// 客户端可能会传一个很大的时间来表示首次请求
+	if latestTime == nil || *latestTime == 0 || *latestTime > 1076997151921 {
 		curTime = time.Now()
 	} else {
 		curTime = time.Unix(*latestTime, 0)
@@ -36,7 +49,8 @@ func UserGetFeed(ctx context.Context, latestTime *int64) ([]*Video, error) {
 
 	// 获取视频列表
 	var videoList []*Video
-	conn := DB.WithContext(ctx).Model(&Video{}).Limit(limit).Where("publish_time <= ?", curTime).Find(&videoList)
+	conn := DB.WithContext(ctx).Model(&Video{}).Where("publish_time <= ?", curTime).
+		Limit(limit).Order("publish_time desc").Find(&videoList)
 	if err := conn.Error; err != nil {
 		return nil, err
 	}
@@ -62,5 +76,15 @@ func UserPublishAction(ctx context.Context, userID int64, filePath string, cover
 	if err := res.Error; err != nil {
 		return err
 	}
+	return nil
+}
+
+func IsFavorite(ctx context.Context, userID int64, vdeioID int64) error {
+	var like *Like
+	conn := DB.WithContext(ctx).Where("user_id = ? AND video_id = ?", userID, vdeioID).First(&like)
+	if err := conn.Error; err != nil {
+		return err
+	}
+
 	return nil
 }
