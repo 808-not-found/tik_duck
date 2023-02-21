@@ -179,7 +179,7 @@ func GetFriendList(ctx context.Context, myID int64) ([]*User, error) {
 
 	// 双指针取出重复值
 	n, m := len(myFollow), len(myFollower)
-	for i, j := 1, 1; i <= n && j <= m; i++ {
+	for i, j := 0, 0; i < n && j < m; i++ {
 		for myFollower[j].ID < myFollow[i].ID {
 			j++
 		}
