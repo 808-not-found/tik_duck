@@ -26,7 +26,7 @@ func BenchmarkUserPublishListService(b *testing.B) {
 			UserId: 222,
 			Token:  "777",
 		}
-		userservice.UserPublishListService(context.Background(), &req)
+		_, _ = userservice.UserPublishListService(context.Background(), &req)
 	}
 }
 func BenchmarkUserPublishListServiceParallel(b *testing.B) {
@@ -38,7 +38,7 @@ func BenchmarkUserPublishListServiceParallel(b *testing.B) {
 				UserId: 222,
 				Token:  "777",
 			}
-			userservice.UserPublishListService(context.Background(), &req)
+			_, _ = userservice.UserPublishListService(context.Background(), &req)
 		}
 	})
 }

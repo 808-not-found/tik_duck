@@ -32,7 +32,7 @@ func BenchmarkUserCommentActionService(b *testing.B) {
 			ActionType:  1,
 			CommentText: &rettext,
 		}
-		userplatservice.UserCommentActionService(context.Background(), &req)
+		_, _ = userplatservice.UserCommentActionService(context.Background(), &req)
 	}
 }
 func BenchmarkUserCommentActionServiceParallel(b *testing.B) {
@@ -47,7 +47,7 @@ func BenchmarkUserCommentActionServiceParallel(b *testing.B) {
 				ActionType:  1,
 				CommentText: &rettext,
 			}
-			userplatservice.UserCommentActionService(context.Background(), &req)
+			_, _ = userplatservice.UserCommentActionService(context.Background(), &req)
 		}
 	})
 }

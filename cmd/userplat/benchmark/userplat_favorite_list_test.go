@@ -26,7 +26,7 @@ func BenchmarkUserFavoriteListService(b *testing.B) {
 			UserId: 222777,
 			Token:  "3",
 		}
-		userplatservice.UserFavoriteListService(context.Background(), &req)
+		_, _ = userplatservice.UserFavoriteListService(context.Background(), &req)
 	}
 }
 func BenchmarkUserFavoriteListServiceParallel(b *testing.B) {
@@ -38,7 +38,7 @@ func BenchmarkUserFavoriteListServiceParallel(b *testing.B) {
 				UserId: 222777,
 				Token:  "3",
 			}
-			userplatservice.UserFavoriteListService(context.Background(), &req)
+			_, _ = userplatservice.UserFavoriteListService(context.Background(), &req)
 		}
 	})
 }

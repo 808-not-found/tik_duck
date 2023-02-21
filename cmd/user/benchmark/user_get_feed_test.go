@@ -25,7 +25,7 @@ func BenchmarkUserGetFeedService(b *testing.B) {
 		//设置传入参数
 		Token := "520222"
 		req := user.FeedRequest{Token: &Token}
-		userservice.UserGetFeedService(context.Background(), &req)
+		_, _ = userservice.UserGetFeedService(context.Background(), &req)
 	}
 }
 func BenchmarkUserGetFeedServiceParallel(b *testing.B) {
@@ -35,7 +35,7 @@ func BenchmarkUserGetFeedServiceParallel(b *testing.B) {
 			//设置传入参数
 			Token := "520222"
 			req := user.FeedRequest{Token: &Token}
-			userservice.UserGetFeedService(context.Background(), &req)
+			_, _ = userservice.UserGetFeedService(context.Background(), &req)
 		}
 	})
 }

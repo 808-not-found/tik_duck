@@ -27,7 +27,7 @@ func BenchmarkUserFavoriteActionService(b *testing.B) {
 			VideoId:    999,
 			ActionType: 1,
 		}
-		userplatservice.UserFavoriteActionService(context.Background(), &req)
+		_, _ = userplatservice.UserFavoriteActionService(context.Background(), &req)
 	}
 }
 func BenchmarkUserFavoriteActionServiceParallel(b *testing.B) {
@@ -40,7 +40,7 @@ func BenchmarkUserFavoriteActionServiceParallel(b *testing.B) {
 				VideoId:    999,
 				ActionType: 1,
 			}
-			userplatservice.UserFavoriteActionService(context.Background(), &req)
+			_, _ = userplatservice.UserFavoriteActionService(context.Background(), &req)
 		}
 	})
 }

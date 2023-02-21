@@ -16,7 +16,7 @@ func BenchmarkUserRegisterService(b *testing.B) {
 			Username: "蒂萨久",
 			Password: "114514",
 		}
-		userservice.UserRegisterService(context.Background(), &req)
+		_, _, _, _, _ = userservice.UserRegisterService(context.Background(), &req)
 	}
 }
 func BenchmarkUserRegisterServiceParallel(b *testing.B) {
@@ -28,7 +28,7 @@ func BenchmarkUserRegisterServiceParallel(b *testing.B) {
 				Username: "蒂萨久",
 				Password: "114514",
 			}
-			userservice.UserRegisterService(context.Background(), &req)
+			_, _, _, _, _ = userservice.UserRegisterService(context.Background(), &req)
 		}
 	})
 }
