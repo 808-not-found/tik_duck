@@ -25,7 +25,7 @@ func CommentAction(ctx context.Context, myID int64, vdID int64, commentText stri
 	// 增加commentcount
 	// var myUser *User
 	var res *Comment // 返回值为一条评论内容
-	//var commentlist *Comment
+	// var commentlist *Comment
 	var myVideo *Video
 	conn := DB.WithContext(ctx).Where("id = ?", vdID).First(&myVideo).Update("comment_count", myVideo.CommentCount+1)
 	if err := conn.Error; err != nil {
@@ -38,7 +38,7 @@ func CommentAction(ctx context.Context, myID int64, vdID int64, commentText stri
 		Content: commentText,
 	}
 	conn = DB.WithContext(ctx).Create(&comment)
-	//res = &comment
+	//  res = &comment
 	if err := conn.Error; err != nil {
 		return res, err
 	}
