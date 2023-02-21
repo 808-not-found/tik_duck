@@ -55,7 +55,11 @@ func Publish(ctx context.Context, c *app.RequestContext) {
 		})
 		return
 	}
-	cover.GetSnapshot(saveFile, saveCover, 1)
+	err = cover.GetSnapshot(saveFile, saveCover, 1)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	var userPublishActionReq user.PublishActionRequest
 	userPublishActionReq.CoverPath = saveCover
 	userPublishActionReq.FilePath = saveFile
