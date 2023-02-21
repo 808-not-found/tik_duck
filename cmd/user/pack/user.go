@@ -37,6 +37,7 @@ func DBUserToRPCUser(m *db.User, fromID int64) (*user.User, error) {
 	} else {
 		IsFollowShip = false
 	}
+
 	return &user.User{
 		Id:            m.ID,
 		Name:          m.Name,
