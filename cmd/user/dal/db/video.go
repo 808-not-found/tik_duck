@@ -48,7 +48,7 @@ func UserGetFeed(ctx context.Context, latestTime *int64) ([]*Video, error) {
 
 	// 获取视频列表
 	var videoList []*Video
-	conn := DB.WithContext(ctx).Model(&Video{}).Limit(limit).Where("publish_time <= ?", curTime).Find(&videoList)
+	conn := DB.WithContext(ctx).Model(&Video{}).Order("publish_time desc").Limit(limit).Where("publish_time < ?", curTime).Find(&videoList)
 	if err := conn.Error; err != nil {
 		return nil, err
 	}
