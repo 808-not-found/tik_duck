@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"log"
 	"sort"
 	"time"
 
@@ -82,16 +83,14 @@ func UnFollowAction(ctx context.Context, myID int64, toID int64) error {
 	}
 	// 减少follower count
 	var toUser *User
-	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("id", toUser.FollowerCount-1)
+	conn = DB.WithContext(ctx).Where("id = ?", toID).First(&toUser).Update("follower_count", toUser.FollowerCount-1)
 	if err := conn.Error; err != nil {
 		return err
 	}
 	// 删除follow表中的一条记录
-	follow := Follow{
-		FromUserID: myID,
-		ToUserID:   toID,
-	}
-	conn = DB.WithContext(ctx).Delete(follow)
+	var follow *Follow
+	log.Println("follow结构体", follow)
+	conn = DB.WithContext(ctx).Where("from_user_id = ? AND to_user_id = ?", myID, toID).Delete(&follow)
 	if err := conn.Error; err != nil {
 		return err
 	}
