@@ -29,30 +29,6 @@ import (
 //	    4: string Token (go.tag = 'json:"token"') //用户鉴权token
 //	}
 
-func BenchmarkUserLoginService(b *testing.B) {
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		//设置传入参数
-		req := user.UserLoginRequest{
-			Username: "ljz",
-			Password: "20020210",
-		}
-		userservice.UserLoginService(context.Background(), &req)
-	}
-}
-func BenchmarkUserLoginServiceParallel(b *testing.B) {
-	b.ResetTimer()
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			//设置传入参数
-			req := user.UserLoginRequest{
-				Username: "ljz",
-				Password: "20020210",
-			}
-			userservice.UserLoginService(context.Background(), &req)
-		}
-	})
-}
 func TestUserLoginService(t *testing.T) {
 	//构建通用信息
 	nowTime := time.Now()

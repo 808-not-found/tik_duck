@@ -26,6 +26,7 @@ import (
 //	   2: optional string StatusMsg (go.tag = 'json:"status_msg"') //返回状态描述
 //	   3: list<Video> VideoList (go.tag = 'json:"video_list"') //用户发布的视频列表
 //	}
+
 func TestUserPublishListService(t *testing.T) {
 	nowTime := time.Now()
 	retVideo := make([]*db.Video, 0)
