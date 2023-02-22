@@ -9,11 +9,6 @@ import (
 	// "github.com/808-not-found/tik_duck/cmd/user/pack"
 	userservice "github.com/808-not-found/tik_duck/cmd/user/userService"
 	user "github.com/808-not-found/tik_duck/kitex_gen/user"
-	//"github.com/808-not-found/tik_duck/pkg/allerrors"
-	// "github.com/808-not-found/tik_duck/pkg/consts"
-	// "github.com/808-not-found/tik_duck/pkg/jwt"
-	// . "github.com/bytedance/mockey"
-	// "github.com/stretchr/testify/assert"
 )
 
 //	struct UserRequest {

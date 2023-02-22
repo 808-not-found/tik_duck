@@ -6,8 +6,6 @@ import (
 
 	uuservice "github.com/808-not-found/tik_duck/cmd/useruser/uuservice"
 	useruser "github.com/808-not-found/tik_duck/kitex_gen/useruser"
-	//"github.com/808-not-found/tik_duck/pkg/consts"
-	//"github.com/808-not-found/tik_duck/cmd/useruser/pack"
 )
 
 //	struct RelationFollowListRequest {

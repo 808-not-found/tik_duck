@@ -10,10 +10,10 @@ import (
 func Msg(ctx context.Context, m *db.Message) (res *chat.Message, err error) {
 	t := m.CreatedAt.String()
 	return &chat.Message{
-		Id: m.ID,
-		ToUserId: m.ToUserID,
+		Id:         m.ID,
+		ToUserId:   m.ToUserID,
 		FromUserId: m.FromUserID,
-		Content: m.Content,
+		Content:    m.Content,
 		CreateTime: &t,
 	}, nil
 }
