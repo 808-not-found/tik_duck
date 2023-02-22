@@ -16,7 +16,7 @@ const (
 	ChatService         = "chat"
 
 	WebServerPort     = "8080"
-	WebServerPublicIP = "192.168.18.106"
+	WebServerPublicIP = "192.168.0.103"
 	StaticPort        = "8081"
 
 	MySQLDefaultDSN = "tik_duck:duck@tcp(localhost:9910)/tik_duck?charset=utf8mb4&parseTime=True"
