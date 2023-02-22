@@ -40,11 +40,14 @@ func UserGetFeed(ctx context.Context, latestTime *int64) ([]*Video, error) {
 	// 初始化数据
 	var curTime time.Time
 	// 客户端可能会传一个很大的时间来表示首次请求
+
 	if latestTime == nil || *latestTime == 0 || *latestTime > 1076997151921 {
 		curTime = time.Now()
 	} else {
 		curTime = time.Unix(*latestTime, 0)
 	}
+
+	curTime = curTime.Add(8 * time.Hour)
 	const limit = 30
 
 	// 获取视频列表
