@@ -41,7 +41,7 @@ func GetMsgService(ctx context.Context, req *chat.MessageChatRequest) (resp *cha
 	}
 
 	resp = &chat.MessageChatResponse{
-		StatusCode: 0,
+		StatusCode:  0,
 		MessageList: rpcList,
 	}
 	return resp, nil

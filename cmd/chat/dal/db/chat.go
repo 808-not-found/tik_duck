@@ -14,7 +14,7 @@ type Message struct {
 	FromUserID  int64     `gorm:"column:from_user_id;NOT NULL"`
 	ToUserID    int64     `gorm:"column:to_user_id;NOT NULL"`
 	Content     string    `gorm:"column:content;NOT NULL"`
-	CreatedAt time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP;NOT NULL"`
+	CreatedAt   time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP;NOT NULL"`
 }
 
 func GetMsg(ctx context.Context, myID int64, toID int64, t *int64) (res []*Message, err error) {
@@ -29,8 +29,8 @@ func GetMsg(ctx context.Context, myID int64, toID int64, t *int64) (res []*Messa
 func PostMsg(ctx context.Context, myID int64, toID int64, content *string) (err error) {
 	message := Message{
 		FromUserID: myID,
-		ToUserID: toID,
-		Content: *content,
+		ToUserID:   toID,
+		Content:    *content,
 	}
 	conn := DB.WithContext(ctx).Create(&message)
 	if err = conn.Error; err != nil {

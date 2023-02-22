@@ -8,7 +8,10 @@ import (
 	"github.com/808-not-found/tik_duck/pkg/jwt"
 )
 
-func PostMsgService(ctx context.Context, req *chat.RelationActionRequest) (resp *chat.RelationActionResponse, err error) {
+func PostMsgService(
+	ctx context.Context,
+	req *chat.RelationActionRequest,
+) (resp *chat.RelationActionResponse, err error) {
 	resp = &chat.RelationActionResponse{
 		StatusCode: 0,
 	}
